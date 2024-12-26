@@ -14,6 +14,12 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
+## [0.10.2] - 2024-12-26
+
+### Fixed
+
+- "Toggle Point" to "Web Toggle Point" in title of `README.md`
+
 ## [0.10.1] - 2024-12-24
 
 ### Fixed
