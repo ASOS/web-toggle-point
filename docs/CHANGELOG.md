@@ -79,7 +79,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Fixed
 
-- Removed old `yarn.lock` left over from 1.0.3 update.
+- Removed old `yarn.lock` left over from 0.4.3 update.
 
 ## Added
 
