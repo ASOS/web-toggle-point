@@ -3,7 +3,7 @@ import withJsonIsomorphism from "./withJsonIsomorphism";
 import "./external";
 
 /**
- * Server Side Rendering code for Isomorphic React applications
+ * Server Side Rendering code for Isomorphic applications
  * @module web-toggle-point-ssr
  */
 export { withJsonIsomorphism, serializationFactory };
