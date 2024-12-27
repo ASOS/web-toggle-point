@@ -2,7 +2,7 @@ import "./external";
 
 /**
  * Application code for holding feature toggle state
- * @module toggle-point-features
+ * @module web-toggle-point-features
  */
 
 /**
