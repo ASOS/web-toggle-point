@@ -181,7 +181,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Added
 
-- Danger support, with checks for CHANGELOG.md updates and package-lock.json updates
+- Danger support, with checks for `CHANGELOG.md` updates and `package-lock.json` updates
 
 ### Fixed
 
