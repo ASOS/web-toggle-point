@@ -163,7 +163,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 ### Changed
 
 - Split the "app" package into separate "ssr", "features" and "react-pointcuts" packages.
-- Move to explicit rather than wildcard workspaces, to enable reification of the repo when publishing (waiting on [https://github.com/Roaders/workspace-version/issues/3](an issue to resolve))
+- Move to explicit rather than wildcard workspaces, to enable reification of the repo when publishing (waiting on [an issue to resolve](https://github.com/Roaders/workspace-version/issues/3))
 - Updated the `dedupeExternalJsdocPlugin` to de-duplicate members of external namespaces, rather than just the namespaces themselves (to ensure we don't duplicate React, HostApplication etc. in the html documentation)
 - Updated packages for snyk vulnerabilities, populated policy file
 - Removed redundant export fields from workspace `package.json`
