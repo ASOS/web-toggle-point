@@ -19,6 +19,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 ### Fixed
 
 - "Toggle Point" to "Web Toggle Point" in title of `README.md`
+- fixed the dedupe external JSDoc plugin, after move to type imports
 
 ## [0.10.1] - 2024-12-24
 
