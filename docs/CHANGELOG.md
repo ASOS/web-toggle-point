@@ -91,7 +91,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 - Moved to v4 of [`upload-artifact`](https://github.com/actions/upload-artifact) and [`download-artifact`](https://github.com/actions/download-artifact) actions
 - Changed nature of pre-release packages to `beta` from `alpha` (better matching the reality of how these pre-releases are used)
-- Fixed up contribution guide since version 2.0.0 added the proposed update checks
+- Fixed up contribution guide since version 0.5.0 added the proposed update checks
 - Updated to JSDoc 4, issue with factories resolved
 
 ### Changed
@@ -133,7 +133,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Fixed
 
-- Fixup documentation left fallow from package split (2.0.0)
+- Fixup documentation left fallow from package split (0.5.0)
 - Upgrade serialize-javascript to 6.0.2 to avoid [`SNYK-JS-SERIALIZEJAVASCRIPT-614760`](https://security.snyk.io/vuln/SNYK-JS-SERIALIZEJAVASCRIPT-6147607)
 - snyk ignore [`SNYK-JS-INFLIGHT-6095116`](https://security.snyk.io/vuln/SNYK-JS-INFLIGHT-6095116)
 - move to use asos runner groups
