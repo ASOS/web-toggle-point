@@ -22,7 +22,7 @@ const seen = new Map();
 exports.handlers = {
   jsdocCommentFound: function (e) {
     if (e.filename.endsWith("external.js")) {
-      const match = e.comment.match(/(?:[\s\S]*@typedef \{(?<typedef>.+)\})?[\s\S]+external:(?<external>\S+)/);
+      const match = e.comment.match(/(?:[\s\S]*@typedef \{.+\} (?<typedef>.+))?[\s\S]+external:(?<external>\S+)/);
       if (match) {
         const symbol = match.groups.typedef || match.groups.external;
         if (!seen.has(symbol)) {
