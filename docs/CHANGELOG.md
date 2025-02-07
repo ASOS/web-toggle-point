@@ -22,6 +22,10 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
   - Clarification regarding changes needing to be committed for the `danger:local` script to be effective.
   - Clarification regarding write access or forking being needed to open a pull request.
 
+### Changed
+
+- Modified some playwright screenshots from the "serve" example, false negatives assumed due to subtle change in Linux Chromium in latest Ubuntu?  Will need a new issue to make less flaky!
+
 ## [0.10.2] - 2024-12-26
 
 ### Fixed
