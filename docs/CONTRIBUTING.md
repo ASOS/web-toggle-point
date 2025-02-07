@@ -39,7 +39,7 @@ npm run test:automation
 npm run danger:local
 ```
 > [!NOTE]
-> N.B. The `danger:local` script requires changes to be committed, otherwise you will receive the message:
+> N.B. The `danger:local` script requires staged changes to be committed, otherwise you will receive the message:
 >
 > `No git changes detected between head and main`
 
