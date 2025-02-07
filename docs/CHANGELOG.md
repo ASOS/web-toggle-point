@@ -25,6 +25,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 ### Changed
 
 - Modified some playwright screenshots from the "serve" example, false negatives assumed due to subtle change in Linux Chromium in latest Ubuntu?  Will need a new issue to make less flaky!
+- Updated the `danger` version
 
 ## [0.10.2] - 2024-12-26
 
