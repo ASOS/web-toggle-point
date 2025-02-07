@@ -20,7 +20,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 - Updated the `CONTRIBUTING.md`:
   - Clarification regarding changes needing to be committed for the `danger:local` script to be effective.
-  - Clarification regarding write access being needed to open a pull request.
+  - Clarification regarding write access or forking being needed to open a pull request.
 
 ## [0.10.2] - 2024-12-26
 
