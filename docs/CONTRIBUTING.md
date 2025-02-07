@@ -17,7 +17,7 @@ On this project we follow mainline development (or trunk based development), and
 Therefore you need to branch / fork from `main` and merge into `main`.
 
 > [!NOTE]
-> To contribute a pull request, [you will need to have write permission to the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), so please get in contact!
+> To contribute a pull request, [you will need to fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) or be given [write access](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), so get in touch to discuss the latter!
 
 ### Coding style
 
