@@ -16,6 +16,7 @@
   "scripts": {
     "build": "npm run build --workspace packages",
     "danger:local": "DANGER_DISABLE_TRANSPILATION=true danger local --base main",
+    "danger:local:staged": "DANGER_DISABLE_TRANSPILATION=true danger local --staging --base main",
     "docs": "rimraf ./docs/html/* && jsdoc ./packages/*/src -c ./docs/jsdoc.conf.js",
     "lint": "npm run lint --workspaces --if-present && npm run lint:docs && npm run lint:danger",
     "lint:danger": "eslint danger",

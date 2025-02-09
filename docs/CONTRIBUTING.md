@@ -42,6 +42,8 @@ npm run danger:local
 > N.B. The `danger:local` script requires staged changes to be committed, otherwise you will receive the message:
 >
 > `No git changes detected between head and main`
+>
+> If you'd like to check just staged commits, you can instead run `npm run danger:local:staged`
 
 ## Opening a PR
 
