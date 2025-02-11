@@ -14,7 +14,7 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
-## [0.10.3] - 2024-02-09
+## [0.10.3] - 2024-02-11
 
 ### Fixed
 
