@@ -14,6 +14,13 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
+## [0.10.3] - 2024-02-09
+
+### Fixed
+
+- Reverted the transpilation hack introduced in [version 0.1.0](#090---2024-11-29) for [danger-js](https://github.com/danger/danger-js), after [implementing a fix](https://github.com/danger/danger-js/pull/1476), thus upgrading danger to `12.3.4`.
+- Consistent version linking and full-stops, in this changelog
+
 ## [0.10.2] - 2024-12-26
 
 ### Fixed
@@ -39,17 +46,17 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 ### Fixed
 
 - support windows `endOfLine` in lint setup
-- ensured that changes to `package-lock.json` caused by a package adding a dependency doesn't necessarily mean a `CHANGELOG.md` or version bump is required in the monorepo root; since it's not really had any meaningful change itself.
+- ensured that changes to `package-lock.json` caused by a package adding a dependency doesn't necessarily mean a `CHANGELOG.md` or version bump is required in the monorepo root; since it's not really had any meaningful change itself
 
 ## [0.9.0] - 2024-11-29
 
 ### Changed
 
-- reluctantly add `react` and `react-dom` to the repo root `package.json`, despite not being needed by all packages, due to errant npm deduping.
+- reluctantly add `react` and `react-dom` to the repo root `package.json`, despite not being needed by all packages, due to errant npm deduping
 - ingested `peripheral` packages
   - reluctantly convert danger files to cjs (& [exclude from transpilation](https://danger.systems/js/tutorials/transpilation#disabling-transpilation)), since peripheral babel modules added create a circular reference in babel, and ignores don't work in danger due to https://github.com/danger/danger-js/issues/1469
 - removed the `optimizely` package, since not ready for open source, replaced with a fake activation plugin
-- remove `eslint-plugin-markdownlint`, hangover from move to eslint 9 in version `0.6.0`, which has native markdown support
+- remove `eslint-plugin-markdownlint`, hangover from move to eslint 9 in [version 0.6.0](#060---2024-11-25), which has native markdown support
 
 ## [0.8.0] - 2024-11-29
 
@@ -80,7 +87,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Fixed
 
-- Removed old `yarn.lock` left over from 0.4.3 update.
+- Removed old `yarn.lock` left over from [0.4.3 update](#043---2023-09-12)
 
 ## Added
 
@@ -92,7 +99,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 - Moved to v4 of [`upload-artifact`](https://github.com/actions/upload-artifact) and [`download-artifact`](https://github.com/actions/download-artifact) actions
 - Changed nature of pre-release packages to `beta` from `alpha` (better matching the reality of how these pre-releases are used)
-- Fixed up contribution guide since version 0.5.0 added the proposed update checks
+- Fixed up contribution guide since [version 0.5.0](#050---2023-10-23) added the proposed update checks
 - Updated to JSDoc 4, issue with factories resolved
 
 ### Changed
@@ -104,9 +111,9 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Fixed
 
-- Fixed up the [`pull_request_template.md`](../.github/pull_request_template.md) for ADO & formatting.
+- Fixed up the [`pull_request_template.md`](../.github/pull_request_template.md) for ADO & formatting
 - Ensured JSDoc linting rules do not apply to test code
-- Updated deps to remove 1 high and two moderate npm audit failures.
+- Updated deps to remove 1 high and two moderate npm audit failures
 
 ## [0.5.7] - 2024-07-19
 
@@ -134,7 +141,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Fixed
 
-- Fixup documentation left fallow from package split (0.5.0)
+- Fixup documentation left fallow from package split [0.5.0](#050---2023-10-23)
 - Upgrade serialize-javascript to 6.0.2 to avoid [`SNYK-JS-SERIALIZEJAVASCRIPT-614760`](https://security.snyk.io/vuln/SNYK-JS-SERIALIZEJAVASCRIPT-6147607)
 - snyk ignore [`SNYK-JS-INFLIGHT-6095116`](https://security.snyk.io/vuln/SNYK-JS-INFLIGHT-6095116)
 - move to use asos runner groups
@@ -163,7 +170,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Changed
 
-- Split the "app" package into separate "ssr", "features" and "react-pointcuts" packages.
+- Split the "app" package into separate "ssr", "features" and "react-pointcuts" packages
 - Move to explicit rather than wildcard workspaces, to enable reification of the repo when publishing (waiting on [an issue to resolve](https://github.com/Roaders/workspace-version/issues/3))
 - Updated the `dedupeExternalJsdocPlugin` to de-duplicate members of external namespaces, rather than just the namespaces themselves (to ensure we don't duplicate React, HostApplication etc. in the html documentation)
 - Updated packages for snyk vulnerabilities, populated policy file
@@ -175,7 +182,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Added
 
-- Danger check to ensure that when a package version is updated, any dependent packages also are updated.  Needed since "features" relies on "ssr".
+- Danger check to ensure that when a package version is updated, any dependent packages also are updated.  Needed since "features" relies on "ssr"
 - Added `eslint-plugin-workspaces` with recommended rules
 
 ## [0.4.5] - 2023-10-03
@@ -198,7 +205,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Changed
 
-- Moved away from SPN usage to app registrations in the GHA pipelines.
+- Moved away from SPN usage to app registrations in the GHA pipelines
 
 ## [0.4.3] - 2023-09-12
 
@@ -216,7 +223,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Fixed
 
-- Ensured that failures (due to no changed version) whilst releasing one package do not prevent other jobs in the publish matrix from running, or from marking the workflow as a whole as a failure.
+- Ensured that failures (due to no changed version) whilst releasing one package do not prevent other jobs in the publish matrix from running, or from marking the workflow as a whole as a failure
 
 ## [0.4.0] - 2022-12-23
 
@@ -240,4 +247,4 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Added
 
-- Initial commit.
+- Initial commit
