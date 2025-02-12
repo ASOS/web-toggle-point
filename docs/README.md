@@ -84,7 +84,7 @@ Please see separate [examples documentation](../examples/README.md).
 
 ### 🔜 Future Plans
 
-Please see [issues](https://github.com/ASOS/web-toggle-point/issues) and please consider contributing!
+Please see [discussions](https://github.com/ASOS/web-toggle-point/discussions) and [issues](https://github.com/ASOS/web-toggle-point/issues), and please consider [contributing](./CONTRIBUTING.md)!
 
 ### 🔗 Links
 
