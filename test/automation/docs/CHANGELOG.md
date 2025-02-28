@@ -11,7 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Set playwright image snapshot [threshold](https://playwright.dev/docs/api/class-pageassertions#page-assertions-to-have-screenshot-1) to 0.0001, to mitigate flaky false-negatives with Linux Chromium updates
 
-
 ## [0.1.2] - 2024-12-18
 
 ### Fixed
