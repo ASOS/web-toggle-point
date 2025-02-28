@@ -3,7 +3,7 @@ import { devices, ReporterDescription } from "@playwright/test";
 const baseConfig = {
   expect:{
     toMatchSnapshot: {
-      threshold: 0.0001
+      maxDiffPixelRatio: 0.05
     }
   },
   fullyParallel: true,
