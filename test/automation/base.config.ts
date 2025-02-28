@@ -1,6 +1,9 @@
 import { devices, ReporterDescription } from "@playwright/test";
 
 const baseConfig = {
+  expect:{
+    threshold: 0.0001
+  },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   workers: process.env.CI ? 1 : undefined,
