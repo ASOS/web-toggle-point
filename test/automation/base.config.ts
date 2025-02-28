@@ -1,11 +1,6 @@
 import { devices, ReporterDescription } from "@playwright/test";
 
 const baseConfig = {
-  expect:{
-    toMatchSnapshot: {
-      maxDiffPixelRatio: 0.05
-    }
-  },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   workers: process.env.CI ? 1 : undefined,

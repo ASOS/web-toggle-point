@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] - 2025-02-28
+
+### Fixed
+
+- Set playwright image snapshot [max pixel difference ratio](https://playwright.dev/docs/api/class-pageassertions#page-assertions-to-have-screenshot-1-option-max-diff-pixel-ratio) to 0.05, to mitigate flaky false-negatives with Linux Chromium updates
+
 ## [0.2.2] - 2024-12-17
 
 ### Removed
