@@ -14,6 +14,12 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
+## [0.10.3] - 2025-02-28
+
+### Fixed
+
+- Set playwright image snapshot [threshold](https://playwright.dev/docs/api/class-pageassertions#page-assertions-to-have-screenshot-1) to 0.0001, to mitigate flaky false-negatives with Linux Chromium updates
+
 ## [0.10.2] - 2024-12-26
 
 ### Fixed
