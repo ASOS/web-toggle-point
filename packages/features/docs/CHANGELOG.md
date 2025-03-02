@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- remove errant `@reduxjs/toolkit` peer dependency
+- remove redundant `@reduxjs/toolkit` and `react-dom` peer dependencies
 
 ## [0.3.1] - 2024-12-26
 
