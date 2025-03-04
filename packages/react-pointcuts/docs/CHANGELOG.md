@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.3] - 2025-03-03
 
-### Fixed
+### Changed
 
-- Added [`package.json` repository field](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository), for clarity once on NPM
+- Added `package.json` [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository), [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs), and [`directories/doc`](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#directories) fields, for clarity once on NPM
 
 ## [0.4.2] - 2024-12-26
 
