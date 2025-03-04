@@ -17,6 +17,12 @@
     "url": "git+https://github.com/asos/web-toggle-point.git",
     "directory": "packages/webpack"
   },
+  "bugs": {
+    "url": "https://github.com/asos/web-toggle-point/issues"
+  },
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "build": "npm run clean && rollup -c build/rollup.mjs",
     "prepublishOnly": "npm run build",

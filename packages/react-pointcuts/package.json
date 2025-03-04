@@ -20,6 +20,12 @@
     "url": "git+https://github.com/asos/web-toggle-point.git",
     "directory": "packages/react-pointcuts"
   },
+  "bugs": {
+    "url": "https://github.com/asos/web-toggle-point/issues"
+  },
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "build": "npm run clean && npm run build:browser && npm run build:server",
     "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isClient true",
