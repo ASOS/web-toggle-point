@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.7.5] - 2025-03-06
 
+### Changed
+
+- added `package.json` [homepage](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#homepage), for clarity once on https://www.npmjs.com/
+
 ### Fixed
 
 - fixed typo in JSDoc comment
+
+### Fixed
+
+- include the `README.md` in the NPM package
 
 ## [0.7.4] - 2025-03-03
 
