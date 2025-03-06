@@ -14,7 +14,7 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
-## [0.10.3] - 2025-02-07
+## [0.10.4] - 2025-03-06
 
 ### Fixed
 
@@ -30,6 +30,12 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 - Modified some playwright screenshots from the "serve" example, false negatives assumed due to subtle change in Linux Chromium in latest Ubuntu?  Will need a new issue to make less flaky!
 - Updated the `danger` version
+
+## [0.10.3] - 2025-02-27
+
+### Fixed
+
+- GHA pipelines for publishing to public/scoped NPM repository
 
 ## [0.10.2] - 2024-12-26
 
