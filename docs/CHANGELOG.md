@@ -24,7 +24,6 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Changed
 
-- Modified some playwright screenshots from the "serve" example, false negatives assumed due to subtle change in Linux Chromium in latest Ubuntu?  Will need a new issue to make less flaky!
 - Updated main `README.md`:
   - Linked to `CONTRIBUTING.md`
   - Added link to repo discussions, alongside the issues
