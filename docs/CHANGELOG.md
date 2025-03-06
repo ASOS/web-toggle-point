@@ -25,13 +25,13 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 ### Changed
 
 - updated main `README.md`:
-  - Linked to `CONTRIBUTING.md`
-  - Added link to repo discussions, alongside the issues
+  - linked to `CONTRIBUTING.md`
+  - added link to repo discussions, alongside the issues
 - updated `pull_request_template.md` to ensure "resolves #issue" is prompted, to make sure linked issues are closed automatically with PR merges
 
 ### Added
 
- - A `danger:local:staged` command to augment the above danger fix
+ - a `danger:local:staged` command to augment the above danger fix
 
 ## [0.10.4] - 2025-03-06
 
