@@ -18,25 +18,26 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 ### Fixed
 
-- Updated the `CONTRIBUTING.md`:
-  - Clarification regarding changes needing to be committed for the `danger:local` script to be effective
-  - Clarification regarding write access or forking being needed to open a pull request
+- updated the `CONTRIBUTING.md`:
+  - clarification regarding changes needing to be committed for the `danger:local` script to be effective
+  - clarification regarding write access or forking being needed to open a pull request
 
 ### Changed
 
-- Updated main `README.md`:
+- updated main `README.md`:
   - Linked to `CONTRIBUTING.md`
   - Added link to repo discussions, alongside the issues
+- updated `pull_request_template.md` to ensure "resolves #issue" is prompted, to make sure linked issues are closed automatically with PR merges
 
 ### Added
 
- - A `danger:local:staged` command to augment the above fix
+ - A `danger:local:staged` command to augment the above danger fix
 
 ## [0.10.4] - 2025-03-06
 
 ### Fixed
 
-- Ensured that the registry is explicitly set, to ensure that [`@actions/setup-node`](https://github.com/actions/setup-node) honours the `NODE_AUTH_TOKEN`
+- ensured that the registry is explicitly set, to ensure that [`@actions/setup-node`](https://github.com/actions/setup-node) honours the `NODE_AUTH_TOKEN`
 
 ## [0.10.3] - 2025-02-27
 
