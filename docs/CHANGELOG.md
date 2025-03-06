@@ -20,16 +20,18 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 - Updated the `CONTRIBUTING.md`:
   - Clarification regarding changes needing to be committed for the `danger:local` script to be effective.
-  - Added a `danger:local:staged` command to augment the above
   - Clarification regarding write access or forking being needed to open a pull request.
-- Updated main `README.md`:
-  - Linked to `CONTRIBUTING.md`
-  - Added link to repo discussions, alongside the issues
 
 ### Changed
 
 - Modified some playwright screenshots from the "serve" example, false negatives assumed due to subtle change in Linux Chromium in latest Ubuntu?  Will need a new issue to make less flaky!
-- Updated the `danger` version
+- Updated main `README.md`:
+  - Linked to `CONTRIBUTING.md`
+  - Added link to repo discussions, alongside the issues
+
+### Added
+
+ - A `danger:local:staged` command to augment the above fix
 
 ## [0.10.4] - 2025-03-06
 
