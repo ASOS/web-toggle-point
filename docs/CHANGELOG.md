@@ -14,12 +14,18 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
-## [0.10.3] - 2024-02-11
+## [0.10.4] - 2024-03-06
 
 ### Fixed
 
 - Reverted the transpilation hack introduced in [version 0.1.0](#090---2024-11-29) for [danger-js](https://github.com/danger/danger-js), after [implementing a fix](https://github.com/danger/danger-js/pull/1476), thus upgrading danger to `12.3.4`.
 - Consistent version linking and full-stops, in this changelog
+
+## [0.10.3] - 2025-02-27
+
+### Fixed
+
+- GHA pipelines for publishing to public/scoped NPM repository
 
 ## [0.10.2] - 2024-12-26
 
