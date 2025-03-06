@@ -12,5 +12,8 @@
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-import-attributes"
+  ],
+  "ignore": [
+    "peripheral/babel-preset-asos/index.js"
   ]
 }
