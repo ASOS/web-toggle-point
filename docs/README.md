@@ -31,11 +31,11 @@ A library providing a means to toggle or branch web application code.
 
 ### 🐬 Purpose
 
-This library provides a means to toggle or branch application code. 
+This library provides a means to toggle or branch application code at runtime, whilst mitigating the carrying costs of doing so.
 
 It aims to enable low friction feature toggling [aspect/advice](https://en.wikipedia.org/wiki/Advice_(programming))[^1] in a codebase.
 
-It suggests a convention-based approach to storing variant code, aiming to mitigate [boilerplate](https://en.wikipedia.org/wiki/Boilerplate_code) whilst developing new features, and reduce the friction of accepting or rejecting toggled variations, when appropriate.
+It suggests a convention-based approach to storing variant code, aiming to mitigate [boilerplate](https://en.wikipedia.org/wiki/Boilerplate_code) whilst developing new features, and reduce the friction of accepting or rejecting toggled variations, if and when the time arises.
 
 Originally developed for experiment toggles / flags, it acts only as a means to implement a toggle point, separating any toggle router concern, so is agnostic of the type of toggle or flag.
 

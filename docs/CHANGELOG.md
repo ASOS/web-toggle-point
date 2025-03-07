@@ -27,6 +27,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 - updated main `README.md`:
   - linked to `CONTRIBUTING.md`
   - added link to repo discussions, alongside the issues
+  - clarified the convention-based approach to advice
 - updated `pull_request_template.md` to ensure "resolves #issue" is prompted, to make sure linked issues are closed automatically with PR merges
 
 ### Added
