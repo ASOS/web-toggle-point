@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - fixed typo in JSDoc comment
+- fixed typo in `README.md`
 - include the `README.md` in the NPM package
 
 ## [0.7.4] - 2025-03-03
