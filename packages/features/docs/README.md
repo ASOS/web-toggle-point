@@ -10,18 +10,6 @@ A store should be chosen based on the requirement for global or partitioned stat
 
 See: [JSDoc output](https://asos.github.io/web-toggle-point/module-web-toggle-point-features.html)
 
-> [!WARNING]
-> ### Use with React 17
-> The package should work with React 17 and above, but due to [a bug](https://github.com/facebook/react/issues/20235) that they are not back-filling, the use of `"type": "module"` in the package means webpack will be unable to resolve the extensionless import.
-> To fix, either upgrade to React 18+ or add the following resolve configuration to the webpack config:
-> ```js
-> resolve: {
->   alias: {
->     "react/jsx-runtime": "react/jsx-runtime.js"
->   }
-> }
-> ```
-
 ## Exports
 
 The package contains the following exports:
@@ -106,5 +94,14 @@ It accepts the following parameters:
   - a method to log warnings, should the serialized json somehow become malformed when hydrating the client application
     - this was designed to allow modifications of markup in systems upstream of the origin, but downstream of the browser, with a view to ensure adequate telemetry is in place.
 
-
-
+> [!WARNING]
+> ### Use with React 17
+> The react-specific stores should work with React 17 and above, but due to [a bug](https://github.com/facebook/react/issues/20235) that they are not back-filling, the use of `"type": "module"` in the package means webpack will be unable to resolve the extensionless import.
+> To fix, either upgrade to React 18+ or add the following resolve configuration to the webpack config:
+> ```js
+> resolve: {
+>   alias: {
+>     "react/jsx-runtime": "react/jsx-runtime.js"
+>   }
+> }
+> ```

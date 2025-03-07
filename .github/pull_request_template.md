@@ -1,6 +1,6 @@
 # Issue
 
-[_ISSUE_ID_](https://github.com/ASOS/web-toggle-point/issues/_ISSUE_ID_)
+resolves #_ISSUE_ID_
 
 ## Details
 

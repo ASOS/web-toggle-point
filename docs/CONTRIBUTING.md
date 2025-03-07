@@ -16,6 +16,9 @@ On this project we follow mainline development (or trunk based development), and
 
 Therefore you need to branch / fork from `main` and merge into `main`.
 
+> [!NOTE]
+> To contribute a pull request, [you will need to fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) or be given [write access](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), so get in touch to discuss the latter!
+
 ### Coding style
 
 Generally try to match the style and conventions of the code around your changes. Ultimately we want code that is clear, concise, consistent and easy to read.
@@ -35,6 +38,12 @@ npm run test:unit
 npm run test:automation
 npm run danger:local
 ```
+> [!NOTE]
+> N.B. The `danger:local` script requires staged changes to be committed, otherwise you will receive the message:
+>
+> `No git changes detected between head and main`
+>
+> If you'd like to check just staged commits, you can instead run `npm run danger:local:staged`
 
 ## Opening a PR
 
