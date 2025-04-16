@@ -101,7 +101,8 @@ It accepts the following parameters:
 > ```js
 > resolve: {
 >   alias: {
->     "react/jsx-runtime": "react/jsx-runtime.js"
+>     "react/jsx-runtime": "react/jsx-runtime.js",
+>     "react-dom/server": "react-dom/server.js",
 >   }
 > }
 > ```
