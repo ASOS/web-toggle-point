@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - added `package.json` [homepage](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#homepage), for clarity once on https://www.npmjs.com/
-- move the React 17 note to the end, in the `README.md`, since only relevant to the last two store factories. Add companion note regarding `react-dom/server`.
+- move the React 17 note to the end, in the `README.md`, since only relevant to the last two store factories & added companion note regarding `react-dom/server`.
 
 ### Fixed
 
