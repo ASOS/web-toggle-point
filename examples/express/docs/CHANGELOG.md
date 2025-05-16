@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- corrected some links to packages from the examples readme.
+- corrected some links to packages from the examples readme
+- removed orphan `index.js` in the animals example, this has been supplanted by `router.js`
 
 ## [0.2.3] - 2024-12-24
 
