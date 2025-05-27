@@ -1,15 +1,15 @@
 import processVariantFiles from "./processVariantFiles/index.js";
-import getVariantFiles from "./getVariantFiles.js";
+import getVariantPaths from "./getVariantPaths.js";
 import processPointCuts from "./index.js";
 import fillDefaultOptionalValues from "./fillDefaultOptionalValues.js";
 
 jest.mock("./processVariantFiles/index", () => jest.fn());
-jest.mock("./getVariantFiles", () =>
+jest.mock("./getVariantPaths", () =>
   jest.fn(() => Symbol("test-variant-files"))
 );
 jest.mock("./fillDefaultOptionalValues", () =>
   jest.fn(() => ({
-    variantGlob: Symbol("test-variant-glob"),
+    variantGlobs: Symbol("test-variant-globs"),
     joinPointResolver: Symbol("test-join-point-resolver")
   }))
 );
@@ -42,10 +42,10 @@ describe("processPointCuts", () => {
 
   it("should get variant files for each of the point cuts", () => {
     for (const index of pointCutsValues.keys()) {
-      const { variantGlob } =
+      const { variantGlobs } =
         fillDefaultOptionalValues.mock.results[index].value;
-      expect(getVariantFiles).toHaveBeenCalledWith({
-        variantGlob,
+      expect(getVariantPaths).toHaveBeenCalledWith({
+        variantGlobs,
         appRoot,
         fileSystem
       });
@@ -54,15 +54,14 @@ describe("processPointCuts", () => {
 
   it("should process the variant files, and keep a shared record of config files found between each point cut", () => {
     for (const [index, pointCut] of pointCutsValues.entries()) {
-      const variantFiles = getVariantFiles.mock.results[index].value;
-      const { variantGlob, joinPointResolver } =
+      const variantPaths = getVariantPaths.mock.results[index].value;
+      const { joinPointResolver } =
         fillDefaultOptionalValues.mock.results[index].value;
       expect(processVariantFiles).toHaveBeenCalledWith({
-        variantFiles,
+        variantPaths,
         joinPointFiles,
         pointCut,
         joinPointResolver,
-        variantGlob,
         warnings,
         configFiles: expect.any(Map),
         fileSystem,

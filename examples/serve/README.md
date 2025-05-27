@@ -6,7 +6,7 @@ This example shows the use of [`webpack`](../../packages/webpack/docs/README.md)
 
 It uses a `globalFeaturesStoreFactory` from the `features` package, to hold a invariant global toggle state.
 
-It demonstrates a setup that utilises the `toggleHandler`, `variantGlob`, and `controlResolver` options of the Webpack plugin, with some basic convention-based filesystem approaches to toggling:
+It demonstrates a setup that utilises the `toggleHandler`, `variantGlobs`, and `controlResolver` options of the Webpack plugin, with some basic convention-based filesystem approaches to toggling:
 
 1. selecting a translations JSON file based on [`navigator.language`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language).
     - This uses language files stored at:

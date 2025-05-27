@@ -37,7 +37,7 @@ import { NormalModule } from 'webpack';
 interface PointCut {
   name: string;
   togglePointModule: string;
-  variantGlob?: string;
+  variantGlobs?: string[];
   joinPointResolver?: (variantPath: string) => string;
 }
 
@@ -53,7 +53,7 @@ interface TogglePointInjectionOptions {
 > [!IMPORTANT]
 > N.B. when setting up multiple pointcuts, the path matched by the [globs](https://en.wikipedia.org/wiki/Glob_(programming)) must be mutually exclusive.  Otherwise, the pointcut defined earlier in the array "wins", and a warning is emitted into the compilation indicating that the subsequent cuts are neutered for those matching files.
 >
-> Also, due to the way Webpack works, there should only be a sinlge `TogglePointInjection` plugin per webpack configuration, so utilize the point cuts array, rather than having separate plugin instances per point cut.
+> Also, due to the way Webpack works, there should only be a single `TogglePointInjection` plugin per webpack configuration, so utilize the point cuts array, rather than having separate plugin instances per point cut.
 
 #### _`name`_
 
@@ -70,11 +70,13 @@ It's paramount that this module is compatible with the modules it is varying.  e
 
 Also, the interface of the toggle point, and the variations that it may supplant, needs to be interchangeable with the base/default module. [Liskov Substitution Principle](https://en.wikipedia.org/wiki/Liskov_substitution_principle) must apply; functionality may differ, but it must still be compatible with all the consumers of the base module.
 
-#### _`variantGlob`_
+#### _`variantGlobs`_
 
-A [glob](https://en.wikipedia.org/wiki/Glob_(programming)) which points at varied code modules.  The default/base modules are extrapolated from this source location.[^2]
+An array of [globs](https://en.wikipedia.org/wiki/Glob_(programming)) which point at varied code modules.  The default/base modules are extrapolated from these source locations.[^2]
 
-This can be as specific or generic as needed, but ideally the most specific possible for the use-cases in effect.  
+These can be as specific or generic as needed, but ideally the most specific possible for the use-cases in effect.
+
+The common case is a single glob, but an array is provided to mitigate the need for complex ["brace expansion"](https://github.com/micromatch/braces) or [extended globs](https://github.com/micromatch/micromatch#extglobs), which could be complex when targeting variations which are located in disparate parts of a codebase.
 
 It should match modules that are compatible with the `togglePointModule` - e.g. if all React code is held within a `/components` folder, it makes sense to include this in the glob path to avoid inadvertently toggling non-react code (should a variant be set up for non-React code without considering the configuration).
 
@@ -97,13 +99,13 @@ If not supplied, a default `glob` of `/**/__variants__/*/*/!(*.test).{js,jsx,ts,
 
 #### _`toggleHandler`_
 
-This module unpicks the [WebPack context module](https://webpack.js.org/guides/dependency-management/#context-module-api) produced by enacting the configured `variantGlob` and converts it into a form suitable for the configured `togglePoint`.
+This module unpicks the [WebPack context module](https://webpack.js.org/guides/dependency-management/#context-module-api) produced by enacting the configured `variantGlobs` and converts it into a form suitable for the configured `togglePoint`.
 
-If not supplied, a default handler (`@asos/web-toggle-point-webpack/pathSegmentToggleHandler`) is used, compatible with the default `variantGlob`, that converts the matched paths into a tree data structure held in a `Map`, with each path segment as a node in the tree, and the variant modules as the leaf nodes.
+If not supplied, a default handler (`@asos/web-toggle-point-webpack/pathSegmentToggleHandler`) is used, compatible with the default `variantGlobs`, that converts the matched paths into a tree data structure held in a `Map`, with each path segment as a node in the tree, and the variant modules as the leaf nodes.
 
 #### _`joinPointResolver`_
 
-This marries with the `variantGlob`, in that it "undoes" the variation in file path made to the base/default module.
+This marries with the `variantGlobs`, in that it "undoes" the variation in file path made to the base/default module.
 
 For every variant path found, the plugin executes this method to locate the related base/default path.
 
@@ -163,7 +165,7 @@ const plugin = new TogglePointInjection({
   pointCuts: [{
     name: "my point cut",
     togglePointModule: "/src/modules/withTogglePoint",
-    variantGlob: "./src/modules/**/__variants__/*/*/*.js"
+    variantGlobs: ["./src/modules/**/__variants__/*/*/*.js"]
   }]
 });
 ```

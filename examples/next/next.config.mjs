@@ -12,8 +12,9 @@ const togglePointInjection = new TogglePointInjection({
     {
       name: "experiments",
       togglePointModule: "/src/app/fixtures/experiments/withTogglePoint",
-      variantGlob:
+      variantGlobs: [
         "./src/app/fixtures/experiments/**/__variants__/*/*/!(*.spec).tsx"
+      ]
     }
   ],
   webpackNormalModule: async () =>

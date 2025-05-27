@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 
 const configPointCutConfig = {
   name: "configuration variants",
-  variantGlob: "./src/routes/config/__variants__/*/*/*.jsx",
+  variantGlobs: ["./src/routes/config/__variants__/*/*/*.jsx"],
   togglePointModule: "/src/routes/config/togglePoint.js"
 };
 
@@ -48,7 +48,9 @@ const config = [
           configPointCutConfig,
           {
             name: "animal apis by version",
-            variantGlob: "./src/routes/animals/api/**/v[1-9]*([0-9])/*.js",
+            variantGlobs: [
+              "./src/routes/animals/api/**/v{1..9}*([[:digit:]])/*.js"
+            ],
             joinPointResolver: (variantPath) =>
               posix.resolve(
                 variantPath,

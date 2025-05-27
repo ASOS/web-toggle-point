@@ -14,7 +14,7 @@ describe("fillDefaultOptionalValues", () => {
     });
   };
 
-  describe("when the point cut has no variantGlob or joinPointResolver", () => {
+  describe("when the point cut has no variantGlobs or joinPointResolver", () => {
     const pointCut = {};
 
     beforeEach(() => {
@@ -23,7 +23,7 @@ describe("fillDefaultOptionalValues", () => {
 
     it("should fill the defaults", () => {
       expect(result).toEqual({
-        variantGlob: "./**/__variants__/*/*/!(*.test).{js,jsx,ts,tsx}",
+        variantGlobs: ["./**/__variants__/*/*/!(*.test).{js,jsx,ts,tsx}"],
         joinPointResolver: expect.any(Function)
       });
     });
@@ -31,8 +31,8 @@ describe("fillDefaultOptionalValues", () => {
     makeDefaultJoinPointResolverAssertions();
   });
 
-  describe("when the point cut has a variantGlob but no joinPointResolver", () => {
-    const pointCut = { variantGlob: Symbol("test-variant-glob") };
+  describe("when the point cut has a variantGlobs but no joinPointResolver", () => {
+    const pointCut = { variantGlobs: Symbol("test-variant-globs") };
 
     beforeEach(() => {
       result = fillPointCutDefaults(pointCut);
@@ -40,7 +40,7 @@ describe("fillDefaultOptionalValues", () => {
 
     it("should fill the defaults", () => {
       expect(result).toEqual({
-        variantGlob: pointCut.variantGlob,
+        variantGlobs: pointCut.variantGlobs,
         joinPointResolver: expect.any(Function)
       });
     });
@@ -48,23 +48,23 @@ describe("fillDefaultOptionalValues", () => {
     makeDefaultJoinPointResolverAssertions();
   });
 
-  describe("when the point cut has a joinPointResolver but no variantGlob", () => {
-    it("should return the supplied joinPointResolver and fill a default variantGlob", () => {
+  describe("when the point cut has a joinPointResolver but no variantGlobs", () => {
+    it("should return the supplied joinPointResolver and fill default variantGlobs", () => {
       const pointCut = {
         joinPointResolver: Symbol("test-join-point-resolver")
       };
       const result = fillPointCutDefaults(pointCut);
       expect(result).toEqual({
-        variantGlob: "./**/__variants__/*/*/!(*.test).{js,jsx,ts,tsx}",
+        variantGlobs: ["./**/__variants__/*/*/!(*.test).{js,jsx,ts,tsx}"],
         joinPointResolver: pointCut.joinPointResolver
       });
     });
   });
 
-  describe("when the point cut has a variantGlob and a joinPointResolver", () => {
+  describe("when the point cut has variantGlobs and a joinPointResolver", () => {
     it("should return the point cut supplied values", () => {
       const pointCut = {
-        variantGlob: Symbol("test-variant-glob"),
+        variantGlobs: Symbol("test-variant-glob"),
         joinPointResolver: Symbol("test-join-point-resolver")
       };
       const result = fillPointCutDefaults(pointCut);

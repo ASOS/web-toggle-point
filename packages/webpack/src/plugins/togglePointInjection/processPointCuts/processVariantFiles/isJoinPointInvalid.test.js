@@ -10,10 +10,10 @@ jest.mock("../../constants", () => ({
 jest.mock("./validateConfigSchema", () => jest.fn());
 
 const appRoot = "test-app-root";
-const joinDirectory = "test-join-directory";
+const directory = "test-join-directory";
 const mockJoinPoint = "test-join-point";
-const joinPointPath = join(joinDirectory, mockJoinPoint);
-const toggleConfigPath = join(appRoot, joinDirectory, TOGGLE_CONFIG);
+const joinPointPath = join(directory, mockJoinPoint);
+const toggleConfigPath = join(appRoot, directory, TOGGLE_CONFIG);
 const joinPointFullPath = join(appRoot, joinPointPath);
 
 describe("isJoinPointInvalid", () => {
@@ -22,7 +22,7 @@ describe("isJoinPointInvalid", () => {
   beforeEach(() => {
     configFiles = new Map();
     ({ fs: fileSystem, vol } = memfs());
-    vol.fromJSON({ [join(appRoot, joinDirectory)]: {} });
+    vol.fromJSON({ [join(appRoot, directory)]: {} });
     jest.spyOn(fileSystem, "stat");
     jest.spyOn(fileSystem, "readFile");
   });
@@ -30,11 +30,11 @@ describe("isJoinPointInvalid", () => {
   const act = () =>
     isJoinPointInvalid({
       configFiles,
-      name: mockJoinPoint,
+      filename: mockJoinPoint,
       fileSystem,
       appRoot,
       joinPointPath,
-      joinDirectory
+      directory
     });
 
   const makeSecondCallAssertions = (expectedResult) => {
