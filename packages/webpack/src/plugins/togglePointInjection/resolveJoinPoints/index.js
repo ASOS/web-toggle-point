@@ -1,5 +1,5 @@
 import { PLUGIN_NAME } from "../constants";
-import { posix, win32 } from "path";
+import { posix, sep } from "path";
 import { promisify } from "util";
 import handleJoinPointMatch from "./handleJoinPointMatch";
 const { relative } = posix;
@@ -23,9 +23,7 @@ const resolveJoinPoints = ({
     async (resolveData) => {
       if (
         !joinPointFiles.size ||
-        !resolveData.context
-          .replaceAll(win32.sep, posix.sep)
-          .startsWith(appRoot) ||
+        !resolveData.context.replaceAll(sep, posix.sep).startsWith(appRoot) ||
         !isLoaderlessFileRequest(resolveData.request)
       ) {
         return;
@@ -38,7 +36,7 @@ const resolveJoinPoints = ({
         {}
       );
 
-      const resource = `/${relative(appRoot, resolved.replaceAll(win32.sep, posix.sep))}`;
+      const resource = `/${relative(appRoot, resolved.replaceAll(sep, posix.sep))}`;
       if (joinPointFiles.has(resource)) {
         handleJoinPointMatch({
           resource,

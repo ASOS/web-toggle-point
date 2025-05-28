@@ -7,20 +7,26 @@ jest.mock("../constants", () => ({
 }));
 
 describe("generateJoinPoint", () => {
-  const path = "test-folder/test-path";
+  const joinPointPath = "/test-path";
   const pointCutName = "test-point-cut";
-  const variants = [
-    "test-sub-folder/test-variant-1",
-    "test-sub-folder/test-variant-2",
-    "test-other-sub-folder/test-variant-1"
-  ];
+  const variantPathMap = Symbol("test-variant-path-map");
+  const mockImportCode =
+    "const joinPoint = 'test-join-point'; const variantPathMap = 'test-variants';";
+  const importCodeGenerator = jest.fn(() => mockImportCode);
+  const pointCut = {
+    name: pointCutName,
+    loadStrategy: { importCodeGenerator }
+  };
   let result;
 
   beforeEach(() => {
     const joinPointFiles = new Map([
-      [path, { pointCut: { name: pointCutName }, variants }]
+      [joinPointPath, { pointCut, variantPathMap }]
     ]);
-    result = generateJoinPoint({ joinPointFiles, path });
+    result = generateJoinPoint({
+      joinPointFiles,
+      joinPointPath
+    });
   });
 
   it("should return a script that imports the appropriate point cut for the join point", () => {
@@ -29,19 +35,17 @@ describe("generateJoinPoint", () => {
     );
   });
 
-  it("should return a script that imports the base / control module for the join point", () => {
-    expect(result).toMatch(`import * as joinPoint from "${path}";`);
+  it("should call the import code generator of the passed loading strategy, and return a script that includes the import code", () => {
+    expect(importCodeGenerator).toHaveBeenCalledWith({
+      joinPointPath,
+      variantPathMap
+    });
+    expect(result).toMatch(mockImportCode);
   });
 
-  it("should return a script that imports all the valid variants of the base / control module into a webpackContext, using a minimal regex that matches all the variants", () => {
+  it("should return a script that exports a default export which calls the point cut, passing the join point (control module) and the variantPathMap returned by the import code", () => {
     expect(result).toMatch(
-      `const variants = import.meta.webpackContext("${
-        path.split("/")[0]
-      }", { recursive: true, regExp: /test\\-(?:other\\-sub\\-folder\\/test\\-variant\\-1|sub\\-folder\\/test\\-variant\\-[12])/ });`
+      "export default pointCut({ joinPoint, variantPathMap });"
     );
-  });
-
-  it("should return a script exports a default export which calls the point cut, passing the join point (control module) and the variants", () => {
-    expect(result).toMatch("export default pointCut({ joinPoint, variants });");
   });
 });

@@ -3,7 +3,8 @@ import { render, screen } from "@testing-library/react";
 import useCodeMatches from "../useCodeMatches";
 import getComponent from "./getComponent";
 import getCodeSelectionPlugins from "../getCodeSelectionPlugins";
-import { createRef, forwardRef } from "react";
+import { createRef, forwardRef, lazy } from "react";
+import getDisplayName from "./getDisplayName";
 
 const mockMatches = {};
 jest.mock("../useCodeMatches", () => jest.fn(() => mockMatches));
@@ -17,6 +18,8 @@ const MockVariedComponent = forwardRef(
 );
 
 jest.mock("./getComponent", () => jest.fn(() => MockVariedComponent));
+const mockDisplayName = "test-display-name";
+jest.mock("./getDisplayName", () => jest.fn(() => mockDisplayName));
 
 describe("withTogglePointFactory", () => {
   let rerender;
@@ -26,20 +29,22 @@ describe("withTogglePointFactory", () => {
   const mockPlugins = [Symbol("test-plugin1"), Symbol("test-plugin2")];
   const mockActiveFeatures = Symbol("test-active-features");
   const getActiveFeatures = jest.fn(() => mockActiveFeatures);
+  const mockComponentModule = { default: () => <div>test-component</div> };
 
-  let Toggled, variantKey;
+  let Toggled, createMockVariant;
 
   describe.each`
     inputVariantKey | expectedVariantKey
-    ${variantKey}   | ${"bucket"}
+    ${undefined}    | ${"bucket"}
     ${"test-key"}   | ${"test-key"}
   `(
     "when given a variant key of $inputVariantKey",
     ({ inputVariantKey, expectedVariantKey }) => {
-      const makeCommonAssertions = (mockComponent) => {
+      let unpack;
+
+      const makeCommonAssertions = ({ joinPoint }) => {
         beforeEach(() => {
           mockMatches.matchedFeatures = Symbol("test-features");
-          mockMatches.matchedVariant = Symbol("test-variant");
           jest.clearAllMocks();
           const withTogglePoint = withTogglePointFactory({
             getActiveFeatures,
@@ -47,7 +52,7 @@ describe("withTogglePointFactory", () => {
             variantKey: inputVariantKey,
             plugins: mockPlugins
           });
-          Toggled = withTogglePoint({ default: mockComponent }, featuresMap);
+          Toggled = withTogglePoint({ joinPoint, featuresMap, unpack });
         });
 
         it("should get code selection plugins", () => {
@@ -55,21 +60,21 @@ describe("withTogglePointFactory", () => {
         });
 
         const makeRenderedAssertions = () => {
-          it("should render the varied component, passing the inbound props provided to the HOC", () => {
-            expect(screen.getByTestId(mockVariedComponent)).toBeInTheDocument();
-            const ref = expect.toBeOneOf([null, expect.anything()]);
-            expect(MockVariedComponent.render).toHaveBeenCalledWith(
-              inboundProps,
-              ref
-            );
-          });
-
           it("should check for code matches, based on the result of the getActiveFeatures method passed and the potential code paths on disk", () => {
             expect(useCodeMatches).toHaveBeenCalledWith({
               featuresMap,
               variantKey: expectedVariantKey,
               activeFeatures: mockActiveFeatures
             });
+          });
+
+          it("should render the (potentially) varied component, passing the inbound props provided to the HOC", () => {
+            expect(screen.getByTestId(mockVariedComponent)).toBeInTheDocument();
+            const ref = expect.toBeOneOf([null, expect.anything()]);
+            expect(MockVariedComponent.render).toHaveBeenCalledWith(
+              inboundProps,
+              ref
+            );
           });
         };
 
@@ -80,8 +85,20 @@ describe("withTogglePointFactory", () => {
               matchedFeatures,
               matchedVariant,
               logError,
-              control: mockComponent,
+              packedBaseModule: joinPoint,
+              unpackComponent: expect.any(Function),
               plugins: mockCodeSelectionPlugins
+            });
+          });
+
+          describe("When the get component function uses the unpackComponent method passed", () => {
+            beforeEach(() => {
+              const { unpackComponent } = getComponent.mock.calls[0][0];
+              unpackComponent(mockMatches.matchedVariant);
+            });
+
+            it("should unpack the module", () => {
+              expect(unpack).toHaveBeenCalledWith(mockMatches.matchedVariant);
             });
           });
         };
@@ -89,6 +106,13 @@ describe("withTogglePointFactory", () => {
         const makeCommonAssertions = () => {
           makeRenderedAssertions();
           makeGetComponentAssertions();
+
+          it("should prepare a display name based on the display name of the joinPoint", () => {
+            expect(getDisplayName).toHaveBeenCalledWith(joinPoint);
+            expect(Toggled.displayName).toBe(
+              `withTogglePoint(${mockDisplayName})`
+            );
+          });
 
           describe("when the component re-renders", () => {
             beforeEach(() => {
@@ -102,7 +126,7 @@ describe("withTogglePointFactory", () => {
 
               describe("and the matched variant has updated", () => {
                 beforeEach(() => {
-                  mockMatches.matchedVariant = Symbol("test-new-variant");
+                  mockMatches.matchedVariant = createMockVariant();
                   rerender(<Toggled {...inboundProps} />);
                 });
 
@@ -161,34 +185,28 @@ describe("withTogglePointFactory", () => {
         });
       };
 
-      describe("when the given fallback component has a displayName", () => {
-        const mockComponent = () => {};
-        mockComponent.displayName = "test-component";
+      describe("when the given joinPoint is a lazy component", () => {
+        beforeEach(() => {
+          createMockVariant = () =>
+            lazy(Promise.resolve(Symbol("test-variant")));
+          unpack = jest.fn((module) => module);
+          mockMatches.matchedVariant = createMockVariant();
+        });
 
-        makeCommonAssertions(mockComponent);
-
-        it("should name the HOC with the fallback component's display name wrapped in 'withTogglePoint'", () => {
-          expect(Toggled.displayName).toBe(
-            `withTogglePoint(${mockComponent.displayName})`
-          );
+        makeCommonAssertions({
+          joinPoint: lazy(Promise.resolve(mockComponentModule))
         });
       });
 
-      describe("when the given fallback component does not have a displayName, but has a function name", () => {
-        const mockComponent = () => {};
-
-        makeCommonAssertions(mockComponent);
-
-        it("should name the HOC with the fallback component's name wrapped in 'withTogglePoint'", () => {
-          expect(Toggled.displayName).toBe(`withTogglePoint(mockComponent)`);
+      describe("when the given joinPoint is not a lazy component", () => {
+        beforeEach(() => {
+          createMockVariant = () => ({ default: Symbol("test-variant") });
+          unpack = jest.fn((module) => module.default);
+          mockMatches.matchedVariant = createMockVariant();
         });
-      });
 
-      describe("when the given fallback component does not have a displayName or a function name", () => {
-        makeCommonAssertions(() => {});
-
-        it("should name the HOC with 'Component' wrapped in 'withTogglePoint'", () => {
-          expect(Toggled.displayName).toBe(`withTogglePoint(Component)`);
+        makeCommonAssertions({
+          joinPoint: mockComponentModule
         });
       });
     }

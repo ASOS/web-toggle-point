@@ -1,7 +1,7 @@
 import { PLUGIN_NAME } from "../constants";
 import handleJoinPointMatch from "./handleJoinPointMatch";
 import { sep, join } from "path";
-import resolvePointCuts from ".";
+import resolveJoinPoints from ".";
 
 jest.mock("../constants", () => ({
   PLUGIN_NAME: "test-plugin-name"
@@ -48,7 +48,7 @@ describe("resolveJoinPoints", () => {
     const joinPointFiles = new Map();
 
     beforeEach(() => {
-      resolvePointCuts({
+      resolveJoinPoints({
         compilation,
         appRoot,
         normalModuleFactory,
@@ -64,7 +64,7 @@ describe("resolveJoinPoints", () => {
       beforeEach(() => {
         [, beforeResolveCallback] =
           normalModuleFactory.hooks.beforeResolve.tapPromise.mock.lastCall;
-        handleJoinPointMatch.mockClear();
+        jest.clearAllMocks();
         beforeResolveCallback();
       });
 
@@ -77,7 +77,7 @@ describe("resolveJoinPoints", () => {
   describe("when there are some join points previously identified", () => {
     const joinPointFile = "/test-folder/test-join-point-file";
     beforeEach(() => {
-      resolvePointCuts({
+      resolveJoinPoints({
         compilation,
         appRoot,
         normalModuleFactory,

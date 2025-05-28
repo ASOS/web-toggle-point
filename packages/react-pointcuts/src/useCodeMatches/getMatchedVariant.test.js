@@ -32,11 +32,11 @@ describe("getMatchedVariant", () => {
         [feature3, { bucket: bucket1 }]
       ];
 
-      it("should return the first matching variant where a folder and file match exists in the features map, and return the code request, and the associated variables from the matched features", () => {
+      it("should return the first matching variant where a folder and file match exists in the features map, and return the packed module, and the associated variables from the matched features", () => {
         expect(
           getMatchedVariant({ matchedFeatures, featuresMap, variantKey })
         ).toEqual({
-          codeRequest: featuresMap.get(feature1).get(bucket2),
+          packedModule: featuresMap.get(feature1).get(bucket2),
           variables
         });
       });

@@ -1,24 +1,25 @@
 import { forwardRef } from "react";
+import getDisplayName from "../getDisplayName";
 
-const wrap = ({ Component, useHook, name }, rest) => {
+const wrap = ({ component: Component, useHook, name }, rest) => {
   const WithTogglePointPlugin = forwardRef((props, ref) => {
     useHook(rest);
 
     return <Component {...props} ref={ref} />;
   });
 
-  WithTogglePointPlugin.displayName = `With${name}(${
-    Component.displayName || Component.name || "Component"
-  })`;
+  WithTogglePointPlugin.displayName = `With${name}(${getDisplayName(
+    Component
+  )})`;
 
   return WithTogglePointPlugin;
 };
 
-const withPlugins = ({ Component, plugins, ...rest }) => {
+const withPlugins = ({ component, plugins, ...rest }) => {
   for (const { onCodeSelected: useHook, name } of plugins) {
-    Component = wrap(
+    component = wrap(
       {
-        Component,
+        component,
         useHook,
         name
       },
@@ -26,7 +27,7 @@ const withPlugins = ({ Component, plugins, ...rest }) => {
     );
   }
 
-  return Component;
+  return component;
 };
 
 export default withPlugins;

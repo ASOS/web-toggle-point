@@ -1,54 +1,89 @@
 import generatePointCut from "./generatePointCut.js";
+import { posix, sep } from "path";
 
 describe("generatePointCut", () => {
   const pointCutName = "test-point-cut";
-  const path = `/${pointCutName}`;
-  const togglePointModule = "test-toggle-point-path";
+  const joinPointPath = `/${pointCutName}`;
+  const togglePointModuleSpecifier = "test-toggle-point-path";
+  const toggleHandlerFactoryModuleSpecifier =
+    "test-toggle-handler-factory-module-specifier";
+  let adapterModuleSpecifier;
   let result, pointCuts;
-
-  beforeEach(() => {
-    pointCuts = [
-      { name: "test-other-point-cut" },
-      { name: pointCutName, togglePointModule }
-    ];
-  });
 
   const makeCommonAssertions = () => {
     it("should return a script that imports the appropriate toggle point", () => {
-      expect(result).toMatch(`import togglePoint from "${togglePointModule}";`);
+      expect(result).toMatch(
+        `import togglePoint from "${togglePointModuleSpecifier}";`
+      );
     });
 
-    it("should return a script exports a default export which calls the toggle handler, passing the toggle point and any other properties of the first argument given to it", () => {
+    it("should return a script that imports the appropriate toggle handler factory", () => {
       expect(result).toMatch(
-        "export default (rest) => handler({ togglePoint, ...rest });"
+        `import handlerFactory from "${toggleHandlerFactoryModuleSpecifier}";`
+      );
+    });
+
+    it("should return a script that imports the pack and unpack exports of the appropriate adapter module, via the namespace, falling back to an identity function if the adapter does not export a pack/unpack handler", () => {
+      // N.B. The pack and unpack functions must be aliased during the import to mitigate https://github.com/webpack/webpack/issues/19518
+      expect(result).toMatch(
+        `import * as namespace from "${adapterModuleSpecifier.replaceAll(sep, posix.sep)}";
+const identity = (module) => module;
+const { pack:_pack = identity, unpack:_unpack = identity } = namespace;`
+      );
+    });
+
+    it("should return a script that constructs a toggle handler, passing the toggle point to the factory, plus the pack and unpack functions from the load strategy adapter", () => {
+      expect(result).toMatch(
+        "const handler = handlerFactory({ togglePoint, pack: _pack, unpack: _unpack });"
+      );
+    });
+
+    it("should return a script with a handler default export", () => {
+      expect(result).toMatch("export default handler;");
+    });
+
+    it("should return a script that imports the appropriate toggle handler", () => {
+      expect(result).toMatch(
+        `import handlerFactory from "${toggleHandlerFactoryModuleSpecifier}";`
       );
     });
   };
 
-  describe("when a toggle handler is configured against the point cut", () => {
-    const toggleHandler = "test-toggle-handler";
-
+  describe("on posix based file systems", () => {
     beforeEach(() => {
-      pointCuts[1].toggleHandler = toggleHandler;
-      result = generatePointCut({ pointCuts, path });
-    });
-
-    it("should return a script that imports the appropriate toggle handler", () => {
-      expect(result).toMatch(`import handler from "${toggleHandler}";`);
+      adapterModuleSpecifier = "/test/path/test-adapter-module-specifier";
+      pointCuts = [
+        { name: "test-other-point-cut", toggleHandlerFactoryModuleSpecifier },
+        {
+          name: pointCutName,
+          togglePointModuleSpecifier,
+          toggleHandlerFactoryModuleSpecifier,
+          loadStrategy: {
+            adapterModuleSpecifier
+          }
+        }
+      ];
+      result = generatePointCut({ pointCuts, joinPointPath });
     });
 
     makeCommonAssertions();
   });
 
-  describe("when a toggle handler is not configured against the point cut", () => {
+  describe("on windows file systems", () => {
     beforeEach(() => {
-      result = generatePointCut({ pointCuts, path });
-    });
-
-    it("should return a script that imports the default toggle handler (a path segment toggle handler)", () => {
-      expect(result).toMatch(
-        `import handler from "@asos/web-toggle-point-webpack/pathSegmentToggleHandler";`
-      );
+      adapterModuleSpecifier = "D:\\test\\path\\test-adapter-module-specifier";
+      pointCuts = [
+        { name: "test-other-point-cut", toggleHandlerFactoryModuleSpecifier },
+        {
+          name: pointCutName,
+          togglePointModuleSpecifier,
+          toggleHandlerFactoryModuleSpecifier,
+          loadStrategy: {
+            adapterModuleSpecifier
+          }
+        }
+      ];
+      result = generatePointCut({ pointCuts, joinPointPath });
     });
 
     makeCommonAssertions();

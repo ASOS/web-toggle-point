@@ -41,10 +41,8 @@ const isJoinPointInvalid = async ({
 }) => {
   await ensureConfigFile({ configFiles, fileSystem, joinDirectory, appRoot });
 
-  if (configFiles.has(joinDirectory)) {
-    if (configFiles.get(joinDirectory)?.joinPoints.includes(name) === false) {
-      return true;
-    }
+  if (configFiles.get(joinDirectory)?.joinPoints.includes(name) === false) {
+    return true;
   }
 
   if (!(await fileExists(fileSystem, join(appRoot, joinPointPath)))) {

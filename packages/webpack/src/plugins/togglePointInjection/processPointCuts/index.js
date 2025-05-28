@@ -1,6 +1,5 @@
 import processVariantFiles from "./processVariantFiles/index.js";
 import getVariantFiles from "./getVariantFiles.js";
-import fillDefaultOptionalValues from "./fillDefaultOptionalValues.js";
 
 const processPointCuts = async ({
   appRoot,
@@ -11,9 +10,7 @@ const processPointCuts = async ({
   const configFiles = new Map();
   const warnings = [];
   for await (const pointCut of pointCuts.values()) {
-    const { variantGlob, joinPointResolver } =
-      fillDefaultOptionalValues(pointCut);
-
+    const { variantGlob } = pointCut;
     const variantFiles = await getVariantFiles({
       variantGlob,
       appRoot,
@@ -24,8 +21,6 @@ const processPointCuts = async ({
       variantFiles,
       joinPointFiles,
       pointCut,
-      joinPointResolver,
-      variantGlob,
       warnings,
       configFiles,
       fileSystem,

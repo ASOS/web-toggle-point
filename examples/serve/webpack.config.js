@@ -4,19 +4,25 @@ import audience from "./src/fixtures/audience/__pointCutConfig.js";
 import config from "./src/fixtures/config/__pointCutConfig.js";
 import translation from "./src/fixtures/translation/__pointCutConfig.js";
 import event from "./src/fixtures/event/__pointCutConfig.js";
-import { TogglePointInjection } from "@asos/web-toggle-point-webpack/plugins";
+import { TogglePointInjectionPlugin } from "@asos/web-toggle-point-webpack/plugins";
 import { fileURLToPath } from "url";
 
 export default {
   entry: "./src/index.js",
-  mode: "development",
+  mode: "production",
+  devtool: "source-map",
   output: {
+    module: true,
     filename: "main.js",
     path: resolve(dirname(fileURLToPath(import.meta.url)), "dist")
   },
+  experiments: {
+    outputModule: true
+  },
+  target: "es2022",
   externals: [externals()],
   plugins: [
-    new TogglePointInjection({
+    new TogglePointInjectionPlugin({
       pointCuts: [audience, config, translation, event]
     })
   ],
@@ -35,6 +41,11 @@ export default {
             }
           }
         ]
+      },
+      {
+        test: /\.js$/,
+        enforce: "pre",
+        use: ["source-map-loader"]
       }
     ]
   }

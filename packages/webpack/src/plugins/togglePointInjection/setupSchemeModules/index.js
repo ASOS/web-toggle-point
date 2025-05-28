@@ -11,13 +11,13 @@ const setupSchemeModules = ({
   NormalModule.getCompilationHooks(compilation)
     .readResource.for(SCHEME)
     .tap(PLUGIN_NAME, ({ resourcePath }) => {
-      const [, type, path] = resourcePath.split(/:(.*?):(.*)/, 3);
+      const [, type, joinPointPath] = resourcePath.split(/:(.*?):(.*)/, 3);
       switch (type) {
         case POINT_CUTS: {
-          return generatePointCut({ pointCuts, path });
+          return generatePointCut({ pointCuts, joinPointPath });
         }
         case JOIN_POINTS: {
-          return generateJoinPoint({ joinPointFiles, path });
+          return generateJoinPoint({ joinPointFiles, joinPointPath });
         }
       }
     });

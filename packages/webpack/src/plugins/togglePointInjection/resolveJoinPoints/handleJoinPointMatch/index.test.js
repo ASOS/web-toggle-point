@@ -1,7 +1,7 @@
 import handleJoinPointMatch from ".";
-import { SCHEME, JOIN_POINTS } from "../../constants";
 import getIssuerModule from "./getIssuerModule";
 import resourceProxyExistsInRequestChain from "./resourceProxyExistsInRequestChain";
+import { SCHEME, JOIN_POINTS } from "../../constants";
 
 jest.mock("./getIssuerModule", () => jest.fn());
 jest.mock("./resourceProxyExistsInRequestChain", () => jest.fn());
@@ -18,8 +18,9 @@ describe("handleJoinPointMatch", () => {
   const mockOriginalRequest = Symbol("test-original-request");
   let resolveData;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
+
     resolveData = {
       request: mockOriginalRequest
     };

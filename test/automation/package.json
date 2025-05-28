@@ -1,6 +1,6 @@
 {
   "name": "web-toggle-point-automation-tests",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "index.js",  
   "keywords": [],
   "type": "module",
@@ -10,14 +10,17 @@
     "test": "npm run test:next & npm run test:serve & npm run test:express",
     "pretest:next": "npm run install-dependencies",
     "test:next": "playwright test --config ../../examples/next/playwright.config.ts",
+    "test:next:ui": "npm run test:next -- --ui",
     "pretest:serve": "npm run install-dependencies",
     "test:serve": "playwright test --config ../../examples/serve/playwright.config.ts",
-    "pretest:express": "npm run install-dependencies && path-exists ../../examples/express/bin/server.cjs || npm run --prefix ../../examples/express build",
-    "test:express": "playwright test --config ../../examples/express/playwright.config.ts"
+    "test:serve:ui": "npm run test:serve -- --ui",
+    "pretest:express": "npm run install-dependencies && path-exists ../../examples/express/bin/server.mjs || npm run --prefix ../../examples/express build",
+    "test:express": "playwright test --config ../../examples/express/playwright.config.ts",
+    "test:express:ui": "npm run test:express -- --ui"
   },
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.49.0",
+    "@playwright/test": "^1.52.0",
     "@types/node": "^22.9.1",
     "path-exists-cli": "^2.0.0"
   }

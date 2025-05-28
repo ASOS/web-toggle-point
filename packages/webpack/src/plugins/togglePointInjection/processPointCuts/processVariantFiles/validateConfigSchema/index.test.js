@@ -1,11 +1,12 @@
-import validateConfigSchema from "./index";
+import validateConfigSchema from ".";
 import { PLUGIN_NAME } from "../../../constants";
 import { validate } from "schema-utils";
+import configSchema from "./configSchema.json";
 
 jest.mock("schema-utils", () => ({
   validate: jest.fn()
 }));
-jest.mock("./configSchema.json", () => ({}));
+jest.mock("./configSchema.json", () => Symbol("test-config-schema"));
 jest.mock("../../../constants", () => ({
   PLUGIN_NAME: "test-plugin-name"
 }));
@@ -20,7 +21,7 @@ describe("validateConfigSchema", () => {
   });
 
   it("should validate the schema of the config file, and output with the plugin name and 'toggle config' as the data path that errored", () => {
-    expect(validate).toHaveBeenCalledWith({}, configFile, {
+    expect(validate).toHaveBeenCalledWith(configSchema, configFile, {
       name: PLUGIN_NAME,
       baseDataPath: "toggle config",
       postFormatter: expect.any(Function)

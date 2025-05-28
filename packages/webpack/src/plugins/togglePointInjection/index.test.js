@@ -3,8 +3,8 @@ import Logger from "./logger.js";
 import { PLUGIN_NAME } from "./constants.js";
 import resolveJoinPoints from "./resolveJoinPoints/index.js";
 import setupSchemeModules from "./setupSchemeModules/index.js";
-import TogglePointInjection from "./index.js";
-import webpack from "webpack";
+import TogglePointInjectionPlugin from "./index.js";
+import fillDefaultOptionalValues from "./fillDefaultOptionalValues.js";
 import { validate } from "schema-utils";
 import schema from "./schema.json";
 
@@ -20,13 +20,22 @@ jest.mock("./constants", () => ({
 jest.mock("./processPointCuts/index.js", () => jest.fn());
 jest.mock("./resolveJoinPoints/index.js", () => jest.fn());
 jest.mock("./setupSchemeModules/index.js", () => jest.fn());
-jest.mock("webpack", () => ({ NormalModule: Symbol("test-normal-module") }));
+const mockNormalModule = Symbol("test-normal-module");
+jest.mock("./fillDefaultOptionalValues.js", () =>
+  jest.fn((options) => ({
+    ...options,
+    webpackNormalModule: jest.fn(() => mockNormalModule)
+  }))
+);
 jest.mock("schema-utils", () => ({ validate: jest.fn() }));
 jest.mock("./schema.json", () => Symbol("test-json"));
 
 describe("togglePointInjection", () => {
   let togglePointInjection, compiler, options;
-  const pointCuts = [{ name: "test-name", togglePointModule: "test-module" }];
+  const pointCuts = [
+    { [Symbol("test-key")]: Symbol("test-value") },
+    { [Symbol("test-key")]: Symbol("test-value") }
+  ];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -40,13 +49,26 @@ describe("togglePointInjection", () => {
     };
   });
 
-  const makeCommonAssertions = (NormalModule) => {
+  beforeEach(() => {
+    options = { pointCuts };
+    togglePointInjection = new TogglePointInjectionPlugin(options);
+  });
+
+  describe("when applying to a compiler", () => {
+    beforeEach(() => {
+      togglePointInjection.apply(compiler);
+    });
+
     it("should validate the supplied options", () => {
       expect(validate).toHaveBeenCalledWith(
         schema,
         options,
         expect.objectContaining({ name: PLUGIN_NAME, baseDataPath: "options" })
       );
+    });
+
+    it("should fill in default optional values", () => {
+      expect(fillDefaultOptionalValues).toHaveBeenCalledWith(options);
     });
 
     it("should tap into the beforeCompile event, indicating the plugin name", () => {
@@ -123,9 +145,15 @@ describe("togglePointInjection", () => {
             );
           });
 
+          it("should get the NormalModule from the options", () => {
+            expect(
+              togglePointInjection.options.webpackNormalModule
+            ).toHaveBeenCalled();
+          });
+
           it("should set up scheme modules", () => {
             expect(setupSchemeModules).toHaveBeenCalledWith({
-              NormalModule,
+              NormalModule: mockNormalModule,
               compilation,
               joinPointFiles,
               pointCuts
@@ -161,41 +189,6 @@ describe("togglePointInjection", () => {
           makeCommonAssertions();
         });
       });
-    });
-  };
-
-  describe("when a webpackNormalModule option is not supplied", () => {
-    beforeEach(() => {
-      options = { pointCuts };
-      togglePointInjection = new TogglePointInjection(options);
-    });
-
-    describe("when applying to a compiler", () => {
-      beforeEach(() => {
-        togglePointInjection.apply(compiler);
-      });
-
-      makeCommonAssertions(webpack.NormalModule);
-    });
-  });
-
-  describe("when a webpackNormalModule option is supplied (primarily for NextJs users to get around the fact that webpack is pre-bundled)", () => {
-    const MockNormalModule = Symbol("test-normal-module");
-
-    beforeEach(() => {
-      options = {
-        pointCuts,
-        webpackNormalModule: async () => MockNormalModule
-      };
-      togglePointInjection = new TogglePointInjection(options);
-    });
-
-    describe("when applying to a compiler", () => {
-      beforeEach(() => {
-        togglePointInjection.apply(compiler);
-      });
-
-      makeCommonAssertions(MockNormalModule);
     });
   });
 });

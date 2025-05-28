@@ -1,17 +1,20 @@
 import { posix } from "path";
-import isJoinPointInvalid from "./isJoinPointInvalid";
+import isJoinPointInvalid from "./isJoinPointInvalid.js";
+import linkJoinPoints from "./linkJoinPoints.js";
 const { dirname, relative } = posix;
+
+const normalizeToRelativePath = (path, joinDirectory) =>
+  relative(joinDirectory, path).replace(/^([^./])/, "./$1");
 
 const processVariantFiles = async ({
   variantFiles,
   joinPointFiles,
   pointCut,
-  joinPointResolver,
   warnings,
   ...rest
 }) => {
   for (const { name, path } of variantFiles) {
-    const joinPointPath = joinPointResolver(path);
+    const joinPointPath = pointCut.joinPointResolver(path);
     const joinDirectory = dirname(joinPointPath);
 
     if (!joinPointFiles.has(joinPointPath)) {
@@ -27,7 +30,7 @@ const processVariantFiles = async ({
       }
       joinPointFiles.set(joinPointPath, {
         pointCut,
-        variants: []
+        variantPathMap: new Map()
       });
     }
 
@@ -39,10 +42,11 @@ const processVariantFiles = async ({
       continue;
     }
 
-    joinPointFile.variants.push(
-      relative(joinDirectory, path).replace(/^([^./])/, "./$1")
-    );
+    const key = normalizeToRelativePath(path, joinDirectory);
+    joinPointFile.variantPathMap.set(key, path);
   }
+
+  linkJoinPoints(joinPointFiles);
 };
 
 export default processVariantFiles;

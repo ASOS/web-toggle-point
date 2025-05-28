@@ -14,5 +14,5 @@ import styles from "./fixtures/event/theme.css";
 appendText("Some translated content: " + translations.message);
 appendText("Some site-specific content: " + siteSpecific1());
 appendText("Some more site-specific content: " + siteSpecific2());
-appendText("Some audience-specific content: " + audienceSpecific());
+appendText("Some audience-specific content: " + (await audienceSpecific));
 appendText("Some event-themed content", styles.theme);

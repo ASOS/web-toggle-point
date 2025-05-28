@@ -31,7 +31,7 @@ router.get("/*", (req, res) => {
       </body>
     </html>,
     {
-      bootstrapScripts: ["/config/main.js"],
+      bootstrapModules: ["/config/main.mjs"],
       onShellReady() {
         res.statusCode = 200;
         res.setHeader("Content-type", "text/html");

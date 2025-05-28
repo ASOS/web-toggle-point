@@ -1,41 +1,37 @@
-import processVariantFiles from ".";
-import { memfs } from "memfs";
 import { posix } from "path";
+import isJoinPointInvalid from "./isJoinPointInvalid.js";
+import linkJoinPoints from "./linkJoinPoints.js";
+import processVariantFiles from "./index.js";
+
 const { resolve, basename, join, sep } = posix;
+
+jest.mock("./linkJoinPoints.js", () => jest.fn());
+jest.mock("./isJoinPointInvalid.js", () => jest.fn());
 
 describe("processVariantFiles", () => {
   let joinPointFiles;
-  const pointCut = { name: "test-point-cut" };
-  const joinPointResolver = jest.fn();
+  const pointCut = { name: "test-point-cut", joinPointResolver: jest.fn() };
   let warnings;
 
   const variantFileGlob = "test-variant-*.*";
-  const variantGlob = `/${variantFileGlob}`;
-  const appRoot = "/test-app-root/";
   const moduleFile = "test-module.js";
   const joinPointFolder = "test-folder";
   const joinPointPath = join(joinPointFolder, moduleFile);
-  const { fs: fileSystem } = memfs({
-    [`${appRoot}${joinPointPath}`]: "join point"
-  });
+  const rest = { [Symbol("test-key")]: Symbol("test-value") };
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    jest.clearAllMocks();
     warnings = [];
     joinPointFiles = new Map();
   });
 
-  const act = async ({ variantFiles, configFiles }) => {
+  const act = async ({ variantFiles }) => {
     await processVariantFiles({
       variantFiles,
-      configFiles,
       joinPointFiles,
       pointCut,
-      joinPointResolver,
-      variantGlob,
       warnings,
-      name: moduleFile,
-      fileSystem,
-      appRoot
+      ...rest
     });
   };
 
@@ -50,30 +46,56 @@ describe("processVariantFiles", () => {
     });
   });
 
-  const variantFilePath = variantFileGlob.replaceAll("*", "1");
+  const variantFileName = variantFileGlob.replaceAll("*", "1");
 
   describe.each`
     variantFilePath                 | expectedVariant
-    ${variantFilePath}              | ${"." + sep + variantFilePath}
-    ${"." + variantFilePath}        | ${"." + variantFilePath}
-    ${"." + sep + variantFilePath}  | ${"." + sep + variantFilePath}
-    ${".." + sep + variantFilePath} | ${".." + sep + variantFilePath}
+    ${variantFileName}              | ${"." + sep + variantFileName}
+    ${"." + variantFileName}        | ${"." + variantFileName}
+    ${"." + sep + variantFileName}  | ${"." + sep + variantFileName}
+    ${".." + sep + variantFileName} | ${".." + sep + variantFileName}
   `(
     "when given a variant path ($variantFilePath)",
     ({ variantFilePath, expectedVariant }) => {
+      const path = resolve(joinPointFolder, variantFilePath);
       const variantFiles = [
         {
           name: basename(variantFilePath),
-          path: resolve(joinPointFolder, variantFilePath)
+          path
         }
       ];
 
-      describe("when given a variant file that has no matching join point file", () => {
+      const makeCommonAssertions = () => {
+        it("should call the joinPointResolver with the path to the variant file", () => {
+          expect(pointCut.joinPointResolver).toHaveBeenCalledWith(path);
+        });
+
+        it("should call linkJoinPoints with the updated joinPointFiles", () => {
+          expect(linkJoinPoints).toHaveBeenCalledWith(joinPointFiles);
+        });
+      };
+
+      describe("when given a variant file that is not valid according to the configured config files", () => {
+        const joinPointPath = join(
+          joinPointFolder,
+          "test-not-matching-control"
+        );
+
         beforeEach(async () => {
-          joinPointResolver.mockReturnValue(
-            join(joinPointFolder, "test-not-matching-control")
-          );
+          pointCut.joinPointResolver.mockReturnValue(joinPointPath);
+          isJoinPointInvalid.mockReturnValue(true);
           await act({ variantFiles, configFiles: new Map() });
+        });
+
+        makeCommonAssertions();
+
+        it("should call isJoinPointInvalid with the expected arguments", () => {
+          expect(isJoinPointInvalid).toHaveBeenCalledWith({
+            name: variantFiles[0].name,
+            joinPointPath,
+            joinDirectory: joinPointFolder,
+            ...rest
+          });
         });
 
         it("should add no warnings, and not modify joinPointFiles", async () => {
@@ -84,15 +106,27 @@ describe("processVariantFiles", () => {
 
       describe("when given a variant file that has a matching join point file", () => {
         beforeEach(async () => {
-          joinPointResolver.mockReturnValue(joinPointPath);
+          pointCut.joinPointResolver.mockReturnValue(joinPointPath);
         });
 
         describe("and no config file precludes it being valid", () => {
           beforeEach(async () => {
-            await act({ variantFiles, configFiles: new Map() });
+            isJoinPointInvalid.mockReturnValue(false);
+            await act({ variantFiles });
           });
 
-          it("should add no warnings, and add a single joinPointFile representing the matched join point", async () => {
+          makeCommonAssertions();
+
+          it("should call isJoinPointInvalid with the expected arguments", () => {
+            expect(isJoinPointInvalid).toHaveBeenCalledWith({
+              name: variantFiles[0].name,
+              joinPointPath,
+              joinDirectory: joinPointFolder,
+              ...rest
+            });
+          });
+
+          it("should add no warnings, and add a single joinPointFile representing the matched join point, relative to the control module", async () => {
             expect(warnings).toEqual([]);
             expect(joinPointFiles).toEqual(
               new Map([
@@ -100,51 +134,11 @@ describe("processVariantFiles", () => {
                   joinPointPath,
                   {
                     pointCut,
-                    variants: [expectedVariant]
+                    variantPathMap: new Map([[expectedVariant, path]])
                   }
                 ]
               ])
             );
-          });
-        });
-
-        describe("and a config file confirms it as valid", () => {
-          beforeEach(async () => {
-            await act({
-              variantFiles,
-              configFiles: new Map([
-                [joinPointFolder, { joinPoints: [moduleFile] }]
-              ])
-            });
-          });
-
-          it("should add no warnings, and add a single joinPointFile representing the matched join point", async () => {
-            expect(warnings).toEqual([]);
-            expect(joinPointFiles).toEqual(
-              new Map([
-                [
-                  joinPointPath,
-                  {
-                    pointCut,
-                    variants: [expectedVariant]
-                  }
-                ]
-              ])
-            );
-          });
-        });
-
-        describe("and a config file precludes it from being valid", () => {
-          beforeEach(async () => {
-            await act({
-              variantFiles,
-              configFiles: new Map([[joinPointFolder, { joinPoints: [] }]])
-            });
-          });
-
-          it("should add no warnings, and not modify joinPointFiles", async () => {
-            expect(warnings).toEqual([]);
-            expect(joinPointFiles).toEqual(new Map());
           });
         });
 
@@ -155,9 +149,14 @@ describe("processVariantFiles", () => {
               pointCut: testOtherPointCut
             });
             await act({
-              variantFiles,
-              configFiles: new Map()
+              variantFiles
             });
+          });
+
+          makeCommonAssertions();
+
+          it("should not check if the join point is invalid again", () => {
+            expect(isJoinPointInvalid).not.toHaveBeenCalled();
           });
 
           it("should add a warning, and not modify joinPointFiles", async () => {

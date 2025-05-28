@@ -6,18 +6,33 @@
       "items": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "togglePointModule": { "type": "string" },
-          "variantGlob": { "type": "string" },
-          "toggleHandler": {
-            "type": "string"
-          },
           "joinPointResolver": {
             "instanceof": "Function"
-          }
+          },
+          "loadStrategy": {
+            "type": "object",
+            "properties": {
+              "importCodeGenerator": {
+                "instanceof": "Function"
+              },
+              "pack": {
+                "instanceof": "Function"
+              },
+              "unpack": {
+                "instanceof": "Function"
+              }
+            },
+            "required": ["importCodeGenerator"]
+          },
+          "name": { "type": "string" },
+          "toggleHandlerFactoryModuleSpecifier": {
+            "type": "string"
+          },
+          "togglePointModuleSpecifier": { "type": "string" },
+          "variantGlob": { "type": "string" }
         },
         "additionalProperties": false,
-        "required": ["name", "togglePointModule"]
+        "required": ["name", "togglePointModuleSpecifier"]
       }
     },
     "webpackNormalModule": {

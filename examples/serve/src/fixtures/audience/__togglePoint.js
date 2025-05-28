@@ -1,9 +1,9 @@
 import featuresStore from "./__featuresStore.js";
 
-export default (joinPoint, featuresMap) => {
+export default async ({ joinPoint, featuresMap, unpack }) => {
   const audience = featuresStore.getFeatures();
   if (audience && featuresMap.has(audience)) {
-    return featuresMap.get(audience).default;
+    return (await unpack(featuresMap.get(audience))).default();
   }
-  return joinPoint.default;
+  return (await unpack(joinPoint)).default();
 };
