@@ -1,6 +1,6 @@
 import useCodeMatches from "../useCodeMatches";
 import pluginsHookFactory from "./pluginsHookFactory";
-import getCodeSelectionPlugins from "../getCodeSelectionPlugins";
+import getHooksFromPlugins from "../getHooksFromPlugins";
 
 // eslint-disable-next-line prettier/prettier, no-empty -- https://github.com/babel/babel/issues/15156
 {}
@@ -22,8 +22,9 @@ import getCodeSelectionPlugins from "../getCodeSelectionPlugins";
  * export default withToggledHook(useMyHook);
  */
 const withToggledHookFactory = ({ getActiveFeatures, plugins = [] }) => {
-  const codeSelectionPlugins = getCodeSelectionPlugins(plugins);
-  const useCodeSelectionPlugins = pluginsHookFactory(codeSelectionPlugins);
+  const useCodeSelectionPlugins = pluginsHookFactory(
+    getHooksFromPlugins(plugins, "onCodeSelected")
+  );
 
   /**
    * A React hook that wraps a base / control function or hook and swaps in a variant when deemed appropriate by a context

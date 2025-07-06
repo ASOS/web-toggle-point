@@ -14,8 +14,12 @@ const wrap = ({ Component, useHook, name }, rest) => {
   return WithTogglePointPlugin;
 };
 
-const withPlugins = ({ Component, plugins, ...rest }) => {
-  for (const { onCodeSelected: useHook, name } of plugins) {
+const withCodeSelectionPlugins = ({
+  Component,
+  codeSelectionPlugins,
+  ...rest
+}) => {
+  for (const { onCodeSelected: useHook, name } of codeSelectionPlugins) {
     Component = wrap(
       {
         Component,
@@ -29,4 +33,4 @@ const withPlugins = ({ Component, plugins, ...rest }) => {
   return Component;
 };
 
-export default withPlugins;
+export default withCodeSelectionPlugins;

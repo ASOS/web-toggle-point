@@ -1,7 +1,7 @@
 import { useMemo, forwardRef } from "react";
 import getComponent from "./getComponent";
 import useCodeMatches from "../useCodeMatches";
-import getCodeSelectionPlugins from "../getCodeSelectionPlugins";
+import getHooksFromPlugins from "../getHooksFromPlugins";
 
 // eslint-disable-next-line prettier/prettier, no-empty -- https://github.com/babel/babel/issues/15156
 {}
@@ -12,27 +12,33 @@ import getCodeSelectionPlugins from "../getCodeSelectionPlugins";
  * @function
  * @param {object} params parameters
  * @param {function} params.getActiveFeatures a method to get active features. Called honouring the rules of hooks.
- * @param {external:HostApplication.logError} params.logError a method that logs errors
  * @param {string} [params.variantKey=bucket] A key use to identify a variant from the features data structure. Remaining members of the feature will be passed to the variant as props.
- * @param {Array<module:web-toggle-point-react-pointcuts~plugin>} [params.plugins] plugins to be used when toggling
- * Will be used when a toggled component throws an error that can be caught by an {@link https://reactjs.org/docs/error-boundaries.html|ErrorBoundary}.
+ * @param {Array<module:web-toggle-point-react-pointcuts~plugin>} [params.plugins] plugins to be used when toggling.
+ * Any plugins that include a 'onVariantError' hook will be called when a toggled component throws an error that can be caught by an {@link https://reactjs.org/docs/error-boundaries.html|ErrorBoundary}.
  * When errors are caught, the control/base code will be used as the fallback component.
  * @returns {module:web-toggle-point-react-pointcuts.withTogglePoint} withTogglePoint React Higher-Order-Component.
  * @example
  * const withTogglePoint = withTogglePointFactory({
  *   getActiveFeatures,
- *   plugins: [plugin1, plugin2, plugin3],
- *   logError: (error) => window.NREUM?.noticeError(error)
+ *   plugins: [
+ *     somePlugin,
+ *     {
+ *       onCodeSelected: ({ matchedFeatures }) => { console.log("matched: " + JSON.stringify(matchedFeatures)) }); },
+ *     },
+ *     {
+ *       onVariantError: console.error
+ *     }
+ *   ]
  * });
  * export default withTogglePoint(MyReactComponent);
  */
 const withTogglePointFactory = ({
   getActiveFeatures,
-  logError,
   variantKey = "bucket",
   plugins = []
 }) => {
-  const codeSelectionPlugins = getCodeSelectionPlugins(plugins);
+  const codeSelectionPlugins = getHooksFromPlugins(plugins, "onCodeSelected");
+  const variantErrorPlugins = getHooksFromPlugins(plugins, "onVariantError");
 
   /**
    * A React Higher-Order-Component that wraps a base / control component and swaps in a variant when deemed appropriate by a context
@@ -58,9 +64,9 @@ const withTogglePointFactory = ({
           getComponent({
             matchedFeatures,
             matchedVariant,
-            logError,
             control,
-            plugins: codeSelectionPlugins
+            codeSelectionPlugins,
+            variantErrorPlugins
           }),
         [matchedFeatures, matchedVariant]
       );

@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
-import withPlugins from "./withPlugins";
+import withCodeSelectionPlugins from "./withCodeSelectionPlugins";
 import { forwardRef } from "react";
 
-describe("withPlugins", () => {
-  const plugins = [
+describe("withCodeSelectionPlugins", () => {
+  const codeSelectionPlugins = [
     { name: "Plugin1", onCodeSelected: jest.fn() },
     { name: "Plugin2", onCodeSelected: jest.fn(), onSomeOtherThing: () => {} }
   ];
@@ -19,7 +19,7 @@ describe("withPlugins", () => {
   const makeCommonAssertions = () => {
     it("should execute the 'onCodeSelected' hooks of all plugins, in reverse order (since first plugin applies closest to the wrapped component), passing the props passed to withPlugins", () => {
       let lastPlugin;
-      plugins.forEach((plugin) => {
+      codeSelectionPlugins.forEach((plugin) => {
         expect(plugin.onCodeSelected).toHaveBeenCalledTimes(1);
         expect(plugin.onCodeSelected).toHaveBeenCalledWith(rest);
         if (lastPlugin) {
@@ -48,13 +48,17 @@ describe("withPlugins", () => {
         TestComponent.displayName = displayName;
         TestComponent.name = name;
 
-        Wrapped = withPlugins({ Component: TestComponent, plugins, ...rest });
+        Wrapped = withCodeSelectionPlugins({
+          Component: TestComponent,
+          codeSelectionPlugins,
+          ...rest
+        });
         render(<Wrapped />);
       });
 
-      it("should have a display name that wraps the component in the plugins, in order", () => {
+      it("should have a display name that wraps the component in the code selection plugins, in order", () => {
         expect(Wrapped.displayName).toBe(
-          `With${plugins[1].name}(With${plugins[0].name}(${expectedDisplayName}))`
+          `With${codeSelectionPlugins[1].name}(With${codeSelectionPlugins[0].name}(${expectedDisplayName}))`
         );
       });
 
