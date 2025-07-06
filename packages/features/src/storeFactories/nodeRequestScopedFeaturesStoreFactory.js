@@ -26,7 +26,7 @@ const nodeRequestScopedFeaturesStoreFactory = () => {
         throw Error("Called outside of request context");
       }
       return features;
-    },
+    }
   };
 };
 
