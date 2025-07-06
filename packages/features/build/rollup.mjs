@@ -12,8 +12,10 @@ export default async ({ config_isBrowser }) => {
   const browserPrefix = isBrowser ? "browser." : "";
 
   const input = (await readdir("./src/storeFactories"))
-    .filter((file) => !file.endsWith(".test.js"))
-    .filter((file) => !(file.startsWith("node") && isBrowser))
+    .filter(
+      (file) =>
+        !file.endsWith(".test.js") && !(file.startsWith("node") && isBrowser)
+    )
     .map((factory) => `./src/storeFactories/${factory}`);
 
   return {
@@ -23,29 +25,29 @@ export default async ({ config_isBrowser }) => {
         dir: "lib/",
         entryFileNames: `[name].${browserPrefix}js`,
         format: "es",
-        sourcemap: true
+        sourcemap: true,
       },
       {
         dir: "lib/",
         entryFileNames: `[name].${browserPrefix}es5.cjs`,
         format: "cjs",
-        sourcemap: true
-      }
+        sourcemap: true,
+      },
     ],
     external: ["react/jsx-runtime"],
     plugins: [
       keepExternalComments,
       babel({
         exclude: /node_modules/,
-        babelHelpers: "runtime"
+        babelHelpers: "runtime",
       }),
       resolve({
-        preferBuiltins: true
+        preferBuiltins: true,
       }),
       commonjs(),
       external(),
-      isBrowser ? [terser()] : []
+      isBrowser ? [terser()] : [],
     ],
-    preserveSymlinks: true
+    preserveSymlinks: true,
   };
 };
