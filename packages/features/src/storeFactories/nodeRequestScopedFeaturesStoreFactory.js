@@ -5,7 +5,7 @@ import { AsyncLocalStorage } from "async_hooks";
  * Should only be used server-side, for anything user or request specific.
  * A thin wrapper around node {@link https://nodejs.org/api/async_context.html#class-asynclocalstorage|AsyncLocalStorage}, used as an extension point for future plugins.
  * @memberof module:web-toggle-point-features
- * @returns {module:web-toggle-point-features.requestScopedFeaturesStore} A store for features, scoped for the current request.
+ * @returns {module:web-toggle-point-features.nodeRequestScopedFeaturesStore} A store for features, scoped for the current request.
  */
 const nodeRequestScopedFeaturesStoreFactory = () => {
   const store = new AsyncLocalStorage();
@@ -26,7 +26,7 @@ const nodeRequestScopedFeaturesStoreFactory = () => {
         throw Error("Called outside of request context");
       }
       return features;
-    }
+    },
   };
 };
 
