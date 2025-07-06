@@ -1,5 +1,5 @@
 import { withJsonIsomorphism } from "@asos/web-toggle-point-ssr";
-import reactContextFeaturesStoreFactory from "../reactContext/store";
+import reactContextFeaturesStoreFactory from "./reactContextFeaturesStoreFactory";
 
 /**
  * A factory function used to create a store for features, held in a {@link https://reactjs.org/docs/context.html|React context}, backed by server-side rendering.

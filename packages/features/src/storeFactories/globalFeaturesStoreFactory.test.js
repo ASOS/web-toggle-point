@@ -1,4 +1,4 @@
-import globalFeaturesStoreFactory from "./store";
+import globalFeaturesStoreFactory from "./globalFeaturesStoreFactory";
 
 describe("globalFeaturesStoreFactory", () => {
   let featuresStoreFactory;

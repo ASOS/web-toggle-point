@@ -7,11 +7,11 @@ import { AsyncLocalStorage } from "async_hooks";
  * @memberof module:web-toggle-point-features
  * @returns {module:web-toggle-point-features.requestScopedFeaturesStore} A store for features, scoped for the current request.
  */
-const requestScopedFeaturesStoreFactory = () => {
+const nodeRequestScopedFeaturesStoreFactory = () => {
   const store = new AsyncLocalStorage();
 
   /**
-   * @name requestScopedFeaturesStore
+   * @name nodeRequestScopedFeaturesStore
    * @memberof module:web-toggle-point-features
    * @implements module:web-toggle-point-features.FeaturesStore
    * @implements module:web-toggle-point-features.SingletonFeaturesStore
@@ -30,4 +30,4 @@ const requestScopedFeaturesStoreFactory = () => {
   };
 };
 
-export default requestScopedFeaturesStoreFactory;
+export default nodeRequestScopedFeaturesStoreFactory;

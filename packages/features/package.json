@@ -1,19 +1,22 @@
 {
   "name": "@asos/web-toggle-point-features",
   "description": "toggle point features code",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
   "sideEffects": false,
   "exports": {
-    "node": {
-      "import": "./lib/main.js",
-      "require": "./lib/main.es5.cjs"
-    },
-    "default": {
-      "import": "./lib/browser.js",
-      "require": "./lib/browser.es5.cjs"
+    ".": null,
+    "./storeFactories/*": {
+      "node": {
+        "import": "./lib/*.js",
+        "require": "./lib/*.es5.cjs"
+      },
+      "default": {
+        "import": "./lib/*.browser.js",
+        "require": "./lib/*.browser.es5.cjs"
+      }
     }
   },
   "repository": {
@@ -27,12 +30,12 @@
   "directories": {
     "doc": "docs"
   },
-  "scripts": { 
+  "scripts": {
     "build-dependencies": "path-exists ../../packages/ssr/lib || npm run --prefix ../../packages/ssr build",
     "prebuild": "npm run build-dependencies",
     "build": "npm run clean && npm run build:browser && npm run build:server",
-    "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isClient true",
-    "build:server": "rollup -c build/rollup.mjs --config_isClient false",
+    "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isBrowser true",
+    "build:server": "rollup -c build/rollup.mjs --config_isBrowser false",
     "prepublishOnly": "npm run build",
     "clean": "rimraf ./lib",
     "docs": "rimraf ./docs/**/*.html && jsdoc -c ../jsdoc.conf.js",
@@ -79,9 +82,6 @@
   },
   "peerDependenciesMeta": {
     "@asos/web-toggle-point-ssr": {
-      "optional": true
-    },
-    "@reduxjs/toolkit": {
       "optional": true
     },
     "prop-types": {
