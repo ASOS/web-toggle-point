@@ -1,7 +1,7 @@
 {
   "name": "@asos/web-toggle-point-features",
   "description": "toggle point features code",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
@@ -34,7 +34,8 @@
     "build": "npm run clean && npm run build:browser && npm run build:server",
     "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isClient true",
     "build:server": "rollup -c build/rollup.mjs --config_isClient false",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "shx cp docs/README.md . && npm run build",
+    "postpublish": "shx rm ./README.md",
     "clean": "rimraf ./lib",
     "docs": "rimraf ./docs/**/*.html && jsdoc -c ../jsdoc.conf.js",
     "prelint": "npm run build-dependencies",
@@ -68,7 +69,8 @@
     "path-exists-cli": "^2.0.0",
     "react": "^18.3.1",
     "rimraf": "^6.0.1",
-    "rollup-plugin-auto-external": "^2.0.0"
+    "rollup-plugin-auto-external": "^2.0.0",
+    "shx": "^0.4.0"
   },
   "peerDependencies": {
     "@asos/web-toggle-point-ssr": "file:../ssr",
