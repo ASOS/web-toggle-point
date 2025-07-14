@@ -14,18 +14,38 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
-## [0.10.5] - 2024-03-06
+## [0.10.6] - 2025-07-014
 
 ### Fixed
 
 - Reverted the transpilation hack introduced in [version 0.1.0](#090---2024-11-29) for [danger-js](https://github.com/danger/danger-js), after [implementing a fix](https://github.com/danger/danger-js/pull/1476), thus upgrading danger to `12.3.4`.
 - Consistent version linking and full-stops, in this changelog
 
+## [0.10.5] - 2025-03-06
+
+### Fixed
+
+- updated the `CONTRIBUTING.md`:
+  - clarification regarding changes needing to be committed for the `danger:local` script to be effective
+  - clarification regarding write access or forking being needed to open a pull request
+
+### Changed
+
+- updated main `README.md`:
+  - linked to `CONTRIBUTING.md`
+  - added link to repo discussions, alongside the issues
+  - clarified the convention-based approach to advice
+- updated `pull_request_template.md` to ensure "resolves #issue" is prompted, to make sure linked issues are closed automatically with PR merges
+
+### Added
+
+ - a `danger:local:staged` command to augment the above danger fix
+
 ## [0.10.4] - 2025-03-06
 
 ### Fixed
 
-- Ensured that the registry is explicitly set, to ensure that [`@actions/setup-node`](https://github.com/actions/setup-node) honours the `NODE_AUTH_TOKEN`
+- ensured that the registry is explicitly set, to ensure that [`@actions/setup-node`](https://github.com/actions/setup-node) honours the `NODE_AUTH_TOKEN`
 
 ## [0.10.3] - 2025-02-27
 

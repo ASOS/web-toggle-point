@@ -14,25 +14,16 @@
   }
 }
 
-.debug {
-  & script {
-    display: inline;
-    font-family: monospace;
-    width: 100%;
-    padding: 2px;
-    margin: 2px;
-    flex: 0 0 auto;
-    background: #eee;
-    border: 1px solid #ccc;
-  }
-  & script[id$="decisions"]{
-    &::before {
-      content: "decisions: ";
-    }
-  }
-  & script[id$="audience"] {
-    &::before {
-      content: "audience: ";
-    }
-  }
+.code {
+  padding: 0.2em;
+  background: #eee;
+  border: 1px solid #ccc;
+  text-indent: -7em;
+}
+.code::before {
+  content: "experiments: ";
+  position: relative;
+  left: 5.5em;
+  top: -1.7em;
+  font-family: 'Didact Gothic', 'Didact Gothic Fallback';
 }

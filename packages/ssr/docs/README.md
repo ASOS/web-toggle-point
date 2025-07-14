@@ -37,7 +37,8 @@ See: [JSDoc output](https://asos.github.io/web-toggle-point/module-web-toggle-po
 > ```js
 > resolve: {
 >   alias: {
->     "react/jsx-runtime": "react/jsx-runtime.js"
+>     "react/jsx-runtime": "react/jsx-runtime.js",
+>     "react-dom/server": "react-dom/server.js",
 >   }
 > }
 > ```

@@ -9,11 +9,10 @@ const Example = ({ children, experiments }) => {
   const searchParams = useSearchParams();
   const FeaturesProvider = providerFactory();
   return (
-    <div
-      className={`${styles.experiments} ${
-        searchParams.get("showExperiments") ? styles.debug : ""
-      }`}
-    >
+    <div className={styles.experiments}>
+      {searchParams.has("showExperiments") ? (
+        <code className={styles.code}>{JSON.stringify(experiments)}</code>
+      ) : undefined}
       <FeaturesProvider value={experiments}>
         <div>{children}</div>
       </FeaturesProvider>

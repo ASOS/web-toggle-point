@@ -1,7 +1,7 @@
 {
   "name": "@asos/web-toggle-point-ssr",
   "description": "toggle point server side rendering code",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
@@ -23,6 +23,7 @@
   "bugs": {
     "url": "https://github.com/asos/web-toggle-point/issues"
   },
+  "homepage": "https://github.com/asos/web-toggle-point/tree/main/packages/ssr",
   "directories": {
     "doc": "docs"
   },

@@ -53,7 +53,7 @@ interface TogglePointInjectionOptions {
 > [!IMPORTANT]
 > N.B. when setting up multiple pointcuts, the path matched by the [globs](https://en.wikipedia.org/wiki/Glob_(programming)) must be mutually exclusive.  Otherwise, the pointcut defined earlier in the array "wins", and a warning is emitted into the compilation indicating that the subsequent cuts are neutered for those matching files.
 >
-> Also, due to the way Webpack works, there should only be a sinlge `TogglePointInjection` plugin per webpack configuration, so utilize the point cuts array, rather than having separate plugin instances per point cut.
+> Also, due to the way Webpack works, there should only be a single `TogglePointInjection` plugin per webpack configuration, so utilize the point cuts array, rather than having separate plugin instances per point cut.
 
 #### _`name`_
 
