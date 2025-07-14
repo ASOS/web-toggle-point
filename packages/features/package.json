@@ -1,7 +1,7 @@
 {
   "name": "@asos/web-toggle-point-features",
   "description": "toggle point features code",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
@@ -28,7 +28,7 @@
   "directories": {
     "doc": "docs"
   },
-  "scripts": { 
+  "scripts": {
     "build-dependencies": "path-exists ../../packages/ssr/lib || npm run --prefix ../../packages/ssr build",
     "prebuild": "npm run build-dependencies",
     "build": "npm run clean && npm run build:browser && npm run build:server",
