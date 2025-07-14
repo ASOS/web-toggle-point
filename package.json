@@ -1,15 +1,10 @@
 {
   "name": "@asos/web-toggle-point",
-  "version": "0.10.6",
+  "version": "0.10.7",
   "repository": "git@github.com:asos/web-toggle-point.git",
   "homepage": "https://asos.github.io/web-toggle-point/",
   "license": "MIT",
   "private": true,
-  "keywords": [
-    "asos",
-    "toggle point",
-    "feature toggles"
-  ],
   "engines": {
     "node": ">=20"
   },

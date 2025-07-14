@@ -14,6 +14,12 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
+## [0.10.7] - 2025-07-14
+
+### Fixed
+
+- removed `keywords` from `package.json` (in package root and peripherals), since serving no purpose in private packages
+
 ## [0.10.6] - 2025-07-14
 
 ### Fixed

@@ -12,6 +12,13 @@
     },
     "./pathSegmentToggleHandler": "./lib/pathSegmentToggleHandler.js"
   },
+  "keywords": [
+    "toggle point",
+    "feature toggles",
+    "feature flags",
+    "webpack",
+    "module proxy"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asos/web-toggle-point.git",

@@ -15,6 +15,14 @@
       "require": "./lib/browser.es5.cjs"
     }
   },
+  "keywords": [
+    "toggle point",
+    "feature toggles",
+    "feature flags",
+    "ssr",
+    "isomorphic",
+    "universal"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asos/web-toggle-point.git",

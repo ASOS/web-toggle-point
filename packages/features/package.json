@@ -1,6 +1,6 @@
 {
   "name": "@asos/web-toggle-point-features",
-  "description": "toggle point features code",
+  "description": "toggle point features code, used to store toggle state",
   "version": "0.3.5",
   "license": "MIT",
   "type": "module",
@@ -16,6 +16,12 @@
       "require": "./lib/browser.es5.cjs"
     }
   },
+  "keywords": [
+    "toggle point",
+    "feature toggles",
+    "feature flags",
+    "toggle state storage"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asos/web-toggle-point.git",

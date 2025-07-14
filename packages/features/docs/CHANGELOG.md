@@ -10,7 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - ensured that `README.md` is included in the root of the npm package, to conform to [npmjs.org requirement](https://docs.npmjs.com/about-package-readme-files):
-> An npm package `README.md` file **must** be in the root-level directory of the package.
+> An npm package `README.md` file **must** be in the root-level directory of the package
+- improved package description
+
+### Added
+
+- [keywords](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#keywords) added to the `package.json` to aid npm search
 
 ## [0.3.4] - 2025-07-14
 
