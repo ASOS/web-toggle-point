@@ -33,7 +33,7 @@ class TogglePointInjection {
    *     },
    *     {
    *       togglePointModule: "/withTogglePoint",
-   *       variantGlobs: ["./**\/__variants__/*\/*\/!(*.test).{ts,tsx}"]
+   *       variantGlobs: ["./**\/__variants__/*\/*\/!(use*|*.test).{ts,tsx}"]
    *     }
    *   ]
    * });

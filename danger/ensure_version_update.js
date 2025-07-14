@@ -1,4 +1,4 @@
-const getPackages = require("./get_packages.js");
+import getPackages from "./get_packages.js";
 
 const hasPackageVersionChanged = async ({ packageJson }) =>
   !!(await danger.git.JSONDiffForFile(packageJson)).version;

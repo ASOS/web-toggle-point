@@ -5,11 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.3] - 2025-05-27
+## [0.2.4] - 2025-05-27
 
 ### Changed
 
 - updated to use `variantGlobs` array, with updated webpack plugin [0.8.0][version 0.8.0](../../../packages/webpack/docs/CHANGELOG.md#080---2025-05-27)
+
+## [0.2.3] - 2025-02-07
+
+### Fixed
+
+- fixed a regression in the ability to use `?showExperiments` query in the experiments fixtures, regressed in version `0.2.0`.
 
 ## [0.2.2] - 2024-12-24
 

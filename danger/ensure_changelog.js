@@ -1,4 +1,4 @@
-const getPackages = require("./get_packages");
+import getPackages from "./get_packages";
 
 const changeLogLocation = "docs/CHANGELOG.md";
 
