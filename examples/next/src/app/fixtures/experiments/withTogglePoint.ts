@@ -18,9 +18,9 @@ const withTogglePoint = withTogglePointFactory({
             `activated ${feature} with audience ${getFeatures().audience}`
           );
         }
-      },
-    },
-  ],
+      }
+    }
+  ]
 });
 
 export default withTogglePoint;

@@ -8,7 +8,7 @@ const withTogglePoint = withTogglePointFactory({
   variantKey: "size",
   plugins: [
     {
-      onVariantError: console.log
+      onVariantError: console.error
     }
   ]
 });
