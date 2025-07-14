@@ -24,6 +24,7 @@
   "bugs": {
     "url": "https://github.com/asos/web-toggle-point/issues"
   },
+  "homepage": "https://github.com/asos/web-toggle-point/tree/main/packages/features",
   "directories": {
     "doc": "docs"
   },

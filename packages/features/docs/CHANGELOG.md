@@ -5,17 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.3] - 2025-02-28
+## [0.3.4] - 2025-07-14
 
 ### Fixed
 
 - remove redundant `@reduxjs/toolkit` and `react-dom` peer dependencies
 
+## [0.3.3] - 2025-03-06
+
+### Changed
+
+- added `package.json` [homepage](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#homepage), for clarity once on https://www.npmjs.com/
+- move the React 17 note to the end, in the `README.md`, since only relevant to the last two store factories & added companion note regarding `react-dom/server`.
+
+### Fixed
+
+- include the `README.md` in the NPM package
+
 ## [0.3.2] - 2025-03-03
 
 ### Changed
 
-- Added `package.json` [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository), [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs), and [`directories/doc`](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#directories) fields, for clarity once on NPM
+- added `package.json` [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository), [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs), and [`directories/doc`](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#directories) fields, for clarity once on NPM
 
 ## [0.3.1] - 2024-12-26
 
