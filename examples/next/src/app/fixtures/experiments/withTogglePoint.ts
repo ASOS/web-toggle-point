@@ -10,7 +10,7 @@ const withTogglePoint = withTogglePointFactory({
   getActiveFeatures,
   plugins: [
     {
-      onVariantError: console.log,
+      onVariantError: console.error,
       onCodeSelected: ({ matchedFeatures }) => {
         if (matchedFeatures?.length) {
           const [[feature]] = matchedFeatures;
@@ -18,9 +18,9 @@ const withTogglePoint = withTogglePointFactory({
             `activated ${feature} with audience ${getFeatures().audience}`
           );
         }
-      }
-    }
-  ]
+      },
+    },
+  ],
 });
 
 export default withTogglePoint;
