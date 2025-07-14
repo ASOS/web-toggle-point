@@ -1,7 +1,7 @@
 {
   "name": "@asos/web-toggle-point-react-pointcuts",
   "description": "react pointcut code",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
