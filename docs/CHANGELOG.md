@@ -20,6 +20,10 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 - removed `keywords` from `package.json` (in package root and peripherals), since serving no purpose in private packages
 
+### Added
+
+- `.npmrc` for ensuring correct registry
+
 ## [0.10.6] - 2025-07-14
 
 ### Fixed
