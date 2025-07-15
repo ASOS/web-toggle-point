@@ -1,6 +1,6 @@
 {
   "name": "@asos/web-toggle-point",
-  "version": "0.10.4",
+  "version": "0.10.6",
   "repository": "git@github.com:asos/web-toggle-point.git",
   "homepage": "https://asos.github.io/web-toggle-point/",
   "license": "MIT",
@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "npm run build --workspace packages",
-    "danger:local": "DANGER_DISABLE_TRANSPILATION=true danger local --base main",
+    "danger:local": "danger local --base main",
+    "danger:local:staged": "npm run danger:local --staged",
     "docs": "rimraf ./docs/html/* && jsdoc ./packages/*/src -c ./docs/jsdoc.conf.js",
     "lint": "npm run lint --workspaces --if-present && npm run lint:docs && npm run lint:danger",
     "lint:danger": "eslint danger",
@@ -43,7 +44,7 @@
     "browserslist-config-asos": "file:./peripheral/browserslist-config-asos",
     "core-js": "^3.0.0",
     "cross-env": "^7.0.3",
-    "danger": "^11.3.0",
+    "danger": "^12.3.4",
     "eslint": "^9.15.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jest": "^28.9.0",

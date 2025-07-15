@@ -5,11 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2025-05-27
+
+### Changed
+
+- moved to accept an array for variant globs in the plugin, allowing cherry-picking of disparately-located files to be selected where a common pattern does not apply
+
+## [0.7.5] - 2025-03-06
+
+### Changed
+
+- added `package.json` [homepage](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#homepage), for clarity once on https://www.npmjs.com/
+
+### Fixed
+
+- fixed typo in JSDoc comment
+- fixed typo in `README.md`
+- include the `README.md` in the NPM package
+
 ## [0.7.4] - 2025-03-03
 
 ### Changed
 
-- Added `package.json` [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository), [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs), and [`directories/doc`](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#directories) fields, for clarity once on NPM
+- added `package.json` [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository), [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs), and [`directories/doc`](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#directories) fields, for clarity once on NPM
 
 ## [0.7.3] - 2024-12-26
 

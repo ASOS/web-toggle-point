@@ -21,7 +21,7 @@ jobs:
       matrix:
         action:
           [
-            { command: "DANGER_DISABLE_TRANSPILATION=true npm exec danger ci", name: "Danger" }, # cannot transpile due to https://github.com/danger/danger-js/issues/1469
+            { command: "npm exec danger ci", name: "Danger" },
             { command: "npm run lint", name: "Lint" },
             { command: "npm run test:unit", name: "Unit Tests" }
           ]

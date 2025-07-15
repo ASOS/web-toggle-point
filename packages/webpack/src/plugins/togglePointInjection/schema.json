@@ -6,9 +6,18 @@
       "items": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "togglePointModule": { "type": "string" },
-          "variantGlob": { "type": "string" },
+          "name": {
+            "type": "string"
+          },
+          "togglePointModule": {
+            "type": "string"
+          },
+          "variantGlobs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "toggleHandler": {
             "type": "string"
           },
@@ -17,7 +26,10 @@
           }
         },
         "additionalProperties": false,
-        "required": ["name", "togglePointModule"]
+        "required": [
+          "name",
+          "togglePointModule"
+        ]
       }
     },
     "webpackNormalModule": {
@@ -25,5 +37,7 @@
     }
   },
   "additionalProperties": false,
-  "required": ["pointCuts"]
+  "required": [
+    "pointCuts"
+  ]
 }
