@@ -3,6 +3,7 @@ import { test, expect } from "@playwright/test";
 test.describe("date-specific content", () => {
   test.describe("when visiting on an un-toggled date", () => {
     test("it shows the control content", async ({ page }) => {
+      await page.clock.setFixedTime(new Date(Date.UTC(2025, 1, 1)));
       await page.goto("/");
       expect(
         await page.getByText("Some event-themed content").screenshot()

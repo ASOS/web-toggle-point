@@ -17,32 +17,32 @@ const fileExists = async (fileSystem, path) => {
 const ensureConfigFile = async ({
   configFiles,
   fileSystem,
-  joinDirectory,
+  directory,
   appRoot
 }) => {
-  if (!configFiles.has(joinDirectory)) {
+  if (!configFiles.has(directory)) {
     let configFile = null;
-    const path = `${join(appRoot, joinDirectory, TOGGLE_CONFIG)}`;
+    const path = `${join(appRoot, directory, TOGGLE_CONFIG)}`;
     if (await fileExists(fileSystem, path)) {
       configFile = JSON.parse(await readFile({ fileSystem, path }));
       validateConfigSchema({ configFile, appRoot, path });
     }
-    configFiles.set(joinDirectory, configFile);
+    configFiles.set(directory, configFile);
   }
 };
 
 const isJoinPointInvalid = async ({
   configFiles,
-  name,
+  filename,
   fileSystem,
   appRoot,
   joinPointPath,
-  joinDirectory
+  directory
 }) => {
-  await ensureConfigFile({ configFiles, fileSystem, joinDirectory, appRoot });
+  await ensureConfigFile({ configFiles, fileSystem, directory, appRoot });
 
-  if (configFiles.has(joinDirectory)) {
-    if (configFiles.get(joinDirectory)?.joinPoints.includes(name) === false) {
+  if (configFiles.has(directory)) {
+    if (configFiles.get(directory)?.joinPoints.includes(filename) === false) {
       return true;
     }
   }

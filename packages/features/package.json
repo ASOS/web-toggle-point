@@ -1,7 +1,7 @@
 {
   "name": "@asos/web-toggle-point-features",
   "description": "toggle point features code",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
@@ -24,10 +24,11 @@
   "bugs": {
     "url": "https://github.com/asos/web-toggle-point/issues"
   },
+  "homepage": "https://github.com/asos/web-toggle-point/tree/main/packages/features",
   "directories": {
     "doc": "docs"
   },
-  "scripts": { 
+  "scripts": {
     "build-dependencies": "path-exists ../../packages/ssr/lib || npm run --prefix ../../packages/ssr build",
     "prebuild": "npm run build-dependencies",
     "build": "npm run clean && npm run build:browser && npm run build:server",
@@ -66,31 +67,22 @@
     "jsdoc": "^4.0.4",
     "path-exists-cli": "^2.0.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "rimraf": "^6.0.1",
     "rollup-plugin-auto-external": "^2.0.0"
   },
   "peerDependencies": {
     "@asos/web-toggle-point-ssr": "file:../ssr",
     "prop-types": "^15.7.2",
-    "react": ">=17",
-    "react-dom": ">=17",
-    "@reduxjs/toolkit": "^2.4.0"
+    "react": ">=17"
   },
   "peerDependenciesMeta": {
     "@asos/web-toggle-point-ssr": {
-      "optional": true
-    },
-    "@reduxjs/toolkit": {
       "optional": true
     },
     "prop-types": {
       "optional": true
     },
     "react": {
-      "optional": true
-    },
-    "react-dom": {
       "optional": true
     }
   }

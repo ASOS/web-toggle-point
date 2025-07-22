@@ -23,6 +23,7 @@
   "bugs": {
     "url": "https://github.com/asos/web-toggle-point/issues"
   },
+  "homepage": "https://github.com/asos/web-toggle-point/tree/main/packages/react-pointcuts",
   "directories": {
     "doc": "docs"
   },
@@ -59,7 +60,6 @@
     "jest-extended": "^4.0.2",
     "jsdoc": "^4.0.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "rimraf": "^6.0.1",
     "rollup-plugin-auto-external": "^2.0.0"
   },
@@ -67,7 +67,6 @@
     "@asos/web-toggle-point-features": "file:../features",
     "@asos/web-toggle-point-webpack": "file:../webpack",
     "prop-types": "^15.7.2",
-    "react": ">=17",
-    "react-dom": ">=17"
+    "react": ">=17"
   }
 }

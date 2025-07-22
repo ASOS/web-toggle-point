@@ -1,8 +1,8 @@
 import { fs as fileSystem, vol } from "memfs";
 import { join, sep } from "path";
-import getVariantFiles from "./getVariantFiles";
+import getVariantPaths from "./getVariantPaths";
 
-describe("getVariantFiles", () => {
+describe("getVariantPaths", () => {
   const appRoot = "/test-folder";
   let result;
   beforeEach(async () => {
@@ -42,23 +42,20 @@ describe("getVariantFiles", () => {
       sep
     );
 
-    result = await getVariantFiles({
-      variantGlob: "./**/test-matching-folder/**/test-matching-*.js",
+    result = await getVariantPaths({
+      variantGlobs: [
+        "./**/test-matching-folder/**/test-matching-*.js",
+        "./**/test-matching-folder/test-matching-*.js"
+      ],
       appRoot,
       fileSystem
     });
   });
 
-  it("should return the matching files as an object with the file name and the path relative to the application root", () => {
-    expect(result).toEqual([
-      expect.objectContaining({
-        name: "test-matching-file-1.js",
-        path: "/test-matching-folder/test-matching-file-1.js"
-      }),
-      expect.objectContaining({
-        name: "test-matching-file-2.js",
-        path: "/test-matching-folder/test-matching-file-2.js"
-      })
+  it("should return the distinct matching file paths relative to the application root", () => {
+    expect(Array.from(result)).toEqual([
+      "/test-matching-folder/test-matching-file-1.js",
+      "/test-matching-folder/test-matching-file-2.js"
     ]);
   });
 });

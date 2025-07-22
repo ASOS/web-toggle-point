@@ -1,6 +1,6 @@
 {
   "name": "web-toggle-point-serve-example",
-  "version": "0.2.3",
+  "version": "0.2.6",
   "type": "module",
   "private": true,
   "scripts": {
