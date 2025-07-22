@@ -33,8 +33,8 @@
   },
   "scripts": {
     "build": "npm run clean && rollup -c build/rollup.mjs",
-    "prepublishOnly": "shx cp docs/README.md . && npm run build",
-    "postpublish": "shx rm ./README.md",
+    "prepublishOnly": "shx cp docs/README.md ../../LICENSE . && npm run build",
+    "postpublish": "shx rm ./README.md LICENSE",
     "clean": "rimraf ./lib",
     "docs": "rimraf ./docs/**/*.html && jsdoc -c ../jsdoc.conf.js",
     "lint": "eslint build src docs --flag unstable_config_lookup_from_file",
