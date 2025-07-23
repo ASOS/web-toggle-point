@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2025-07-17
+
+### Added
+
+- support for "packed" modules in the `withToggledPointFactory` and `withToggledHookFactory`
+  - this allows for load strategies to store variations in a form that prevents early download and/or execution, providing a means to "unpack" the module when it is selected / actually ready to render
+  - the update to `withToggledHookFactory` allows for "deferred execution" loading strategies, but does not support code-split / lazy loading, since no way to inject suspense boundaries within execution path of hooks
+- detection of modules packed with [`React.lazy`](https://react.dev/reference/react/lazy) in the `withTogglePointFactory`
+  - wraps the lazy loaded components in a [Suspense boundary](https://react.dev/reference/react/Suspense) that preserves server-rendered markup whilst variant bundles are downloading.
+  - utilises [useDeferredValue](https://react.dev/reference/react/useDeferredValue) where available (React 18+) to ensure that when changing between variants (i.e. dynamic feature stores) the existing variant is preserved whilst new variants download, preventing `null`-rendering flash of no content
+- a `lazyComponentLoadStrategyFactory` path export
+  - this creates load strategies for the webpack plugin to "pack" components in `React.lazy`
+  - added dependency on the webpack package, to support this
+
+### Changed
+
+- updated the interface of `withTogglePoint` to de-structure an object, rather than have multiple parameters, aligning with change to the Webpack Plugin, made to support toggle points that only care about a `featuresMap`, or perhaps aligned to a load strategy that does not need `pack` and/or `unpack`. This also aligns with ASOS Codebase Convention PC14
+- clarified the features store structure that the toggle points are compatible with
+
+### Fixed
+
+- support the `variantKey` parameter for `withToggledHookFactory`, as already existed for `withTogglePointFactory`
+
 ## [0.4.5] - 2025-07-14
 
 ### Fixed

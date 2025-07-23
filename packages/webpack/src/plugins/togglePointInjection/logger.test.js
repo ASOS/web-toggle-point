@@ -21,12 +21,15 @@ describe("logger", () => {
   describe("logJoinPoints", () => {
     const pointCut = { name: "test-point-cut" };
     const joinPointName = "test-join-point";
-    const variants = ["test-variant-1", "test-variant-2"];
+    const variantPathMap = new Map([
+      ["test-key-1", "test-path-1"],
+      ["test-key-2", "test-key-2"]
+    ]);
     const joinPointFiles = new Map([
       [
         joinPointName,
         {
-          variants,
+          variantPathMap,
           pointCut: { name: "test-point-cut" }
         }
       ]
@@ -40,9 +43,9 @@ describe("logger", () => {
       expect(compilationLogger.info).toHaveBeenCalledWith(
         `Identified '${
           pointCut.name
-        }' point cut for join point '${joinPointName}' with potential variants:\n${variants.join(
-          "\n"
-        )}`
+        }' point cut for join point '${joinPointName}' with potential variants:\n${Array.from(
+          variantPathMap.values()
+        ).join("\n")}`
       );
     });
   });

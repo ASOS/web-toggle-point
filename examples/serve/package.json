@@ -1,6 +1,6 @@
 {
   "name": "web-toggle-point-serve-example",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -23,7 +23,7 @@
     "css-loader": "^7.1.2",
     "path-exists-cli": "^2.0.0",
     "style-loader": "^4.0.0",
-    "webpack": "^5.38.1",
+    "webpack": "^5.99.7",
     "webpack-cli": "^4.7.2",
     "webpack-node-externals": "^3.0.0"
   },

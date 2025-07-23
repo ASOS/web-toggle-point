@@ -47,7 +47,7 @@ const getActiveFeatures = useSnapshot.bind(undefined, value); // passed to `with
 ```
 ...which will then re-render consuming components based on the parts of the toggle state they are reliant on.
 
-### `nodeRequestScopedStoreFactory`
+### `nodeRequestScopedFeaturesStoreFactory`
 
 A "request scoped" features store factory, for use in [Node](https://nodejs.org/).
 
@@ -58,7 +58,7 @@ It exports a store with:
       import express from "express";
 
       const app = express();
-      const featuresStore = requestScopedFeaturesStoreFactory();
+      const featuresStore = nodeRequestScopedFeaturesStoreFactory();
 
       app.use((request, response, next) => {
         const value = ?? // some value holding toggle state, either based on `request`, or scoped from outside this middleware, etc.

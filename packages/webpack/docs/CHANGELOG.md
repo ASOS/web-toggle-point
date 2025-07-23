@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2025-07-17
+
+### Added
+
+- "load strategy" concept
+  - provide `moduleLoadStrategyFactories` exports: `staticLoadStrategyFactory`, `deferredRequireLoadStrategyFactory`, `deferredDynamicImportLoadStrategyFactory`
+
+### Changed
+
+- changed description of package to better indicate it contains more than just a plugin
+- renamed `TogglePointInjection` to `TogglePointInjectionPlugin` to follow Webpack recommended naming convention
+- renamed `togglePointModule` to `togglePointModuleSpecifier` to better describe [the type](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#importing_features_into_your_script)
+- updated webpack version to 5.99.7
+- consolidated setting of default optional values
+- changed `variants` array on join point data structure to a `Map` of relative to absolute path as `variantPathMap`
+- move away from webpack `import.meta.webpackContext` when generating join points, expect load strategies to construct context/maps instead
+  - add linking of join points, to supplant the functionality previously provided by `import.meta.webpackContext`
+- various internal variable renames for clarity
+- wrapped "toggle handlers" in a factory method, to support `togglePoint`, `pack` and `unpack` being passed during setup, simplifying the toggle handler interface
+  - move `toggleHandler/pathSegmentToggleHandler` to `toggleHandlerFactories/pathSegment`
+- updated win32 path replacement, can effectively no-op on posix systems
+
+### Fixed
+
+- removed "next" peer dependency, this needn't be explicit
+- ensured files that cannot be resolved (by [enhanced-resolve](https://github.com/webpack/enhanced-resolve/)), for whatever reason, don't break the build
+
 ## [0.8.0] - 2025-05-27
 
 ### Changed

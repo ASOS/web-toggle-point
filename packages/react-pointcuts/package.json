@@ -1,18 +1,18 @@
 {
   "name": "@asos/web-toggle-point-react-pointcuts",
   "description": "react pointcut code",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
   "exports": {
-    "node": {
+    ".": {
       "import": "./lib/main.js",
       "require": "./lib/main.es5.cjs"
     },
-    "default": {
-      "import": "./lib/browser.js",
-      "require": "./lib/browser.es5.cjs"
+    "./lazyComponentLoadStrategyFactory": {
+      "import": "./lib/lazyComponentLoadStrategyFactory.js",
+      "require": "./lib/lazyComponentLoadStrategyFactory.es5.cjs"
     }
   },
   "repository": {
@@ -28,6 +28,8 @@
     "doc": "docs"
   },
   "scripts": {
+    "build-dependencies": "path-exists ../../packages/webpack/lib || npm run --prefix ../../packages/webpack build",
+    "prebuild": "npm run build-dependencies",
     "build": "npm run clean && npm run build:browser && npm run build:server",
     "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isClient true",
     "build:server": "rollup -c build/rollup.mjs --config_isClient false",
@@ -36,9 +38,11 @@
     "docs": "rimraf ./docs/**/*.html && jsdoc -c ../jsdoc.conf.js",
     "lint": "eslint build src docs --flag unstable_config_lookup_from_file",
     "lint:fix": "npm run lint -- --fix",
+    "pretest": "npm run build-dependencies",
     "test": "jest"
   },
   "dependencies": {
+    "@asos/web-toggle-point-webpack": "file:../webpack",
     "@babel/runtime": "^7.26.0"
   },
   "devDependencies": {
@@ -50,6 +54,7 @@
     "@testing-library/jest-dom": "^6.1.3",
     "@testing-library/react": "^16.0.1",
     "@types/webpack-env": "^1.18.0",
+    "babel-plugin-transform-import-meta-x": "^0.0.3",
     "eslint-plugin-jsdoc": "^50.5.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.31.10",
@@ -60,13 +65,14 @@
     "jest-extended": "^4.0.2",
     "jsdoc": "^4.0.4",
     "react": "^18.3.1",
+    "react-is": "^18.3.1",
     "rimraf": "^6.0.1",
     "rollup-plugin-auto-external": "^2.0.0"
   },
   "peerDependencies": {
     "@asos/web-toggle-point-features": "file:../features",
-    "@asos/web-toggle-point-webpack": "file:../webpack",
     "prop-types": "^15.7.2",
-    "react": ">=17"
+    "react": ">=17",
+    "react-is": ">=17"
   }
 }

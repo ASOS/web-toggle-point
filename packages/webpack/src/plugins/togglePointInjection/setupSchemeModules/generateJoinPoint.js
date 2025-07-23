@@ -1,20 +1,20 @@
-import { posix } from "path";
-import regexgen from "regexgen";
 import { POINT_CUTS, SCHEME } from "../constants.js";
-const { dirname } = posix;
 
-const generateJoinPoint = ({ joinPointFiles, path }) => {
+const generateJoinPoint = ({ joinPointFiles, joinPointPath }) => {
   const {
-    pointCut: { name },
-    variants
-  } = joinPointFiles.get(path);
-  const directory = dirname(path);
-  const regex = regexgen(variants);
+    pointCut: {
+      name,
+      loadStrategy: { importCodeGenerator }
+    },
+    variantPathMap
+  } = joinPointFiles.get(joinPointPath);
+  const pointCutImport = `import pointCut from "${SCHEME}:${POINT_CUTS}:/${name}";`;
 
-  return `import pointCut from "${SCHEME}:${POINT_CUTS}:/${name}";
-import * as joinPoint from "${path}";
-const variants = import.meta.webpackContext("${directory}", { recursive: true, regExp: ${regex} });
-export default pointCut({ joinPoint, variants });`;
+  const code = importCodeGenerator({ joinPointPath, variantPathMap });
+
+  return `${pointCutImport}
+${code}
+export default pointCut({ joinPoint, variantPathMap });`;
 };
 
 export default generateJoinPoint;

@@ -3,10 +3,10 @@ const getMatchedVariant = ({ matchedFeatures, featuresMap, variantKey }) => {
     feature,
     { [variantKey]: variant, ...variables }
   ] of matchedFeatures) {
-    const codeRequest = featuresMap.get(feature)?.get(variant);
-    if (codeRequest) {
+    const packedModule = featuresMap.get(feature)?.get(variant);
+    if (packedModule) {
       return {
-        codeRequest,
+        packedModule,
         variables
       };
     }

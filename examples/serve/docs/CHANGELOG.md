@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-07-17
+
+### Changed
+
+- moved to `production` webpack mode with `source-map` devtool and `source-map-loader`, for clarity when using dev tools
+- updates for new `webpack` package:
+  - moving to `toggleHandlerFactories` from `toggleHandlers`
+  - using non-default `loadStrategy` for two of the four examples
+    - `audience` becomes `deferredImport` (`async`)
+    - `translation` becomes `static` (which was the previous default...)
+    - other default to `deferredRequire` (synchronous, but delayed require of module)
+- move to use `import.meta.resolve` replacing the hand-rolled `getToggleHandlerPath.js`
+- move `toggleHandlers` to `toggleHandlerFactories`, to align with updated `webpack` package
+- update output format to `es2022` and `module`, to validate loading strategies against this
+
 ## [0.2.6] - 2025-07-14
 
 ### Changed

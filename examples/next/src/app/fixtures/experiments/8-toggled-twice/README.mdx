@@ -1,0 +1,37 @@
+# Toggling Toggles
+
+## Explanation
+
+This example demonstrates how different toggle types and conventions can compound.
+
+The experimental variant is stored in a folder structure:
+
+```
+./__variants__/test-feature/test-variant/component.tsx
+```
+
+It has variants that are colocated in the same folder, with a postfix to their filename:
+
+```
+./__variants__/test-feature/test-variant/component.a-m.tsx
+./__variants__/test-feature/test-variant/component.n-z.tsx
+```
+
+A bespoke toggle handler unpicks the character ranges from the variant filenames, and adds
+each letter to the potential variations considered by the join point.
+
+A bespoke reactive toggle point with coupled features store is set to listen for key presses, 
+and modify the active feature to match any held alphabetic character, passing a `children`
+render prop to the varied component that outputs the key pressed.
+
+The supplementary join point has a lazy load strategy applied, ensuring that the extra
+variations are code-split into their own chunk.  Via the use of `importCodeGeneratorOptions`,
+a [webpack magic comment](https://webpack.js.org/api/module-methods/#magic-comments) is set,
+ensuring that the chunk is preloaded, and named `"toggled-twice-chunk"`.
+
+## Activation
+
+If an `experiments` header is set, with a `"test-feature": { "bucket": "test-variant" }`
+decision, the experimentally varied component will show.  If a key press of an alphabetic 
+character is held, then this is itself varied, either a "variant 1" or "variant 2" (dependent
+on character range), with the key pressed passed as a string child to the component.

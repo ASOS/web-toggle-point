@@ -1,8 +1,11 @@
 import { build } from "webpack-test-utils";
 import { readFile } from "fs/promises";
-import { resolve } from "path";
 import TogglePointInjection from "./index.js";
 import { PLUGIN_NAME } from "./constants.js";
+import { posix } from "path";
+import staticLoadStrategyFactory from "../../moduleLoadStrategyFactories/staticLoadStrategyFactory";
+
+const loadStrategy = staticLoadStrategyFactory();
 
 describe("togglePointInjection", () => {
   let plugin, fileSystem, built;
@@ -18,28 +21,27 @@ describe("togglePointInjection", () => {
   const testCases = [
     {
       name: "not react hooks",
-      togglePointModule: togglePointModule1,
+      togglePointModuleSpecifier: togglePointModule1,
       variantGlobs: [`${modulesFolder}**/${variantsFolder}/*/*/!(*use)*.js`],
-      moduleName: "testModule.js"
+      moduleName: "testModule.js",
+      loadStrategy
     },
     {
       name: "react hooks",
-      togglePointModule: togglePointModule2,
+      togglePointModuleSpecifier: togglePointModule2,
       variantGlobs: [`${modulesFolder}**/${variantsFolder}/*/*/use*.js`],
-      moduleName: "useTestModule.js"
+      moduleName: "useTestModule.js",
+      loadStrategy
     }
   ];
 
   beforeEach(async () => {
     fileSystem = {
-      "node_modules/@asos/web-toggle-point-webpack/pathSegmentToggleHandler":
+      "node_modules/@asos/web-toggle-point-webpack/toggleHandlerFactories/pathSegment":
         await readFile(
-          resolve(
+          posix.resolve(
             __dirname,
-            "..",
-            "..",
-            "toggleHandlers",
-            "pathSegmentToggleHandler.js"
+            "../../toggleHandlerFactories/pathSegment.js"
           ),
           "utf8"
         )
@@ -62,7 +64,7 @@ describe("togglePointInjection", () => {
           ...fileSystem,
           "/src/index.js": `export { default } from "${modulesFolder}${moduleName}";`,
           [`${togglePointModule1}.js`]:
-            "export default (joinPointModule, featuresMap) => ({ joinPointModule, featuresMap })",
+            "export default ({ joinPoint, featuresMap, unpack }) => ({ joinPoint, featuresMap, unpack })",
           [`${modulesFolder}${variantsFolder}/${testFeature}/${testVariant}/not-matching-name.js`]: `export default "${variantModuleOutput}";`,
           [`${modulesFolder}${moduleName}`]: `export default "${baseModuleOutput}";`
         },
@@ -80,7 +82,7 @@ describe("togglePointInjection", () => {
 
   describe.each(testCases)(
     "when a module is toggled and a matching variant exists",
-    ({ name, togglePointModule, moduleName }) => {
+    ({ name, togglePointModuleSpecifier, moduleName }) => {
       plugin = new TogglePointInjection({
         pointCuts: testCases.map(({ moduleName, ...rest }) => rest) // eslint-disable-line no-unused-vars
       });
@@ -89,8 +91,8 @@ describe("togglePointInjection", () => {
           {
             ...fileSystem,
             "/src/index.js": `export { default } from "${modulesFolder}${moduleName}";`,
-            [`${togglePointModule}.js`]:
-              "export default (joinPointModule, featuresMap) => ({ joinPointModule, featuresMap })",
+            [`${togglePointModuleSpecifier}.js`]:
+              "export default ({ joinPoint, featuresMap, unpack }) => ({ joinPoint, featuresMap, unpack })",
             [`${modulesFolder}${variantsFolder}/${testFeature}/${testVariant}/${moduleName}`]: `export default "${variantModuleOutput}";`,
             [`${modulesFolder}${moduleName}`]: `export default "${baseModuleOutput}";`
           },
@@ -102,17 +104,18 @@ describe("togglePointInjection", () => {
 
       it("should log the fact that the toggle point was found", () => {
         expect(getLogOfType("info")).toEqual(
-          `Identified '${name}' point cut for join point '${modulesFolder}${moduleName}' with potential variants:\n./${variantsFolder}/${testFeature}/${testVariant}/${moduleName}`
+          `Identified '${name}' point cut for join point '${modulesFolder}${moduleName}' with potential variants:\n${modulesFolder}${variantsFolder}/${testFeature}/${testVariant}/${moduleName}`
         );
       });
 
-      it("should pass the toggled base module and a Map containing the matched variant to the module at the togglePointModule", () => {
+      it("should pass the toggled base module and a Map containing the matched variant to the module at the togglePointModuleSpecifier", async () => {
         const result = built.require("/dist/index.js");
         expect(result).toMatchObject({
-          joinPointModule: {
+          joinPoint: {
             default: baseModuleOutput
           },
-          featuresMap: expect.anything() // jest doesn't have a built-in way to check if an object is a Map
+          featuresMap: expect.anything(), // jest doesn't have a built-in way to check if an object is a Map
+          unpack: expect.any(Function)
         });
         const { featuresMap } = result;
         expect(featuresMap.has(testFeature)).toBe(true);
@@ -138,7 +141,7 @@ describe("togglePointInjection", () => {
             joinPoints: []
           }),
           [`${togglePointModule1}.js`]:
-            "export default (joinPointModule, featuresMap) => ({ joinPointModule, featuresMap })",
+            "export default ({ joinPoint, featuresMap, unpack }) => ({ joinPoint, featuresMap, unpack })",
           [`${modulesFolder}${variantsFolder}/${testFeature}/${testVariant}/${moduleName}`]: `export default "${variantModuleOutput}";`,
           [`${modulesFolder}${moduleName}`]: `export default "${baseModuleOutput}";`
         },
@@ -169,7 +172,7 @@ describe("togglePointInjection", () => {
           ...fileSystem,
           "/src/index.js": `export { default } from "${modulesFolder}${moduleName}";`,
           [`${togglePointModule1}.js`]:
-            "export default (joinPointModule, featuresMap) => ({ joinPointModule, featuresMap })",
+            "export default ({ joinPoint, featuresMap, unpack }) => ({ joinPoint, featuresMap, unpack })",
           [`${modulesFolder}${variantsFolder}/${testFeature}/${testVariant}/${moduleName}`]: `export default "${variantModuleOutput}";`,
           [`${modulesFolder}${moduleName}`]: `export default "${baseModuleOutput}";`
         },

@@ -3,7 +3,7 @@ import getMatchedVariant from "./getMatchedVariant";
 import getMatchedFeatures from "./getMatchedFeatures";
 
 const useCodeMatches = ({ activeFeatures, variantKey, featuresMap }) => {
-  const seriazlizedActiveFeatures = JSON.stringify(activeFeatures);
+  const serializedActiveFeatures = JSON.stringify(activeFeatures);
 
   const matches = useMemo(() => {
     const matchedFeatures = getMatchedFeatures({
@@ -20,7 +20,7 @@ const useCodeMatches = ({ activeFeatures, variantKey, featuresMap }) => {
       matchedFeatures,
       matchedVariant
     };
-  }, [seriazlizedActiveFeatures]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [serializedActiveFeatures]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return matches;
 };

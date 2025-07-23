@@ -1,5 +1,5 @@
 *
-!lib/*
+!lib/**
 !docs/CHANGELOG.md
 !docs/README.md
 !package.json

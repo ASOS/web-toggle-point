@@ -1,4 +1,4 @@
-import requestScopedStoreFactory from "./store";
+import nodeRequestScopedFeaturesStoreFactory from "./store";
 import { AsyncLocalStorage } from "async_hooks";
 
 jest.mock("async_hooks", () => ({
@@ -8,11 +8,11 @@ jest.mock("async_hooks", () => ({
   }))
 }));
 
-describe("store", () => {
-  let requestScopedStore;
+describe("nodeRequestScopedFeaturesStoreFactory", () => {
+  let nodeRequestScopedFeaturesStore;
 
   beforeEach(() => {
-    requestScopedStore = requestScopedStoreFactory();
+    nodeRequestScopedFeaturesStore = nodeRequestScopedFeaturesStoreFactory();
   });
 
   it("should create an AsyncLocalStorage store", () => {
@@ -21,7 +21,7 @@ describe("store", () => {
 
   describe("when getting a value outside the scope of a request", () => {
     it("should throw an error", () => {
-      expect(() => requestScopedStore.getFeatures()).toThrow(
+      expect(() => nodeRequestScopedFeaturesStore.getFeatures()).toThrow(
         "Called outside of request context"
       );
     });
@@ -32,7 +32,7 @@ describe("store", () => {
     const scopeCallBack = Symbol("test-callback");
 
     beforeEach(() => {
-      requestScopedStore.useValue({ value, scopeCallBack });
+      nodeRequestScopedFeaturesStore.useValue({ value, scopeCallBack });
     });
 
     it("should scope the value to the descendants of the callback, by running it in the local storage", () => {
@@ -50,7 +50,9 @@ describe("store", () => {
       });
 
       it("should return the value scoped to the current request", () => {
-        expect(requestScopedStore.getFeatures()).toEqual(returnedValue);
+        expect(nodeRequestScopedFeaturesStore.getFeatures()).toEqual(
+          returnedValue
+        );
       });
     });
   });

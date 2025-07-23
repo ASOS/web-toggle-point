@@ -8,7 +8,6 @@ const contextMiddleware = (request, response, scopeCallBack) => {
     response.status(StatusCodes.BAD_REQUEST).end();
     return;
   }
-  response.header("Vary", version);
   featuresStore.useValue({ value: { version }, scopeCallBack });
 };
 

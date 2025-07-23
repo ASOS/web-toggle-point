@@ -20,7 +20,6 @@ export const createMockGraph = ({ depth, siblingsAtEachDepthCount }) => {
   createGraph(rootNode, depth, siblingsAtEachDepthCount);
 
   const getIncomingConnections = jest.fn(function* (module) {
-    // eslint-disable-next-line jsdoc/require-jsdoc
     function* traverse(node) {
       if (node.resource === module.resource) {
         yield* issuersMap.get(node).map((node) => ({

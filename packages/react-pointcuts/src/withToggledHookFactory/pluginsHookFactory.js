@@ -1,12 +1,14 @@
 const pluginsHookFactory = (plugins) => {
-  const usePlugins = plugins.reduceRight(
-    (out, { onCodeSelected }) =>
-      (...args) => {
-        onCodeSelected(...args);
-        out?.(...args);
-      },
-    null
-  );
+  const usePlugins =
+    plugins?.reduceRight(
+      (out, { onCodeSelected }) =>
+        (...args) => {
+          onCodeSelected(...args);
+          out?.(...args);
+        },
+      null
+    ) ?? null;
+
   return usePlugins;
 };
 

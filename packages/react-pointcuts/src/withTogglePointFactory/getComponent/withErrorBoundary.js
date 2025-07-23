@@ -1,8 +1,14 @@
 import { Component, forwardRef, createContext } from "react";
+import getDisplayName from "../getDisplayName";
 
 const ForwardedRefContext = createContext();
 
-const withErrorBoundary = ({ Variant, fallback, logError }) => {
+const withErrorBoundary = ({
+  Variant,
+  packedBaseModule,
+  logError,
+  unpackComponent
+}) => {
   class TogglePointErrorBoundary extends Component {
     constructor(props) {
       super(props);
@@ -21,7 +27,9 @@ const withErrorBoundary = ({ Variant, fallback, logError }) => {
     static contextType = ForwardedRefContext;
 
     render() {
-      const Component = this.state.hasError ? fallback : Variant;
+      const Component = this.state.hasError
+        ? unpackComponent(packedBaseModule)
+        : Variant;
 
       return <Component {...this.props} ref={this.context} />;
     }
@@ -32,9 +40,9 @@ const withErrorBoundary = ({ Variant, fallback, logError }) => {
       <TogglePointErrorBoundary {...props} />
     </ForwardedRefContext.Provider>
   ));
-  TogglePointErrorBoundaryWithRef.displayName = `withErrorBoundary(${
-    Variant.displayName || Variant.name || "Component"
-  })`;
+  TogglePointErrorBoundaryWithRef.displayName = `withErrorBoundary(${getDisplayName(
+    Variant
+  )})`;
 
   return TogglePointErrorBoundaryWithRef;
 };

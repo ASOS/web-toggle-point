@@ -19,7 +19,11 @@ It also demonstrates the addition of a toggle-specific side-effect, resulting in
 
 You should see a picture of a cat or a dog, depending on the version chosen.  The contrived application uses a `streamImage` module that accesses a `urlFetcher`, which is varied by the toggle point.
 
-The toggle point is a higher-order function to ensure that each invocation honours the toggle decision, based on current context.  As a caveat of toggling, the constructor of the `urlFetcher` must be called on each request, rather than statically enacted at application start-up.  The code demonstrates a mitigation of hypothetical cost of re-construction via use of a cache within the toggle point.
+## Implementation
+
+The variant module loading mode is configured as `static`, meaning all variations are added to the module instance cache when the application starts. 
+
+The toggle point is a higher-order function to ensure that each invocation honours the toggle decision, based on current context, forwarding on arguments to a class constructor.  As a caveat of `static` toggling, the constructor of the `urlFetcher` must be called on each request, rather than statically enacted at application start-up.  The code demonstrates a mitigation of hypothetical cost of re-construction via use of a cache within the toggle point.
 The toggle point wraps the varied modules in a [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy) to add the logging side-effect.
 
 The use of [AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage) allows the toggle decision to be scoped on a per-request basis, without explicit access to the express request context.  The storage is initialised within [middleware](https://expressjs.com/en/resources/middleware.html).

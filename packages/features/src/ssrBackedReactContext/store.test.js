@@ -1,19 +1,34 @@
+/* eslint-disable react/prop-types */
 import { withJsonIsomorphism } from "@asos/web-toggle-point-ssr";
 import { render, screen } from "@testing-library/react";
 import reactContextFeaturesStoreFactory from "../reactContext/store";
 import ssrBackedReactContextFeaturesStoreFactory from "./store";
 
-const MockSSRBackedFeaturesProvider = jest.fn(({ children }) => (
-  <div data-testid="test-ssr-backed-features-provider">{children}</div>
-));
+const mockSSRBackedFeaturesProvider = "test-ssr-backed-features-provider";
 jest.mock("@asos/web-toggle-point-ssr", () => ({
-  withJsonIsomorphism: jest.fn(() => MockSSRBackedFeaturesProvider)
+  withJsonIsomorphism: jest.fn((WrappedComponent) => {
+    const MockSSRBackedFeaturesProvider = ({ children }) => (
+      <div data-testid={mockSSRBackedFeaturesProvider}>{children}</div>
+    );
+    const MockWithJsonIsomorphism = (props) => (
+      <MockSSRBackedFeaturesProvider>
+        <WrappedComponent {...props} />
+      </MockSSRBackedFeaturesProvider>
+    );
+    return MockWithJsonIsomorphism;
+  })
 }));
 const mockOtherStuff = {
   [Symbol("rest")]: Symbol("rest")
 };
+const mockContextFeaturesProvider = "test-context-features-provider";
 const mockReactContextStoreFactory = {
-  providerFactory: jest.fn(),
+  providerFactory: jest.fn(() => {
+    const MockReactContextProvider = ({ children }) => (
+      <div data-testid={mockContextFeaturesProvider}>{children}</div>
+    );
+    return MockReactContextProvider;
+  }),
   ...mockOtherStuff
 };
 jest.mock("../reactContext/store", () =>
@@ -78,13 +93,16 @@ describe("ssrBackedReactContextFeaturesStoreFactory", () => {
           );
         });
 
-        it("should pass the value to the SSR-backed component", () => {
-          expect(MockSSRBackedFeaturesProvider).toHaveBeenCalledWith(
-            expect.objectContaining({
-              [props.name]: value
-            }),
-            expect.anything()
-          );
+        it("should render the SSR-backed provider", () => {
+          expect(
+            screen.getByTestId(mockSSRBackedFeaturesProvider)
+          ).toBeInTheDocument();
+        });
+
+        it("should render the context provider", () => {
+          expect(
+            screen.getByTestId(mockContextFeaturesProvider)
+          ).toBeInTheDocument();
         });
 
         it("should render the children", () => {

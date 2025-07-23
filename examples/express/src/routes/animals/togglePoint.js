@@ -2,7 +2,7 @@ import featuresStore from "./featuresStore.js";
 
 const cache = new WeakMap();
 
-export default (_, featuresMap) => {
+export default ({ featuresMap }) => {
   return function (...args) {
     const { default: Choice } = featuresMap.get(
       `v${featuresStore.getFeatures().version}`

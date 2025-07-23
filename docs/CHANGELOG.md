@@ -14,6 +14,22 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
+## [0.10.7] - 2025-07-17
+
+### Fixed
+
+- remove `react` and `react-dom` from repo root package.json, introduced in [version 0.9.0](#090---2024-11-29)
+
+### Added
+
+- `test:unit:coverage` script
+
+### Changed
+
+- set minimum node version to 20.8 due to use of [`import.meta.resolve`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta/resolve) where possible in packages / examples
+- updated to `0.11.0` of [`eslint-plugin-workspaces`](https://github.com/joshuajaco/eslint-plugin-workspaces) after [addition of ESLint9 support](https://github.com/joshuajaco/eslint-plugin-workspaces/commit/af855c3a3d8069366d4446747e91828ddf7560c6)
+  - update `eslint.config.mjs` to utilise flat config
+
 ## [0.10.6] - 2025-07-14
 
 ### Fixed

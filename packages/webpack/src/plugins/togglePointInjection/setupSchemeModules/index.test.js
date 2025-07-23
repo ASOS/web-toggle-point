@@ -24,7 +24,7 @@ describe("setupSchemeModules", () => {
   const joinPointFiles = Symbol("test-join-point-files");
   const pointCuts = Symbol("test-point-cuts");
 
-  beforeEach(() => {
+  beforeEach(async () => {
     setupSchemeModules({
       NormalModule,
       compilation,
@@ -46,35 +46,42 @@ describe("setupSchemeModules", () => {
     let result;
 
     describe("and the resource is prefixed with the point cuts type", () => {
-      const path = "test-point-cut-name";
+      const joinPointPath = "test-point-cut-name";
       const output = Symbol("test-output");
 
       beforeEach(() => {
         const [, callback] = tap.mock.lastCall;
         generatePointCut.mockReturnValue(output);
-        result = callback({ resourcePath: `${SCHEME}:${POINT_CUTS}:${path}` });
+        result = callback({
+          resourcePath: `${SCHEME}:${POINT_CUTS}:${joinPointPath}`
+        });
       });
 
       it("should generate the point cut and return the generated module to the read resource hook", () => {
-        expect(generatePointCut).toHaveBeenCalledWith({ pointCuts, path });
+        expect(generatePointCut).toHaveBeenCalledWith({
+          pointCuts,
+          joinPointPath
+        });
         expect(result).toBe(output);
       });
     });
 
     describe("and the resource is prefixed with the join points type", () => {
-      const path = "test-path";
+      const joinPointPath = "test-path";
       const output = Symbol("test-output");
 
       beforeEach(() => {
         const [, callback] = tap.mock.lastCall;
         generateJoinPoint.mockReturnValue(output);
-        result = callback({ resourcePath: `${SCHEME}:${JOIN_POINTS}:${path}` });
+        result = callback({
+          resourcePath: `${SCHEME}:${JOIN_POINTS}:${joinPointPath}`
+        });
       });
 
       it("should generate a join point and return the generated module to the read resource hook", () => {
         expect(generateJoinPoint).toHaveBeenCalledWith({
           joinPointFiles,
-          path
+          joinPointPath
         });
         expect(result).toBe(output);
       });

@@ -4,10 +4,10 @@ import styles from "./styles.module.css";
 import featuresStore from "./featuresStore";
 
 const { providerFactory } = featuresStore;
+const FeaturesProvider = providerFactory();
 
 const Example = ({ children, experiments }) => {
   const searchParams = useSearchParams();
-  const FeaturesProvider = providerFactory();
   return (
     <div className={styles.experiments}>
       {searchParams.has("showExperiments") ? (

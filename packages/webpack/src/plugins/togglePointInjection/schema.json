@@ -6,30 +6,38 @@
       "items": {
         "type": "object",
         "properties": {
-          "name": {
+          "joinPointResolver": {
+            "instanceof": "Function"
+          },
+          "loadStrategy": {
+            "type": "object",
+            "properties": {
+              "importCodeGenerator": {
+                "instanceof": "Function"
+              },
+              "pack": {
+                "instanceof": "Function"
+              },
+              "unpack": {
+                "instanceof": "Function"
+              }
+            },
+            "required": ["importCodeGenerator"]
+          },
+          "name": { "type": "string" },
+          "toggleHandlerFactoryModuleSpecifier": {
             "type": "string"
           },
-          "togglePointModule": {
-            "type": "string"
-          },
+          "togglePointModuleSpecifier": { "type": "string" },
           "variantGlobs": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "toggleHandler": {
-            "type": "string"
-          },
-          "joinPointResolver": {
-            "instanceof": "Function"
           }
         },
         "additionalProperties": false,
-        "required": [
-          "name",
-          "togglePointModule"
-        ]
+        "required": ["name", "togglePointModuleSpecifier"]
       }
     },
     "webpackNormalModule": {
@@ -37,7 +45,5 @@
     }
   },
   "additionalProperties": false,
-  "required": [
-    "pointCuts"
-  ]
+  "required": ["pointCuts"]
 }

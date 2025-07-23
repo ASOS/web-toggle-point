@@ -1,0 +1,18 @@
+Content Management
+==================
+
+Explanation
+-----------
+
+This example demonstrates the `withToggledHookFactory` from the `react-pointcuts` package, and the `reactContextFeaturesStoreFactory` from the `features` package.
+
+A React hook is varied, from a ["no operation"](https://en.wikipedia.org/wiki/NOP_\(code\)) control version, to one that enables [design mode](https://developer.mozilla.org/en-US/docs/Web/API/Document/designMode) for the document.
+
+Activation
+----------
+
+If a cookie exists with the name `i-am-a-content-editor` and any value, on refreshing the page, the document becomes editable. Its background will be green to help indicate this state.
+
+After making changes, pressing [Command](https://en.wikipedia.org/wiki/Command_key) and S (⌘+S or ⊞+S, per O/S) will save changes back to disk, via a [server function](https://react.dev/reference/rsc/server-functions). The background will flash blue whilst save is in progress.
+
+N.B. The action uses [turndown](https://github.com/mixmark-io/turndown) to convert the HTML back to [Markdown](https://en.wikipedia.org/wiki/Markdown), so is limited by what that can interpret.
