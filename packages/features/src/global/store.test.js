@@ -1,11 +1,11 @@
 import globalFeaturesStoreFactory from "./store";
 
 describe("globalFeaturesStoreFactory", () => {
-  const name = "test-name";
+  const toggleType = "test-toggle-type";
   let featuresStoreFactory;
 
   beforeEach(() => {
-    featuresStoreFactory = globalFeaturesStoreFactory({ name });
+    featuresStoreFactory = globalFeaturesStoreFactory({ toggleType });
   });
 
   describe("when using a value", () => {

@@ -26,7 +26,7 @@ const globalFeaturesStoreFactory = ({ toggleType }) => {
     useValue: ({ value }) => {
       storeMap.set(identifier, value);
     },
-    getFeatures: () => storeMap.get(identifier),
+    getFeatures: () => storeMap.get(identifier)
   };
 };
 

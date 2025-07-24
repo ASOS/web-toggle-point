@@ -2,11 +2,11 @@ import reactContextStoreFactory from "./store";
 import { render, screen } from "@testing-library/react";
 
 describe("reactContextFeaturesStoreFactory", () => {
-  const name = "test-name";
+  const toggleType = "test-toggle-type";
   let reactContextStore;
 
   beforeEach(() => {
-    reactContextStore = reactContextStoreFactory({ name });
+    reactContextStore = reactContextStoreFactory({ toggleType });
   });
 
   describe("when creating a provider", () => {
@@ -27,9 +27,9 @@ describe("reactContextFeaturesStoreFactory", () => {
       );
     });
 
-    it("should set an appropriate display name for the provider", () => {
+    it("should set an appropriate display name for the provider, based on the provided toggleType", () => {
       expect(Provider.displayName).toBe(
-        `${name[0].toUpperCase() + name.slice(1)}ToggleProvider`
+        `${toggleType[0].toUpperCase() + toggleType.slice(1)}ToggleProvider`
       );
     });
 
