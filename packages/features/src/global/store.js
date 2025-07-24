@@ -1,6 +1,6 @@
 const storeMap = new WeakMap();
 
-// eslint-disable-next-line no-empty -- https://github.com/babel/babel/issues/15156
+// eslint-disable-next-line prettier/prettier, no-empty -- https://github.com/babel/babel/issues/15156
 {}
 /**
  * A factory function used to create a store for features, held globally in the application.
