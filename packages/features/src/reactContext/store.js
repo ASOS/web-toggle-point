@@ -5,9 +5,12 @@ import PropTypes from "prop-types";
  * A factory function used to create a store for features, held in a {@link https://reactjs.org/docs/context.html|React context}.
  * A thin wrapper around a context, used as an extension point for future plugins.
  * @memberof module:web-toggle-point-features
+ * @implements module:web-toggle-point-features.FeaturesStoreFactory
+ * @param {object} params parameters.
+ * @param {string} params.name The name of type of toggle in the store, used for debugging and the display name of the react context provider.
  * @returns {module:web-toggle-point-features.reactContextFeaturesStore} A store for features, held within a {@link https://reactjs.org/docs/context.html|React context}.
  */
-const reactContextFeaturesStoreFactory = ({ name }) => {
+const reactContextFeaturesStoreFactory = ({ toggleType }) => {
   const context = createContext();
 
   /**
@@ -25,7 +28,7 @@ const reactContextFeaturesStoreFactory = ({ name }) => {
         children: PropTypes.node.isRequired,
         value: PropTypes.object.isRequired
       };
-      Provider.displayName = `${name[0].toUpperCase() + name.slice(1)}ToggleProvider`;
+      Provider.displayName = `${toggleType[0].toUpperCase() + toggleType.slice(1)}ToggleProvider`;
       return Provider;
     },
     getFeatures: useContext.bind(undefined, context)

@@ -4,7 +4,15 @@ import "./external";
  * Application code for holding feature toggle state
  * @module web-toggle-point-features
  */
-
+/**
+ * Factories for feature toggle stores
+ *
+ * @callback FeaturesStoreFactory
+ * @memberof module:web-toggle-point-features
+ * @param {object} params parameters
+ * @param {string} params.toggleType The type of toggle in the store
+ * @returns {module:web-toggle-point-features.FeaturesStore} A store for features
+ */
 /**
  * Interface for feature toggle stores
  *

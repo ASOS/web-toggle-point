@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-07-24
+
+### Changed
+
+- added a `FeaturesStoreFactory` interface that insists on a `toggleType` input to all features store factories
+  - for the `nodeRequestScopedFeaturesStoreFactory`, this becomes a unique key against [a realm-wide Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#shared_symbols_in_the_global_symbol_registry), to ensure the store is shared in multi-runtime realms (e.g. NextJS compiled applications)
+
+### Fixed
+
+- ensured interfaces in JSDoc output properly
+  - concede to a [`@callback`](https://jsdoc.app/tags-callback) to represent the `FeaturesStoreFactory` interface.
+- descriptions in test files properly matching factories
+- some line-breaks in this CHANGELOG
+
 ## [0.3.4] - 2025-07-14
 
 ### Fixed
@@ -47,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `nodeRequestScopedStoreFactory` export, a "feature store" factory function designed for use within a request-scoped server runtime, e.g. primed within Express middleware
 - `reactContextFeaturesStoreFactory` export, a "feature store" factory function, designed to wrap a proportion of a react application with a contextual features state 
 - `ssrBackedReactContextFeaturesStoreFactory` export, a "feature store" factory function, designed to wrap a proportion of a react application with a contextual features state, backed by the [`ssr` package](../../ssr/docs/README.md) for use without an SSR-compatible React framework.
+
 ...after spending _far too long_ trying to get node `"exports"` with paths working, so that could better create specific node/browser import paths, before giving up (it works, but ESLint doesn't play ball...)
 
 ## [0.2.4] - 2024-11-27

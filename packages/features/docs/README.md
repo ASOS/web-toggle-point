@@ -16,7 +16,11 @@ The package contains the following exports:
 
 ### `globalFeaturesStoreFactory`
 
-A "global" features store factory: a thin wrapper around a singleton, this is an extension point for future plugins etc.
+A "global" features store factory: a thin wrapper around a singleton, this is an extension point for future plugins etc.  Each invocation will create a new store, even with a `toggleType` matching a prior invocation.
+
+It accepts the following parameters:
+- `toggleType`
+  - the type of the toggle, used only for debugging.
 
 It exports a store with:
 
@@ -51,6 +55,10 @@ const getActiveFeatures = useSnapshot.bind(undefined, value); // passed to `with
 
 A "request scoped" features store factory, for use in [Node](https://nodejs.org/).
 
+It accepts the following parameters:
+- `toggleType`
+  - the type of the toggle, this is keyed against a singleton referenced by [a runtime-wide global symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#shared_symbols_in_the_global_symbol_registry), to ensure it works across multi-compilation runtimes (e.g. NextJs) / throughout a [realm](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model#realms).  N.B. Each invocation with the same toggleType will return the initial store.
+
 It exports a store with:
 - a `useValue` function that sets a current value, taking a `scopeCallBack` (along with a `value`), under which the value is scoped.
    - This is using [`AsyncLocalStorage.run`](https://nodejs.org/api/async_context.html#asynclocalstoragerunstore-callback-args) under the hood, which can be plugged into Express middleware thus:
@@ -74,6 +82,10 @@ It exports a store with:
 
 ### `reactContextFeaturesStoreFactory`
 
+It accepts the following parameters:
+- `toggleType`
+  - the type of the toggle, forming the displayName of the react context provider
+
 It exports a store with:
 - a `providerFactory` factory function, creating a [react context provider](https://reactjs.org/docs/context.html#contextprovider).
   - appropriate parts of the react tree, that need to have toggled react components, should be wrapped by this provider. It should be passed a value representing active features state.
@@ -88,8 +100,8 @@ It exports a store with the same signature as that exported by `reactContextFeat
 It accepts the following parameters:
 - `namespace`
   - this becomes a prefix for the `id` of the `application/json` script written to the page, useful for pages running multiple react applications.
-- `name`
-  - the type of the toggle, the latter part of the `id` of the aforementioned script, and becoming the prop holding the features state.
+- `toggleType`
+  - the type of the toggle, the latter part of the `id` of the aforementioned script, and becoming the prop holding the features state, and forming the displayName of the underlying react context provider
 - `logWarning`
   - a method to log warnings, should the serialized json somehow become malformed when hydrating the client application
     - this was designed to allow modifications of markup in systems upstream of the origin, but downstream of the browser, with a view to ensure adequate telemetry is in place.

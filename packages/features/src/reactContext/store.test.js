@@ -1,7 +1,7 @@
 import reactContextStoreFactory from "./store";
 import { render, screen } from "@testing-library/react";
 
-describe("reactContextStoreFactory", () => {
+describe("reactContextFeaturesStoreFactory", () => {
   const name = "test-name";
   let reactContextStore;
 

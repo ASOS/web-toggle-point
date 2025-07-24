@@ -8,7 +8,7 @@ jest.mock("async_hooks", () => ({
   }))
 }));
 
-describe("store", () => {
+describe("nodeRequestScopedFeaturesStoreFactory", () => {
   let requestScopedStore;
 
   beforeEach(() => {
