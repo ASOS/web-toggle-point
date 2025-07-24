@@ -9,10 +9,13 @@ const storeMap = new WeakMap();
  * Consider {@link https://github.com/christophehurpeau/deep-freeze-es6|deep freezing} the value to prevent accidental mutation, if this is intended to be static.
  * For reactive decisions, consider implementing something that allows for reactivity e.g. a {@link https://github.com/pmndrs/valtio|valtio/vanilla} proxy, and subscribe appropriately in a toggle point.
  * @memberof module:web-toggle-point-features
+ * @implements module:web-toggle-point-features.FeaturesStoreFactory
+ * @param {object} params parameters
+ * @param {string} params.toggleType The type of toggle in the store, used for debugging
  * @returns {module:web-toggle-point-features.globalFeaturesStore} A store for features, held globally in the application.
  */
-const globalFeaturesStoreFactory = () => {
-  const identifier = Symbol();
+const globalFeaturesStoreFactory = ({ toggleType }) => {
+  const identifier = Symbol(toggleType);
   /**
    * @name globalFeaturesStore
    * @memberof module:web-toggle-point-features

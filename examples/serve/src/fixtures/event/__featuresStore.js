@@ -1,6 +1,6 @@
 import { globalFeaturesStoreFactory as featuresStoreFactory } from "@asos/web-toggle-point-features";
 
-const featuresStore = featuresStoreFactory();
+const featuresStore = featuresStoreFactory({ toggleType: "events" });
 
 const getEvent = () => {
   const dateString = new Intl.DateTimeFormat("en-GB").format(new Date());
