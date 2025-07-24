@@ -35,7 +35,7 @@ describe("globalFeaturesStoreFactory", () => {
       let newFeaturesStoreFactory;
 
       beforeEach(() => {
-        newFeaturesStoreFactory = globalFeaturesStoreFactory({ name });
+        newFeaturesStoreFactory = globalFeaturesStoreFactory({ toggleType });
       });
 
       it("should not share the value with the new store", () => {
