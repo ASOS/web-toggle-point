@@ -1,4 +1,4 @@
-import { nodeRequestScopedStoreFactory as featuresStoreFactory } from "@asos/web-toggle-point-features";
+import { nodeRequestScopedFeaturesStoreFactory as featuresStoreFactory } from "@asos/web-toggle-point-features";
 
 const featuresStore = featuresStoreFactory({ toggleType: "api version" });
 

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- renamed `nodeRequestScopedFeaturesStoreFactory` from `nodeRequestScopedStoreFactory` for consistency
 - ensured interfaces in JSDoc output properly
   - concede to a [`@callback`](https://jsdoc.app/tags-callback) to represent the `FeaturesStoreFactory` interface.
 - descriptions in test files properly matching factories
