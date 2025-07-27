@@ -1,6 +1,5 @@
 import React from "react";
 import { FEATURE_KEY } from "./constants";
-import type { RequireContext } from "webpack-env";
 
 type ReactComponentModuleType = {
   default: React.Component;
@@ -11,9 +10,8 @@ interface ToggleHandler {
     featuresMap: Map<string, Map<string, ReactComponentModuleType>>
   ) => React.Component;
   joinPoint: ReactComponentModuleType;
-  variants: RequireContext;
+  variants: __WebpackModuleApi.RequireContext;
 }
-
 export default ({ togglePoint, joinPoint, variants }: ToggleHandler) => {
   const variantsMap = new Map<string, ReactComponentModuleType>();
   const featuresMap = new Map([[FEATURE_KEY, variantsMap]]);
