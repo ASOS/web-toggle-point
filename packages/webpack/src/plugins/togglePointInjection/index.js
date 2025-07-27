@@ -46,7 +46,7 @@ class TogglePointInjection {
   constructor(options) {
     validate(schema, options, { name: PLUGIN_NAME, baseDataPath: "options" });
     this.options = {
-      NormalModule: webpack.NormalModule,
+      webpackNormalModule: webpack.NormalModule,
       ...options
     };
   }
