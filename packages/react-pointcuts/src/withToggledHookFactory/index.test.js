@@ -46,7 +46,7 @@ describe("withToggledHookFactory", () => {
           expect(useCodeMatches).toHaveBeenCalledWith({
             featuresMap,
             variantKey: expectedVariantKey,
-            activeFeatures: mockActiveFeatures,
+            activeFeatures: mockActiveFeatures
           });
         });
 
@@ -60,11 +60,11 @@ describe("withToggledHookFactory", () => {
         beforeEach(() => {
           mockMatches.matchedVariant = {
             codeRequest: {
-              default: variant,
-            },
+              default: variant
+            }
           };
           ({ result } = renderHook(toggledHook, {
-            initialProps,
+            initialProps
           }));
         });
 
@@ -104,8 +104,8 @@ describe("withToggledHookFactory", () => {
       beforeEach(() => {
         mockMatches.matchedVariant = {
           codeRequest: {
-            default: jest.fn(),
-          },
+            default: jest.fn()
+          }
         };
         pluginsHookFactory.mockReturnValueOnce(mockPluginsHook);
         ({ result } = renderHook(toggledHook));
