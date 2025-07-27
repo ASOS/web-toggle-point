@@ -14,6 +14,16 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
+## [0.11.0] - 2025-05-27
+
+### Changed
+
+- removed the `tags` badge from main `README.md`, this monorepo does not use release tags
+
+### Added
+
+- a `discussion` badge
+
 ## [0.10.6] - 2025-07-14
 
 ### Fixed
