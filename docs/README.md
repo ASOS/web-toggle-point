@@ -5,10 +5,10 @@
 A library providing a means to toggle or branch web application code.
 </p>
 <p align="center">
-   <a href="https://github.com/ASOS/web-toggle-point/tags/"><img src="https://img.shields.io/github/tag/ASOS/web-toggle-point" alt="Current version" /></a>
    <img src="https://github.com/ASOS/web-toggle-point/workflows/Pull Request Checks/badge.svg" alt="Current test status" />
    <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs are welcome" /></a>
    <a href="https://github.com/ASOS/web-toggle-point/issues/"><img src="https://img.shields.io/github/issues/ASOS/web-toggle-point" alt="toggle point issues" /></a>
+   <a href="https://github.com/ASOS/web-toggle-point/discussions/"><img src="https://img.shields.io/github/discussions/ASOS/web-toggle-point" alt="toggle point discussions" /></a>
    <img src="https://img.shields.io/github/stars/ASOS/web-toggle-point" alt="toggle point stars" />
    <img src="https://img.shields.io/github/forks/ASOS/web-toggle-point" alt="toggle point forks" />
    <img src="https://img.shields.io/github/license/ASOS/web-toggle-point" alt="toggle point license" />

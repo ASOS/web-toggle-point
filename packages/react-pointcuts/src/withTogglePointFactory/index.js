@@ -13,7 +13,7 @@ import getCodeSelectionPlugins from "../getCodeSelectionPlugins";
  * @param {object} params parameters
  * @param {function} params.getActiveFeatures a method to get active features. Called honouring the rules of hooks.
  * @param {external:HostApplication.logError} params.logError a method that logs errors
- * @param {string} [params.variantKey=bucket] A key use to identify a variant from the features data structure. Remaining members of the feature will be passed to the variant as props.
+ * @param {string} [params.variantKey='bucket'] A key use to identify a variant from the features data structure. Remaining members of the feature will be passed to the variant as props.
  * @param {Array<module:web-toggle-point-react-pointcuts~plugin>} [params.plugins] plugins to be used when toggling
  * Will be used when a toggled component throws an error that can be caught by an {@link https://reactjs.org/docs/error-boundaries.html|ErrorBoundary}.
  * When errors are caught, the control/base code will be used as the fallback component.
@@ -30,7 +30,7 @@ const withTogglePointFactory = ({
   getActiveFeatures,
   logError,
   variantKey = "bucket",
-  plugins = []
+  plugins
 }) => {
   const codeSelectionPlugins = getCodeSelectionPlugins(plugins);
 

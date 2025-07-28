@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import setExperimentHeaders from "../playwright.setExperimentHeaders";
 import locateWithinExample from "../playwright.locateInExample";
-import getFixtureURL from "../playwright.getFixtureUrl";
+import getFixtureURL from "../../playwright.getFixtureUrl";
 const fixtureURL = getFixtureURL(import.meta.url);
 
 test.describe("preventing toggling of a module using a toggleConfig", () => {

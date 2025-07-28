@@ -185,7 +185,7 @@ describe("togglePointInjection", () => {
     beforeEach(() => {
       options = {
         pointCuts,
-        webpackNormalModule: async () => MockNormalModule
+        webpackNormalModule: MockNormalModule
       };
       togglePointInjection = new TogglePointInjection(options);
     });
