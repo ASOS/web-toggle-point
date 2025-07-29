@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2025-07-29
+
+### Changed
+
+- consolidated setting of default optional values
+- changed `variants` array on join point data structure to a `Map` of relative to absolute path as `variantPathMap`
+- move away from webpack `import.meta.webpackContext` when generating join points, construct a `Map` manually instead
+  - add linking of join points, to supplant the functionality previously provided by `import.meta.webpackContext`
+- updated win32 path replacement, can effectively no-op on posix systems
+
+### Fixed
+
+- removed "next" peer dependency, this needn't be explicit
+- ensured files that cannot be resolved (by [enhanced-resolve](https://github.com/webpack/enhanced-resolve/)), for whatever reason, don't break the build
+
 ## [0.8.0] - 2025-05-27
 
 ### Changed
