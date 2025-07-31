@@ -31,23 +31,30 @@ It exports a store with:
 For protection against variation (or other) code modifying the toggle state unduly, the value passed could be [deep frozen](https://github.com/christophehurpeau/deep-freeze-es6), e.g.
 ```js
 import { deepFreeze } from "deep-freeze-es6";
-const value = deepFreeze(input);
+const initialValue = {};
+featuresStore.useValue({ value: deepFreeze(initialValue) });
 ```
-For reactive values, without the need for a React or other contextual wrapper, consider [`valtio`](https://github.com/pmndrs/valtio):
+For reactive values, without the need for a React or other contextual wrapper, consider wrapping an object with [`valtio`](https://github.com/pmndrs/valtio):
 ```js
 import { proxy } from "valtio/vanilla";
-const value = proxy(input);
+const initialValue = {};
+featuresStore.useValue({ value: proxy(initialValue) });
 ```
 ...which can then be subscribed to in an appropriate toggle point, to re-evaluate toggled functions:
 ```js
 import { subscribe } from "valtio/vanilla";
-subscribe(value, () => { /* re-evaluate */ });
+subscribe(featuresStore.getFeatures(), () => { /* re-evaluate */ });
 ```
 If using React (e.g. `react-pointcuts` package), can just use the native support in Valtio:
 ```js
 import { proxy, useSnapshot } from "valtio";
-const value = proxy(input); // passed to `stores/global`
-const getActiveFeatures = useSnapshot.bind(undefined, value); // passed to `withTogglePointFactory`
+const initialValue = {};
+featuresStore.useValue({ value: proxy(initialValue) });
+export const useValue = (input) =>  // consumed in updating code-paths
+  featuresStore.useValue({
+    value: Object.assign(featuresStore.getFeatures(), input)
+  });
+export const getActiveFeatures = () => useSnapshot(featuresStore.getFeatures()); // passed to `withTogglePointFactory`
 ```
 ...which will then re-render consuming components based on the parts of the toggle state they are reliant on.
 

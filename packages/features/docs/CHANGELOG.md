@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - concede to a [`@callback`](https://jsdoc.app/tags-callback) to represent the `FeaturesStoreFactory` interface.
 - descriptions in test files properly matching factories
 - some line-breaks in this CHANGELOG
+- more accurate [`valtio`](https://github.com/pmndrs/valtio) examples in the README
 
 ## [0.3.4] - 2025-07-14
 
