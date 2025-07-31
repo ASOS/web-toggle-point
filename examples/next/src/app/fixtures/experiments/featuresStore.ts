@@ -3,7 +3,7 @@
 import { reactContextFeaturesStoreFactory as featuresStoreFactory } from "@asos/web-toggle-point-features";
 
 const reactContextStore = featuresStoreFactory({
-  name: "Experiments"
+  toggleType: "experiments"
 });
 
 export default reactContextStore;
