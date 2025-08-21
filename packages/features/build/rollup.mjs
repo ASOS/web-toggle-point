@@ -22,13 +22,13 @@ export default async ({ config_isBrowser }) => {
     input,
     output: [
       {
-        dir: "lib/",
+        dir: "lib/storeFactories/",
         entryFileNames: `[name].${browserPrefix}js`,
         format: "es",
         sourcemap: true
       },
       {
-        dir: "lib/",
+        dir: "lib/storeFactories/",
         entryFileNames: `[name].${browserPrefix}es5.cjs`,
         format: "cjs",
         sourcemap: true

@@ -4,11 +4,11 @@
   "version": "0.4.0",
   "license": "MIT",
   "type": "module",
-  "main": "./lib/main.es5.cjs",
+  "main": "./lib/global.js",
   "sideEffects": false,
   "exports": {
     ".": null,
-    "./storeFactories/*": {
+    "./*": {
       "node": {
         "import": "./lib/*.js",
         "require": "./lib/*.es5.cjs"
@@ -34,7 +34,8 @@
   "scripts": {
     "build-dependencies": "path-exists ../../packages/ssr/lib || npm run --prefix ../../packages/ssr build",
     "prebuild": "npm run build-dependencies",
-    "build": "npm run clean && npm run build:browser && npm run build:server",
+    "build": "npm run clean && npm run build:browser && npm run build:server && npm run build:eslint-import-backfill",
+    "build:eslint-import-backfill": "rollup -c build/eslint-import-backfill.rollup.mjs",
     "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isBrowser true",
     "build:server": "rollup -c build/rollup.mjs --config_isBrowser false",
     "prepublishOnly": "npm run build",

@@ -5,6 +5,6 @@ const featuresStore = featuresStoreFactory();
 
 const [, audience] = document.cookie.match(/audience=(.+?)(;|$)/) || [];
 
-featuresStore.useValue({ value: audience });
+featuresStore.setValue({ value: audience });
 
 export default featuresStore;

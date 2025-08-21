@@ -16,6 +16,6 @@ const getEvent = () => {
   }
 };
 
-featuresStore.useValue({ value: getEvent() });
+featuresStore.setValue({ value: getEvent() });
 
 export default featuresStore;

@@ -3,6 +3,6 @@ import featuresStoreFactory from "@asos/web-toggle-point-features/storeFactories
 
 const featuresStore = featuresStoreFactory();
 
-featuresStore.useValue({ value: new URL(document.URL).pathname.slice(1) });
+featuresStore.setValue({ value: new URL(document.URL).pathname.slice(1) });
 
 export default featuresStore;

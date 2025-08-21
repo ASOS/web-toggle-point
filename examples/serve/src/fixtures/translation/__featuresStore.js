@@ -3,7 +3,7 @@ import featuresStoreFactory from "@asos/web-toggle-point-features/storeFactories
 
 const featuresStore = featuresStoreFactory();
 
-featuresStore.useValue({
+featuresStore.setValue({
   value: navigator.language || document.documentElement.lang
 });
 
