@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated to named exports version of "features" package ([0.4.0](../../../packages/features/docs/CHANGELOG.md#040---2025-07-15))
 
+### Fixed
+
+- import types explicitly from `@playwright/test` after unexpected pipeline failure
+
 ## [0.2.6] - 2025-07-14
 
 ### Changed
