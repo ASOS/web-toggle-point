@@ -6,13 +6,13 @@
   "type": "module",
   "main": "./lib/main.es5.cjs",
   "exports": {
-    "node": {
-      "import": "./lib/main.js",
-      "require": "./lib/main.es5.cjs"
-    },
-    "default": {
+    "browser": {
       "import": "./lib/browser.js",
       "require": "./lib/browser.es5.cjs"
+    },
+    "default": {
+      "import": "./lib/main.js",
+      "require": "./lib/main.es5.cjs"
     }
   },
   "repository": {

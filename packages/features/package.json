@@ -9,13 +9,13 @@
   "exports": {
     ".": null,
     "./*": {
-      "node": {
-        "import": "./lib/*.js",
-        "require": "./lib/*.es5.cjs"
-      },
-      "default": {
+      "browser": {
         "import": "./lib/*.browser.js",
         "require": "./lib/*.browser.es5.cjs"
+      },
+      "default": {
+        "import": "./lib/*.js",
+        "require": "./lib/*.es5.cjs"
       }
     }
   },
