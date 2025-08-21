@@ -17,7 +17,7 @@ const nodeRequestScopedFeaturesStoreFactory = () => {
    * @implements module:web-toggle-point-features.SingletonFeaturesStore
    */
   return {
-    useValue: ({ value, scopeCallBack }) => {
+    setValue: ({ value, scopeCallBack }) => {
       store.run(value, scopeCallBack);
     },
     getFeatures: () => {

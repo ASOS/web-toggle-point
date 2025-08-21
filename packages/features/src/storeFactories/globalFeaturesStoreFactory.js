@@ -20,7 +20,7 @@ const globalFeaturesStoreFactory = () => {
    * @implements module:web-toggle-point-features.SingletonFeaturesStore
    */
   return {
-    useValue: ({ value }) => {
+    setValue: ({ value }) => {
       storeMap.set(identifier, value);
     },
     getFeatures: () => storeMap.get(identifier)

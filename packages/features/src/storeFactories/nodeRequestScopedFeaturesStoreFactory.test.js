@@ -27,12 +27,12 @@ describe("nodeRequestScopedFeaturesStoreFactory", () => {
     });
   });
 
-  describe("when using a value", () => {
+  describe("when setting a value", () => {
     const value = Symbol("test-value");
     const scopeCallBack = Symbol("test-callback");
 
     beforeEach(() => {
-      requestScopedStore.useValue({ value, scopeCallBack });
+      requestScopedStore.setValue({ value, scopeCallBack });
     });
 
     it("should scope the value to the descendants of the callback, by running it in the local storage", () => {
