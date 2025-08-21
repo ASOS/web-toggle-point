@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Moved to named exports, to ensure that the "ssr" package is not a dependency, unless importing the `ssrBackedReactContextFeaturesStoreFactory`
   - This reverts to the intent of version [version 0.3.0](#030---2024-11-28), but not capitulating to ESLint's issues
+- Support firefox by not using a `Symbol` as a `WeakMap` key (https://github.com/ASOS/web-toggle-point/issues/57)
 
 ### Changed
 
