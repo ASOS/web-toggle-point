@@ -27,7 +27,8 @@ describe("serializationFactory", () => {
     let result;
 
     beforeEach(() => {
-      result = serialization.getScriptMarkup({ content });
+      const { getScriptMarkup } = serialization;
+      result = getScriptMarkup({ content });
     });
 
     it("should return a string containing a JSON script tag, appropriately quoted by jsesc", () => {
@@ -44,8 +45,9 @@ describe("serializationFactory", () => {
   describe("when rendering a scriptReactElement with React", () => {
     let result;
     beforeEach(() => {
+      const { getScriptReactElement } = serialization;
       ({ container: result } = render(
-        serialization.getScriptReactElement({ content })
+        getScriptReactElement({ content })
       ));
     });
 
@@ -69,8 +71,9 @@ describe("serializationFactory", () => {
 
     describe("when a valid JSON string is passed", () => {
       beforeEach(() => {
+        const { getJSONFromScript } = serialization;
         document.body.innerHTML = `<script id="${id}" type="application/json">${validJsonString}</script>`;
-        result = serialization.getJSONFromScript();
+        result = getJSONFromScript();
       });
 
       afterEach(() => {
@@ -88,8 +91,9 @@ describe("serializationFactory", () => {
 
     describe("when an invalid JSON string is passed", () => {
       beforeEach(() => {
+        const { getJSONFromScript } = serialization;
         document.body.innerHTML = `<script id="${id}" type="application/json">${invalidJsonString}</script>`;
-        result = serialization.getJSONFromScript();
+        result = getJSONFromScript();
       });
 
       it("should have logged a warning", () => {

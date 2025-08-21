@@ -1,6 +1,14 @@
 import jsesc from "jsesc";
 import parse from "html-react-parser";
 
+const getScriptMarkup = (id, { content }) => {
+  return `<script id="${id}" type="application/json">${jsesc(content, {
+    isScriptContext: true,
+    json: true
+  })}</script>`;
+};
+
+
 // eslint-disable-next-line prettier/prettier, no-empty -- https://github.com/babel/babel/issues/15156
 {}
 /**
@@ -53,14 +61,14 @@ const serializationFactory = ({ id, logWarning }) =>
      * @param {object} content The JSON content to be serialized.
      * @returns {string} A string containing markup for a type="application/json" script element with the specified content.
      */
-    getScriptMarkup({ content }) {
-      return `<script id="${id}" type="application/json">${jsesc(content, {
-        isScriptContext: true,
-        json: true
-      })}</script>`;
-    },
+    getScriptMarkup: getScriptMarkup.bind(null, id),
+    /**
+     * @memberof module:web-toggle-point-ssr.serialization
+     * @param {object} content The JSON content to be serialized.
+     * @returns {external:React.Component} A react component for rendering a type="application/json" script element with the specified content.
+     */
     getScriptReactElement(...args) {
-      return parse(this.getScriptMarkup(...args));
+      return parse(getScriptMarkup.apply(null, [id, ...args]));
     },
     getJSONFromScript() {
       const input = document.querySelector(`#${id}`)?.textContent;
