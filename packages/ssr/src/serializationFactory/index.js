@@ -8,7 +8,6 @@ const getScriptMarkup = (id, { content }) => {
   })}</script>`;
 };
 
-
 // eslint-disable-next-line prettier/prettier, no-empty -- https://github.com/babel/babel/issues/15156
 {}
 /**

@@ -46,9 +46,7 @@ describe("serializationFactory", () => {
     let result;
     beforeEach(() => {
       const { getScriptReactElement } = serialization;
-      ({ container: result } = render(
-        getScriptReactElement({ content })
-      ));
+      ({ container: result } = render(getScriptReactElement({ content })));
     });
 
     it("should return a react element containing a JSON script tag, appropriately quoted by jsesc", () => {
