@@ -12,7 +12,7 @@ const storeMap = new WeakMap();
  * @returns {module:web-toggle-point-features.globalFeaturesStore} A store for features, held globally in the application.
  */
 const globalFeaturesStoreFactory = () => {
-  const identifier = Symbol();
+  const identifier = {};
   /**
    * @name globalFeaturesStore
    * @memberof module:web-toggle-point-features
@@ -20,7 +20,7 @@ const globalFeaturesStoreFactory = () => {
    * @implements module:web-toggle-point-features.SingletonFeaturesStore
    */
   return {
-    useValue: ({ value }) => {
+    setValue: ({ value }) => {
       storeMap.set(identifier, value);
     },
     getFeatures: () => storeMap.get(identifier)

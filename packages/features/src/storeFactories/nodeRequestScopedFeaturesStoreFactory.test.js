@@ -1,4 +1,4 @@
-import requestScopedStoreFactory from "./store";
+import nodeRequestScopedFeaturesStoreFactory from "./nodeRequestScopedFeaturesStoreFactory";
 import { AsyncLocalStorage } from "async_hooks";
 
 jest.mock("async_hooks", () => ({
@@ -8,11 +8,11 @@ jest.mock("async_hooks", () => ({
   }))
 }));
 
-describe("store", () => {
+describe("nodeRequestScopedFeaturesStoreFactory", () => {
   let requestScopedStore;
 
   beforeEach(() => {
-    requestScopedStore = requestScopedStoreFactory();
+    requestScopedStore = nodeRequestScopedFeaturesStoreFactory();
   });
 
   it("should create an AsyncLocalStorage store", () => {
@@ -27,12 +27,12 @@ describe("store", () => {
     });
   });
 
-  describe("when using a value", () => {
+  describe("when setting a value", () => {
     const value = Symbol("test-value");
     const scopeCallBack = Symbol("test-callback");
 
     beforeEach(() => {
-      requestScopedStore.useValue({ value, scopeCallBack });
+      requestScopedStore.setValue({ value, scopeCallBack });
     });
 
     it("should scope the value to the descendants of the callback, by running it in the local storage", () => {

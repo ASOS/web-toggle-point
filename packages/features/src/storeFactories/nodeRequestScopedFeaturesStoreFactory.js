@@ -5,19 +5,19 @@ import { AsyncLocalStorage } from "async_hooks";
  * Should only be used server-side, for anything user or request specific.
  * A thin wrapper around node {@link https://nodejs.org/api/async_context.html#class-asynclocalstorage|AsyncLocalStorage}, used as an extension point for future plugins.
  * @memberof module:web-toggle-point-features
- * @returns {module:web-toggle-point-features.requestScopedFeaturesStore} A store for features, scoped for the current request.
+ * @returns {module:web-toggle-point-features.nodeRequestScopedFeaturesStore} A store for features, scoped for the current request.
  */
-const requestScopedFeaturesStoreFactory = () => {
+const nodeRequestScopedFeaturesStoreFactory = () => {
   const store = new AsyncLocalStorage();
 
   /**
-   * @name requestScopedFeaturesStore
+   * @name nodeRequestScopedFeaturesStore
    * @memberof module:web-toggle-point-features
    * @implements module:web-toggle-point-features.FeaturesStore
    * @implements module:web-toggle-point-features.SingletonFeaturesStore
    */
   return {
-    useValue: ({ value, scopeCallBack }) => {
+    setValue: ({ value, scopeCallBack }) => {
       store.run(value, scopeCallBack);
     },
     getFeatures: () => {
@@ -30,4 +30,4 @@ const requestScopedFeaturesStoreFactory = () => {
   };
 };
 
-export default requestScopedFeaturesStoreFactory;
+export default nodeRequestScopedFeaturesStoreFactory;

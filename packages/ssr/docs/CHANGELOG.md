@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.4] - 2025-08-21
+
+### Fixed
+
+- moved to `default` and `browser` exports from `node` and `default`, to support typescript module resolution
+- support de-structuring of the serialization object returned by the serialization factory, via changed use of `this`
+
 ## [0.2.3] - 2025-03-06
 
 ### Changed
