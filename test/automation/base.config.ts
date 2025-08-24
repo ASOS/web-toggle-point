@@ -1,4 +1,4 @@
-import { devices, ReporterDescription } from "@playwright/test";
+import { devices, type ReporterDescription } from "@playwright/test";
 
 const baseConfig = {
   fullyParallel: true,

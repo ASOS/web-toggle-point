@@ -1,5 +1,6 @@
 import createMDX from "@next/mdx";
 import remarkGfm from "remark-gfm";
+import webpackNormalModule from "next/dist/compiled/webpack/NormalModule.js";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -17,8 +18,7 @@ const togglePointInjection = new TogglePointInjection({
       ]
     }
   ],
-  webpackNormalModule: async () =>
-    (await import("next/dist/compiled/webpack/NormalModule.js")).default
+  webpackNormalModule
 });
 
 nextConfig.webpack = (config) => {

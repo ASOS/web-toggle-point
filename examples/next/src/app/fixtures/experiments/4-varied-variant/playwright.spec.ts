@@ -1,4 +1,4 @@
-import { test, expect, ConsoleMessage } from "@playwright/test";
+import { test, expect, type ConsoleMessage } from "@playwright/test";
 import setExperimentHeaders from "../playwright.setExperimentHeaders";
 import locateWithinExample from "../playwright.locateInExample";
 import getFixtureURL from "../playwright.getFixtureUrl";
