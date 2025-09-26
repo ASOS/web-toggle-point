@@ -1,5 +1,7 @@
 # Using Varied Code without Toggling its Directory
 
+## Explanation
+
 This example demonstrates the use of a `__toggleConfig.json` within a folder,
 preventing a variation folder from being connected to a join point, yet showing
 that this variation folder can still be accessed from elsewhere in the codebase.
@@ -13,6 +15,8 @@ only _some_ consumers when the variation is active.
 
 This example demonstrates a page that renders a component and a string value that is
 imported both by the page and the component.
+
+## Activation
 
 If an `experiments` header is set, with a `"test-feature": { "bucket": "test-variant" }`
 decision, the varied component will show, including the varied dependent string value

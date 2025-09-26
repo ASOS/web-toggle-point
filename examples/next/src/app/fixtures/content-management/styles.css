@@ -1,0 +1,11 @@
+body {
+  padding: 3em;
+
+  &[data-design-mode] {
+    background: #eeffee;
+  }
+
+  &[data-is-saving] {
+    background: #eeeeff;
+  }
+}

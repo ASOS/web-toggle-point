@@ -19,6 +19,41 @@ export type Experiments = {
 };
 ```
 
+The fixtures are using a contrived point cut plugin, replicating an Optimizely activation handler:
+
+```js
+{
+  onCodeSelected: ({ matchedFeatures }) => {
+    if (matchedFeatures?.length) {
+      const [[feature]] = matchedFeatures;
+      console.log(
+        `activated ${feature} with audience ${getFeatures().audience}`
+      );
+    }
+  }
+}
+```
+
+...which logs the activation event normally destined for the toggle router (Optimizely) to the console.
+
+A contrived server function called `getExperiments` exists to parse inbound headers containing experiments, 
+used to drive the toggling.
+
+## Usage
+
+(from the `examples/next` folder of the monorepo)
+
+1. install [mod header](https://modheader.com/), or some other tool for modifying request headers sent in a browser
+2. `npm install`
+3. `npm run build`
+4. `npm run start`
+5. open `localhost:3000/fixtures/experiments` in a browser
+
+N.B. To confirm the `experiments` header you've set with `mod header`, you can add `?showExperiments=true` 
+to the URL to render the value to the top of the page.
+If you're not seeing the experiments header show up, try refreshing the page.  NextJs is perhaps pre-caching 
+the pages.
+
 ## Examples
 
 1. [Varying a Module](./1-varied-component/)
