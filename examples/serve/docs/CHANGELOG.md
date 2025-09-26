@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - import types explicitly from `@playwright/test` after unexpected pipeline failure
-- loosened playwright image snapshot [max pixel difference ratio](https://playwright.dev/docs/api/class-pageassertions#page-assertions-to-have-screenshot-1-option-max-diff-pixel-ratio) to 0.1, after [new windows false-negative](https://github.com/ASOS/web-toggle-point/actions/runs/18037892128/job/51329062944) (with a bit of headroom)
+- updated pride image after update to windows chromium emojis
 
 ## [0.2.6] - 2025-07-14
 
