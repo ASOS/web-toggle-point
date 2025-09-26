@@ -1,10 +1,11 @@
 import globalFeaturesStoreFactory from "./store";
 
 describe("globalFeaturesStoreFactory", () => {
+  const toggleType = "test-toggle-type";
   let featuresStoreFactory;
 
   beforeEach(() => {
-    featuresStoreFactory = globalFeaturesStoreFactory();
+    featuresStoreFactory = globalFeaturesStoreFactory({ toggleType });
   });
 
   describe("when using a value", () => {
@@ -34,7 +35,7 @@ describe("globalFeaturesStoreFactory", () => {
       let newFeaturesStoreFactory;
 
       beforeEach(() => {
-        newFeaturesStoreFactory = globalFeaturesStoreFactory();
+        newFeaturesStoreFactory = globalFeaturesStoreFactory({ toggleType });
       });
 
       it("should not share the value with the new store", () => {
