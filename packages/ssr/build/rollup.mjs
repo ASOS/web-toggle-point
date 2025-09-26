@@ -10,8 +10,8 @@ import terser from "@rollup/plugin-terser";
 export default ({ config_isClient }) => {
   const CLIENT = JSON.parse(config_isClient);
   const [esOutputFile, cjsOutputFile, extraPlugins] = {
-    false: [pkg.exports.node.import, pkg.exports.node.require, []],
-    true: [pkg.exports.default.import, pkg.exports.default.require, [terser()]]
+    false: [pkg.exports.default.import, pkg.exports.default.require, []],
+    true: [pkg.exports.browser.import, pkg.exports.browser.require, [terser()]]
   }[CLIENT];
 
   return {
