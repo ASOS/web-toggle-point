@@ -1,6 +1,6 @@
 import { build } from "webpack-test-utils";
 import { readFile } from "fs/promises";
-import { resolve } from "path";
+import { posix } from "path";
 import TogglePointInjection from "./index.js";
 import { PLUGIN_NAME } from "./constants.js";
 
@@ -34,7 +34,7 @@ describe("togglePointInjection", () => {
     fileSystem = {
       "node_modules/@asos/web-toggle-point-webpack/pathSegmentToggleHandler":
         await readFile(
-          resolve(
+          posix.resolve(
             __dirname,
             "..",
             "..",
@@ -102,7 +102,7 @@ describe("togglePointInjection", () => {
 
       it("should log the fact that the toggle point was found", () => {
         expect(getLogOfType("info")).toEqual(
-          `Identified '${name}' point cut for join point '${modulesFolder}${moduleName}' with potential variants:\n./${variantsFolder}/${testFeature}/${testVariant}/${moduleName}`
+          `Identified '${name}' point cut for join point '${modulesFolder}${moduleName}' with potential variants:\n${modulesFolder}${variantsFolder}/${testFeature}/${testVariant}/${moduleName}`
         );
       });
 

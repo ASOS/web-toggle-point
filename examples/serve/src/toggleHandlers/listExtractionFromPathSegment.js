@@ -1,9 +1,9 @@
-export default ({ togglePoint, joinPoint, variants }) => {
-  const featuresMap = variants.keys().reduce((map, key) => {
+export default ({ togglePoint, joinPoint, variantPathMap }) => {
+  const featuresMap = variantPathMap.keys().reduce((map, key) => {
     const [, , value] = key.split("/");
     const list = value.split(",");
     for (const value of list) {
-      map.set(value, variants(key));
+      map.set(value, variantPathMap.get(key));
     }
     return map;
   }, new Map());

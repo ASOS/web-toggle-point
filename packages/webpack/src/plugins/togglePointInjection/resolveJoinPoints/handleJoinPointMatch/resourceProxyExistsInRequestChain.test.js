@@ -1,13 +1,14 @@
 import resourceProxyExistsInRequestChain from "./resourceProxyExistsInRequestChain";
 import { createMockGraph } from "../../../../../test/test-utils";
 
-const moduleGraph = { getIncomingConnections: jest.fn() };
 const proxyResource = Symbol("test-proxy-resource");
 
 describe("resourceProxyExistsInRequestChain", () => {
   let result;
 
   describe("when the issuer module is the proxy resource", () => {
+    const moduleGraph = { getIncomingConnections: jest.fn() };
+
     beforeEach(() => {
       result = resourceProxyExistsInRequestChain({
         moduleGraph,
@@ -118,28 +119,54 @@ describe("resourceProxyExistsInRequestChain", () => {
       });
 
       describe("and one of the modules that imported the issuer module was not imported by the proxy resource", () => {
-        let calls;
-
-        beforeEach(() => {
-          result = resourceProxyExistsInRequestChain({
-            moduleGraph,
-            issuerModule,
-            proxyResource
+        describe("and there is a circular dependency", () => {
+          beforeEach(() => {
+            let count = 0;
+            const newModuleGraph = {
+              ...moduleGraph,
+              getIncomingConnections: jest.fn().mockImplementation((module) => {
+                if (count++ === 10) {
+                  count = 0;
+                  return moduleGraph.getIncomingConnections(issuerModule);
+                }
+                return moduleGraph.getIncomingConnections(module);
+              })
+            };
+            result = resourceProxyExistsInRequestChain({
+              moduleGraph: newModuleGraph,
+              issuerModule,
+              proxyResource
+            });
           });
 
-          calls = moduleGraph.getIncomingConnections.mock.calls;
+          it("should return false, without locking up / running forever", () => {
+            expect(result).toBe(false);
+          });
         });
 
-        it("should have traversed the whole import tree of the issuer module", () => {
-          let expectedCount = 1;
-          for (let level = 1; level <= depth; level++) {
-            expectedCount += Math.pow(siblingsAtEachDepthCount, level);
-          }
-          expect(calls.length).toEqual(expectedCount);
-        });
+        describe("and there is no circular dependency", () => {
+          beforeEach(() => {
+            result = resourceProxyExistsInRequestChain({
+              moduleGraph,
+              issuerModule,
+              proxyResource
+            });
+          });
 
-        it("should return false", () => {
-          expect(result).toBe(false);
+          it("should have traversed the whole import tree of the issuer module", () => {
+            let expectedCount = 1;
+            for (let level = 1; level <= depth; level++) {
+              expectedCount += Math.pow(siblingsAtEachDepthCount, level);
+            }
+
+            expect(
+              moduleGraph.getIncomingConnections.mock.calls.length
+            ).toEqual(expectedCount);
+          });
+
+          it("should return false", () => {
+            expect(result).toBe(false);
+          });
         });
       });
     });

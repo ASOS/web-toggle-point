@@ -39,11 +39,11 @@ interface PointCut {
   togglePointModule: string;
   variantGlobs?: string[];
   joinPointResolver?: (variantPath: string) => string;
+  toggleHandler?: string;
 }
 
 interface TogglePointInjectionOptions {
   pointCuts: PointCut[];
-  toggleHandler?: string;
   webpackNormalModule?: () => typeof NormalModule;
 }
 ```

@@ -1,7 +1,7 @@
 import { PLUGIN_NAME } from "../constants";
 import handleJoinPointMatch from "./handleJoinPointMatch";
 import { sep, join } from "path";
-import resolvePointCuts from ".";
+import resolveJoinPoints from ".";
 
 jest.mock("../constants", () => ({
   PLUGIN_NAME: "test-plugin-name"
@@ -48,7 +48,7 @@ describe("resolveJoinPoints", () => {
     const joinPointFiles = new Map();
 
     beforeEach(() => {
-      resolvePointCuts({
+      resolveJoinPoints({
         compilation,
         appRoot,
         normalModuleFactory,
@@ -64,7 +64,7 @@ describe("resolveJoinPoints", () => {
       beforeEach(() => {
         [, beforeResolveCallback] =
           normalModuleFactory.hooks.beforeResolve.tapPromise.mock.lastCall;
-        handleJoinPointMatch.mockClear();
+        jest.clearAllMocks();
         beforeResolveCallback();
       });
 
@@ -77,7 +77,7 @@ describe("resolveJoinPoints", () => {
   describe("when there are some join points previously identified", () => {
     const joinPointFile = "/test-folder/test-join-point-file";
     beforeEach(() => {
-      resolvePointCuts({
+      resolveJoinPoints({
         compilation,
         appRoot,
         normalModuleFactory,
@@ -109,35 +109,19 @@ describe("resolveJoinPoints", () => {
         });
       });
 
-      describe("and the request is for a file with a webpack loader", () => {
-        beforeEach(() => {
-          resolveData = {
-            context: appRoot.replaceAll("/", sep),
-            request: "test-loader!test-request"
-          };
-          beforeResolveCallback(resolveData);
+      const makeCommonAssertions = () => {
+        it("should resolve the request to a module file", () => {
+          expect(mockResolve).toHaveBeenCalledWith(
+            {},
+            resolveData.context,
+            resolveData.request,
+            {},
+            expect.any(Function)
+          );
         });
+      };
 
-        it("should not try to handle a match", () => {
-          expect(handleJoinPointMatch).not.toHaveBeenCalled();
-        });
-      });
-
-      describe("and the request is for a module rather than a file", () => {
-        beforeEach(() => {
-          resolveData = {
-            context: appRoot.replaceAll("/", sep),
-            request: "test-request"
-          };
-          beforeResolveCallback(resolveData);
-        });
-
-        it("should not try to handle a match", () => {
-          expect(handleJoinPointMatch).not.toHaveBeenCalled();
-        });
-      });
-
-      describe("and the request is for a file within the app root, without any loaders", () => {
+      describe("and the request is for a file within the app root", () => {
         beforeEach(() => {
           resolveData = {
             context: appRoot.replaceAll("/", sep),
@@ -145,17 +129,33 @@ describe("resolveJoinPoints", () => {
           };
         });
 
-        const makeCommonAssertions = () => {
-          it("should resolve the request to a module file", () => {
-            expect(mockResolve).toHaveBeenCalledWith(
-              {},
-              resolveData.context,
-              resolveData.request,
-              {},
-              expect.any(Function)
-            );
+        describe("and an error is thrown whilst trying to resolve", () => {
+          beforeEach(() => {
+            mockResolve.mockImplementationOnce(() => {
+              throw new Error("Test error");
+            });
+            beforeResolveCallback(resolveData);
           });
-        };
+
+          makeCommonAssertions();
+
+          it("should not try to handle a match", () => {
+            expect(handleJoinPointMatch).not.toHaveBeenCalled();
+          });
+        });
+
+        describe("and the file cannot be resolved", () => {
+          beforeEach(() => {
+            mockResolvedResource = false;
+            beforeResolveCallback(resolveData);
+          });
+
+          makeCommonAssertions();
+
+          it("should not try to handle a match", () => {
+            expect(handleJoinPointMatch).not.toHaveBeenCalled();
+          });
+        });
 
         describe("and the file is not a join point", () => {
           beforeEach(() => {

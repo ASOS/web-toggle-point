@@ -1,11 +1,41 @@
 import { PLUGIN_NAME } from "../constants";
-import { posix, win32 } from "path";
+import { sep, posix } from "path";
 import { promisify } from "util";
 import handleJoinPointMatch from "./handleJoinPointMatch";
 const { relative } = posix;
 
-const isLoaderlessFileRequest = (request) =>
-  [".", "/"].includes(request.at(0)) && !request.includes("!");
+const matchJoinPointIfResolved = async ({
+  enhancedResolve,
+  resolveData,
+  appRoot,
+  joinPointFiles,
+  compilation
+}) => {
+  let resolved;
+  try {
+    resolved = await enhancedResolve(
+      {},
+      resolveData.context,
+      resolveData.request,
+      {}
+    );
+  } catch {
+    return;
+  }
+
+  if (!resolved) {
+    return;
+  }
+
+  const resource = `/${relative(appRoot, resolved.replaceAll(sep, posix.sep))}`;
+  if (joinPointFiles.has(resource)) {
+    handleJoinPointMatch({
+      resource,
+      compilation,
+      resolveData
+    });
+  }
+};
 
 const resolveJoinPoints = ({
   compilation,
@@ -23,29 +53,18 @@ const resolveJoinPoints = ({
     async (resolveData) => {
       if (
         !joinPointFiles.size ||
-        !resolveData.context
-          .replaceAll(win32.sep, posix.sep)
-          .startsWith(appRoot) ||
-        !isLoaderlessFileRequest(resolveData.request)
+        !resolveData.context.replaceAll(sep, posix.sep).startsWith(appRoot)
       ) {
         return;
       }
 
-      const resolved = await enhancedResolve(
-        {},
-        resolveData.context,
-        resolveData.request,
-        {}
-      );
-
-      const resource = `/${relative(appRoot, resolved.replaceAll(win32.sep, posix.sep))}`;
-      if (joinPointFiles.has(resource)) {
-        handleJoinPointMatch({
-          resource,
-          compilation,
-          resolveData
-        });
-      }
+      await matchJoinPointIfResolved({
+        appRoot,
+        joinPointFiles,
+        enhancedResolve,
+        resolveData,
+        compilation
+      });
     }
   );
 };

@@ -1,4 +1,4 @@
-import { defineConfig, PlaywrightTestConfig } from "@playwright/test";
+import { defineConfig, type PlaywrightTestConfig } from "@playwright/test";
 import baseConfig from "../../test/automation/base.config";
 
 const THREE_MINUTES = 3 * 60 * 1000;

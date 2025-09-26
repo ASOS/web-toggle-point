@@ -1,5 +1,5 @@
-const generatePointCut = ({ pointCuts, path }) => {
-  const pointCutName = path.slice(1);
+const generatePointCut = ({ pointCuts, joinPointPath }) => {
+  const pointCutName = joinPointPath.slice(1);
   const {
     togglePointModule,
     toggleHandler = "@asos/web-toggle-point-webpack/pathSegmentToggleHandler"

@@ -2,7 +2,7 @@ import generatePointCut from "./generatePointCut.js";
 
 describe("generatePointCut", () => {
   const pointCutName = "test-point-cut";
-  const path = `/${pointCutName}`;
+  const joinPointPath = `/${pointCutName}`;
   const togglePointModule = "test-toggle-point-path";
   let result, pointCuts;
 
@@ -30,7 +30,7 @@ describe("generatePointCut", () => {
 
     beforeEach(() => {
       pointCuts[1].toggleHandler = toggleHandler;
-      result = generatePointCut({ pointCuts, path });
+      result = generatePointCut({ pointCuts, joinPointPath });
     });
 
     it("should return a script that imports the appropriate toggle handler", () => {
@@ -42,7 +42,7 @@ describe("generatePointCut", () => {
 
   describe("when a toggle handler is not configured against the point cut", () => {
     beforeEach(() => {
-      result = generatePointCut({ pointCuts, path });
+      result = generatePointCut({ pointCuts, joinPointPath });
     });
 
     it("should return a script that imports the default toggle handler (a path segment toggle handler)", () => {
