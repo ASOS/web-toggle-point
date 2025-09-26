@@ -5,7 +5,7 @@ const config: PlaywrightTestConfig = {
   ...baseConfig,
   expect: {
     toMatchSnapshot: {
-      maxDiffPixelRatio: 0.07
+      maxDiffPixelRatio: 0.05
     }
   },
   testDir: "./src/fixtures",
