@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.0] - 2025-07-17
+## [0.3.0] - 2025-09-29
 
 ### Added
 
@@ -15,12 +15,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - colocate documentation for "experiments" example to sit with its own `README.mdx`
 - update to static `webpackNormalModule` option of webpack package [version 0.8.1](../../../packages/webpack/docs/CHANGELOG.md#081---2025-07-27)
+- Updated to named exports version of "features" package ([0.4.0](../../../packages/features/docs/CHANGELOG.md#040---2025-07-15))
 
 ### Fixed
 
 - consistent "Explanation" and "Activation" sections in example `README.mdx` files
 - removed errant `toggle-point.d.ts` in `tsconfig.json`
 - moved type packages to devDependencies
+
+## [0.2.5] - 2025-07-15
+
+### Changed
+
+- Updated to named exports version of "features" package ([0.4.0](../../../packages/features/docs/CHANGELOG.md#040---2025-07-15))
+
+### Fixed
+
+- import types explicitly from `@playwright/test` & internally, after unexpected pipeline failure
 
 ## [0.2.4] - 2025-05-27
 

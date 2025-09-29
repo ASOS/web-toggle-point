@@ -1,6 +1,6 @@
 "use client";
 
-import { reactContextFeaturesStoreFactory as featuresStoreFactory } from "@asos/web-toggle-point-features";
+import featuresStoreFactory from "@asos/web-toggle-point-features/storeFactories/reactContextFeaturesStoreFactory";
 
 const reactContextStore = featuresStoreFactory({
   name: "Content Management"

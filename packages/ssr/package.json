@@ -1,20 +1,28 @@
 {
   "name": "@asos/web-toggle-point-ssr",
   "description": "toggle point server side rendering code",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
   "exports": {
-    "node": {
-      "import": "./lib/main.js",
-      "require": "./lib/main.es5.cjs"
-    },
-    "default": {
+    "browser": {
       "import": "./lib/browser.js",
       "require": "./lib/browser.es5.cjs"
+    },
+    "default": {
+      "import": "./lib/main.js",
+      "require": "./lib/main.es5.cjs"
     }
   },
+  "keywords": [
+    "toggle point",
+    "feature toggles",
+    "feature flags",
+    "ssr",
+    "isomorphic",
+    "universal"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asos/web-toggle-point.git",
@@ -31,7 +39,8 @@
     "build": "npm run clean && npm run build:browser && npm run build:server",
     "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isClient true",
     "build:server": "rollup -c build/rollup.mjs --config_isClient false",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "shx cp docs/README.md ../../LICENSE . && npm run build",
+    "postpublish": "shx rm ./README.md LICENSE",
     "clean": "rimraf ./lib",
     "docs": "rimraf ./docs/**/*.html && jsdoc -c ../jsdoc.conf.js",
     "lint": "eslint build src docs --flag unstable_config_lookup_from_file",
@@ -62,7 +71,8 @@
     "jsdoc": "^4.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "rollup-plugin-auto-external": "^2.0.0"
+    "rollup-plugin-auto-external": "^2.0.0",
+    "shx": "^0.4.0"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",

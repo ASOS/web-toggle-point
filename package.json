@@ -5,11 +5,6 @@
   "homepage": "https://asos.github.io/web-toggle-point/",
   "license": "MIT",
   "private": true,
-  "keywords": [
-    "asos",
-    "toggle point",
-    "feature toggles"
-  ],
   "engines": {
     "node": ">=20"
   },
