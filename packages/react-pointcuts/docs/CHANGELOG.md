@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.4.6] - 2025-07-14
+## [0.4.7] - 2025-09-29
 
 ### Fixed
 
@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [keywords](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#keywords) added to the `package.json` to aid npm search
+
+## [0.4.6] - 2025-08-21
+
+### Fixed
+
+- moved to `default` and `browser` exports from `node` and `default`, to support typescript module resolution
 
 ## [0.4.5] - 2025-07-14
 

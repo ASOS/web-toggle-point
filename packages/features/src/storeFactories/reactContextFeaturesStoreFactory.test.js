@@ -1,12 +1,12 @@
-import reactContextStoreFactory from "./store";
+import reactContextFeaturesStoreFactory from "./reactContextFeaturesStoreFactory";
 import { render, screen } from "@testing-library/react";
 
-describe("reactContextStoreFactory", () => {
+describe("reactContextFeaturesStoreFactory", () => {
   const name = "test-name";
   let reactContextStore;
 
   beforeEach(() => {
-    reactContextStore = reactContextStoreFactory({ name });
+    reactContextStore = reactContextFeaturesStoreFactory({ name });
   });
 
   describe("when creating a provider", () => {

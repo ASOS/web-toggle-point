@@ -31,7 +31,7 @@ import "./external";
  *
  * @function
  * @memberof module:web-toggle-point-features
- * @name SingletonFeaturesStore#useValue
+ * @name SingletonFeaturesStore#setValue
  * @param {object} params parameters
  * @param {object} params.value A value to store, used to drive feature toggles.
  */

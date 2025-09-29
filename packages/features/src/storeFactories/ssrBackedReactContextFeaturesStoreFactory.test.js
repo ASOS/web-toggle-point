@@ -1,7 +1,7 @@
 import { withJsonIsomorphism } from "@asos/web-toggle-point-ssr";
 import { render, screen } from "@testing-library/react";
-import reactContextFeaturesStoreFactory from "../reactContext/store";
-import ssrBackedReactContextFeaturesStoreFactory from "./store";
+import reactContextFeaturesStoreFactory from "./reactContextFeaturesStoreFactory";
+import ssrBackedReactContextFeaturesStoreFactory from "./ssrBackedReactContextFeaturesStoreFactory";
 
 const MockSSRBackedFeaturesProvider = jest.fn(({ children }) => (
   <div data-testid="test-ssr-backed-features-provider">{children}</div>
@@ -12,12 +12,12 @@ jest.mock("@asos/web-toggle-point-ssr", () => ({
 const mockOtherStuff = {
   [Symbol("rest")]: Symbol("rest")
 };
-const mockReactContextStoreFactory = {
+const mockReactContextFeaturesStoreFactory = {
   providerFactory: jest.fn(),
   ...mockOtherStuff
 };
-jest.mock("../reactContext/store", () =>
-  jest.fn(() => mockReactContextStoreFactory)
+jest.mock("./reactContextFeaturesStoreFactory", () =>
+  jest.fn(() => mockReactContextFeaturesStoreFactory)
 );
 
 describe("ssrBackedReactContextFeaturesStoreFactory", () => {
@@ -52,7 +52,9 @@ describe("ssrBackedReactContextFeaturesStoreFactory", () => {
       });
 
       it("should create a reactContextStore via the reactContextStoreFactory", () => {
-        expect(mockReactContextStoreFactory.providerFactory).toHaveBeenCalled();
+        expect(
+          mockReactContextFeaturesStoreFactory.providerFactory
+        ).toHaveBeenCalled();
       });
 
       it("should create an SSR-backed react component that serializes the provided value in a script with a namespace & named id", () => {

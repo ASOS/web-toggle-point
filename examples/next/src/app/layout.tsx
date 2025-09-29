@@ -1,6 +1,6 @@
 import { Didact_Gothic } from "next/font/google";
 import styles from "./styles.module.css";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 const didactGothic = Didact_Gothic({
   display: "swap",

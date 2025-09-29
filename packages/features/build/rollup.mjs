@@ -1,37 +1,35 @@
-import pkg from "../package.json" with { type: "json" };
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
 import external from "rollup-plugin-auto-external";
 import commonjs from "@rollup/plugin-commonjs";
 import terser from "@rollup/plugin-terser";
 import keepExternalComments from "./keepExternalComments.js";
+import { readdir } from "node:fs/promises";
 
-export default ({ config_isClient }) => {
-  const CLIENT = JSON.parse(config_isClient);
-  const [input, esOutputFile, cjsOutputFile, extraPlugins] = {
-    false: [
-      "./src/node.js",
-      pkg.exports.node.import,
-      pkg.exports.node.require,
-      []
-    ],
-    true: [
-      "./src/browser.js",
-      pkg.exports.default.import,
-      pkg.exports.default.require,
-      [terser()]
-    ]
-  }[CLIENT];
+export default async ({ config_isBrowser }) => {
+  const isBrowser = JSON.parse(config_isBrowser);
+
+  const browserPrefix = isBrowser ? "browser." : "";
+
+  const input = (await readdir("./src/storeFactories"))
+    .filter(
+      (file) =>
+        !file.endsWith(".test.js") && !(file.startsWith("node") && isBrowser)
+    )
+    .map((factory) => `./src/storeFactories/${factory}`);
+
   return {
     input,
     output: [
       {
-        file: esOutputFile,
+        dir: "lib/storeFactories/",
+        entryFileNames: `[name].${browserPrefix}js`,
         format: "es",
         sourcemap: true
       },
       {
-        file: cjsOutputFile,
+        dir: "lib/storeFactories/",
+        entryFileNames: `[name].${browserPrefix}es5.cjs`,
         format: "cjs",
         sourcemap: true
       }
@@ -48,7 +46,7 @@ export default ({ config_isClient }) => {
       }),
       commonjs(),
       external(),
-      ...extraPlugins
+      isBrowser ? [terser()] : []
     ],
     preserveSymlinks: true
   };

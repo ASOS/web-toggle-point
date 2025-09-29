@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.5] - 2025-07-14
+## [0.4.1] - 2025-09-29
 
 ### Fixed
 
@@ -18,6 +18,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [keywords](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#keywords) added to the `package.json` to aid npm search
 
+## [0.4.0] - 2025-07-15
+
+### Fixed
+
+- Moved to named exports, to ensure that the "ssr" package is not a dependency, unless importing the `ssrBackedReactContextFeaturesStoreFactory`
+  - This reverts to the intent of version [version 0.3.0](#030---2024-11-28), but not capitulating to ESLint's issues
+- Support firefox by not using a `Symbol` as a `WeakMap` key (https://github.com/ASOS/web-toggle-point/issues/57)
+
+### Changed
+
+- renamed `useValue` from `SingletonFeaturesStore` interface to `setValue`, to avoid React [rules-of-hooks](https://react.dev/warnings/invalid-hook-call-warning) errors
+- added a backfill main entry to `package.json` to support [missing exports / ESM support in `eslint-plugin-import`](https://github.com/import-js/eslint-plugin-import/issues/1810), for users of this
+  
 ## [0.3.4] - 2025-07-14
 
 ### Fixed
@@ -29,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - added `package.json` [homepage](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#homepage), for clarity once on https://www.npmjs.com/
-- move the React 17 note to the end, in the `README.md`, since only relevant to the last two store factories & added companion note regarding `react-dom/server`.
+- move the React 17 note to the end, in the `README.md`, since only relevant to the last two store factories & added companion note regarding `react-dom/server`
 
 ### Fixed
 
