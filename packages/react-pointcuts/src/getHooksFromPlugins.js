@@ -3,9 +3,9 @@
  * @typedef {object} module:web-toggle-point-react-pointcuts~plugin
  * @property {string} name plugin name, used as a prefix when creating {@link https://legacy.reactjs.org/docs/higher-order-components.html|React Higher-Order-Components} when toggling
  * @property {Function} onCodeSelected hook to be called when a code selection is made
+ * @property {Function} onVariantError hook to be called when a variant throws an error
  */
+const getHooksFromPlugins = (plugins = [], hook) =>
+  plugins.filter(({ [hook]: usedHook }) => !!usedHook);
 
-const getCodeSelectionPlugins = (plugins) =>
-  plugins?.filter(({ onCodeSelected }) => !!onCodeSelected) ?? null;
-
-export default getCodeSelectionPlugins;
+export default getHooksFromPlugins;
