@@ -18,6 +18,12 @@ export default [
     }
   },
   {
+    files: ["prepare-publish.mjs"],
+    languageOptions: {
+      globals: globals.node
+    }
+  },
+  {
     files: ["src/**/*.test.*", "build/**/*.js", "**/rollup.mjs"],
     ignores: ["**/*.snap"],
     rules: {

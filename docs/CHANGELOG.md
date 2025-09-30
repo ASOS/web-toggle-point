@@ -20,6 +20,10 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 - a `build:examples` script, for easy re-building of all examples
 
+### Fixed
+
+- added a `prepare-publish.mjs` script to prepare packages for npm publishing (moving `README.md` and `LICENSE` files into package roots), replacing the prior `shx` based solution, and adding [`transform-markdown-links`](https://github.com/gakimball/transform-markdown-links) to fix relative paths that otherwise incorrectly link on [npmjs.com](https://www.npmjs.com/)
+
 ## [0.11.0] - 2025-09-29
 
 ### Changed

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed `logError` parameter of the `withTogglePointFactory`, replacing with calling of `onVariantError` hook of supplied plugins
 
+### Fixed
+
+- Used the `prepare-publish.mjs` script provided by repo root version [0.12.0](../../../docs/CHANGELOG.md#0120---2025-09-30) to fix relative links in `README.md` on [npmjs.com](https://www.npmjs.com/)
+
 ## [0.4.8] - 2025-09-29
 
 ### Fixed
