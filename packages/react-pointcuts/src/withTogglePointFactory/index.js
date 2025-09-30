@@ -3,8 +3,9 @@ import getComponent from "./getComponent";
 import useCodeMatches from "../useCodeMatches";
 import getHooksFromPlugins from "../getHooksFromPlugins";
 
-// eslint-disable-next-line prettier/prettier, no-empty -- https://github.com/babel/babel/issues/15156
-{}
+// eslint-disable-next-line no-empty -- https://github.com/babel/babel/issues/15156
+{
+}
 /**
  * A factory function used to create a withTogglePoint React Higher-Order-Component.
  * @memberof module:web-toggle-point-react-pointcuts
@@ -12,7 +13,7 @@ import getHooksFromPlugins from "../getHooksFromPlugins";
  * @function
  * @param {object} params parameters
  * @param {function} params.getActiveFeatures a method to get active features. Called honouring the rules of hooks.
- * @param {string} [params.variantKey=bucket] A key use to identify a variant from the features data structure. Remaining members of the feature will be passed to the variant as props.
+ * @param {string} [params.variantKey='bucket'] A key use to identify a variant from the features data structure. Remaining members of the feature will be passed to the variant as props.
  * @param {Array<module:web-toggle-point-react-pointcuts~plugin>} [params.plugins] plugins to be used when toggling.
  * Any plugins that include a 'onVariantError' hook will be called when a toggled component throws an error that can be caught by an {@link https://reactjs.org/docs/error-boundaries.html|ErrorBoundary}.
  * When errors are caught, the control/base code will be used as the fallback component.
@@ -35,7 +36,7 @@ import getHooksFromPlugins from "../getHooksFromPlugins";
 const withTogglePointFactory = ({
   getActiveFeatures,
   variantKey = "bucket",
-  plugins = []
+  plugins
 }) => {
   const codeSelectionPlugins = getHooksFromPlugins(plugins, "onCodeSelected");
   const variantErrorPlugins = getHooksFromPlugins(plugins, "onVariantError");

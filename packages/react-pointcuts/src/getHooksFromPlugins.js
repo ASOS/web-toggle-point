@@ -5,8 +5,7 @@
  * @property {Function} onCodeSelected hook to be called when a code selection is made
  * @property {Function} onVariantError hook to be called when a variant throws an error
  */
-
-const getHooksFromPlugins = (plugins, hook) =>
+const getHooksFromPlugins = (plugins = [], hook) =>
   plugins.filter(({ [hook]: usedHook }) => !!usedHook);
 
 export default getHooksFromPlugins;

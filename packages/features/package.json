@@ -1,21 +1,30 @@
 {
   "name": "@asos/web-toggle-point-features",
-  "description": "toggle point features code",
-  "version": "0.3.4",
+  "description": "toggle point features code, used to store toggle state",
+  "version": "0.4.1",
   "license": "MIT",
   "type": "module",
-  "main": "./lib/main.es5.cjs",
+  "main": "./lib/global.js",
   "sideEffects": false,
   "exports": {
-    "node": {
-      "import": "./lib/main.js",
-      "require": "./lib/main.es5.cjs"
-    },
-    "default": {
-      "import": "./lib/browser.js",
-      "require": "./lib/browser.es5.cjs"
+    ".": null,
+    "./*": {
+      "browser": {
+        "import": "./lib/*.browser.js",
+        "require": "./lib/*.browser.es5.cjs"
+      },
+      "default": {
+        "import": "./lib/*.js",
+        "require": "./lib/*.es5.cjs"
+      }
     }
   },
+  "keywords": [
+    "toggle point",
+    "feature toggles",
+    "feature flags",
+    "toggle state storage"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asos/web-toggle-point.git",
@@ -31,10 +40,12 @@
   "scripts": {
     "build-dependencies": "path-exists ../../packages/ssr/lib || npm run --prefix ../../packages/ssr build",
     "prebuild": "npm run build-dependencies",
-    "build": "npm run clean && npm run build:browser && npm run build:server",
-    "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isClient true",
-    "build:server": "rollup -c build/rollup.mjs --config_isClient false",
-    "prepublishOnly": "npm run build",
+    "build": "npm run clean && npm run build:browser && npm run build:server && npm run build:eslint-import-backfill",
+    "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isBrowser true",
+    "build:server": "rollup -c build/rollup.mjs --config_isBrowser false",
+    "prepublishOnly": "shx cp docs/README.md ../../LICENSE . && npm run build",
+    "postpublish": "shx rm ./README.md LICENSE",
+    "build:eslint-import-backfill": "rollup -c build/eslint-import-backfill.rollup.mjs",
     "clean": "rimraf ./lib",
     "docs": "rimraf ./docs/**/*.html && jsdoc -c ../jsdoc.conf.js",
     "prelint": "npm run build-dependencies",
@@ -68,7 +79,8 @@
     "path-exists-cli": "^2.0.0",
     "react": "^18.3.1",
     "rimraf": "^6.0.1",
-    "rollup-plugin-auto-external": "^2.0.0"
+    "rollup-plugin-auto-external": "^2.0.0",
+    "shx": "^0.4.0"
   },
   "peerDependencies": {
     "@asos/web-toggle-point-ssr": "file:../ssr",

@@ -1,9 +1,9 @@
-import { defineConfig, PlaywrightTestConfig } from "@playwright/test";
+import { defineConfig, type PlaywrightTestConfig } from "@playwright/test";
 import baseConfig from "../../test/automation/base.config";
 
 const config: PlaywrightTestConfig = {
   ...baseConfig,
-  expect:{
+  expect: {
     toMatchSnapshot: {
       maxDiffPixelRatio: 0.05
     }

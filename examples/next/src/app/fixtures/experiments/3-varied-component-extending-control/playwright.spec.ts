@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import setExperimentHeaders from "../playwright.setExperimentHeaders";
 import locateWithinExample from "../playwright.locateInExample";
-import getFixtureURL from "../playwright.getFixtureUrl";
+import getFixtureURL from "../../playwright.getFixtureUrl";
 const fixtureURL = getFixtureURL(import.meta.url);
 
 test.describe("varying a component that imports and extends the control component", () => {

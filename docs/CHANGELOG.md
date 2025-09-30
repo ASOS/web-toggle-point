@@ -14,6 +14,32 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
+## [0.12.0] - 2025-09-30
+
+### Added
+
+- a `build:examples` script, for easy re-building of all examples
+
+## [0.11.0] - 2025-09-29
+
+### Changed
+
+- removed the `tags` badge from main `README.md`, this monorepo does not use release tags
+
+### Added
+
+- a `discussion` badge
+
+## [0.10.7] - 2025-07-14
+
+### Fixed
+
+- removed `keywords` from `package.json` (in package root and peripherals), since serving no purpose in private packages
+
+### Added
+
+- `.npmrc` for ensuring correct registry
+
 ## [0.10.6] - 2025-07-14
 
 ### Fixed
