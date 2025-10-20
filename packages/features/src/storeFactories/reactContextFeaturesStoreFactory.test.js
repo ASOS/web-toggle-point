@@ -1,4 +1,4 @@
-import reactContextStoreFactory from "./store";
+import reactContextFeaturesStoreFactory from "./reactContextFeaturesStoreFactory";
 import { render, screen } from "@testing-library/react";
 
 describe("reactContextFeaturesStoreFactory", () => {
@@ -6,7 +6,7 @@ describe("reactContextFeaturesStoreFactory", () => {
   let reactContextStore;
 
   beforeEach(() => {
-    reactContextStore = reactContextStoreFactory({ toggleType });
+    reactContextStore = reactContextFeaturesStoreFactory({ toggleType });
   });
 
   describe("when creating a provider", () => {

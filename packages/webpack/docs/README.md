@@ -32,7 +32,7 @@ Different code paths may have different toggling needs, and may want a toggle po
 The plugin constructor takes `TogglePointInjectionOptions` thus:
 
 ```typescript
-import { NormalModule } from 'webpack';
+import webpack from 'webpack';
 
 interface PointCut {
   name: string;
@@ -44,7 +44,7 @@ interface PointCut {
 interface TogglePointInjectionOptions {
   pointCuts: PointCut[];
   toggleHandler?: string;
-  webpackNormalModule?: () => typeof NormalModule;
+  webpackNormalModule?: typeof webpack.NormalModule;
 }
 ```
 
@@ -131,10 +131,14 @@ e.g. a variant at `./__variants__/feature-name/variant-name/module.js` will reso
 
 #### _`webpackNormalModule`_
 
-If using [`Next.js`](https://nextjs.org/), an additional configuration parameter is needed, to inject the WebPack `NormalModule`, since the plugin is reliant on its hooks, and Next.js pre-compiles and packages Webpack, rather than referencing it as a normal package dependency.  This can be specified thus (ESM):
+If using [`Next.js`](https://nextjs.org/), an additional configuration parameter is needed, to inject the Webpack `NormalModule`, since the plugin is reliant on its hooks, and Next.js pre-compiles and packages Webpack, rather than referencing it as a normal package dependency.  This can be specified thus (ESM):
 
 ```js
-const webpackNormalModule = async () => (await import("next/dist/compiled/webpack/NormalModule.js")).default
+import webpackNormalModule from "next/dist/compiled/webpack/NormalModule.js";
+const plugin = new TogglePointInjection({
+  pointCuts,
+  webpackNormalModule
+});
 ```
 
 ### How it Works

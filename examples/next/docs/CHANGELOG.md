@@ -5,11 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.5] - 2025-07-24
+## [0.4.0] - 2025-10-20
 
 ### Changed
 
-- updated to features [version 0.4.0](../../../packages/features/docs/CHANGELOG.md#040---2025-07-24)
+- updated to features [version 0.5.0](../../../packages/features/docs/CHANGELOG.md#050---2025-10-20)
+
+## [0.3.0] - 2025-09-29
+
+### Added
+
+- added a "content management" example, demonstrating use of `withToggledHookFactory` from the `react-pointcuts` package
+
+### Changed
+
+- colocate documentation for "experiments" example to sit with its own `README.mdx`
+- update to static `webpackNormalModule` option of webpack package [version 0.8.1](../../../packages/webpack/docs/CHANGELOG.md#081---2025-07-27)
+- Updated to named exports version of "features" package ([0.4.0](../../../packages/features/docs/CHANGELOG.md#040---2025-07-15))
+
+### Fixed
+
+- consistent "Explanation" and "Activation" sections in example `README.mdx` files
+- removed errant `toggle-point.d.ts` in `tsconfig.json`
+- moved type packages to devDependencies
+
+## [0.2.5] - 2025-07-15
+
+### Changed
+
+- Updated to named exports version of "features" package ([0.4.0](../../../packages/features/docs/CHANGELOG.md#040---2025-07-15))
+
+### Fixed
+
+- import types explicitly from `@playwright/test` & internally, after unexpected pipeline failure
 
 ## [0.2.4] - 2025-05-27
 
@@ -21,13 +49,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- fixed a regression in the ability to use `?showExperiments` query in the experiments fixtures, regressed in version `0.2.0`.
+- fixed a regression in the ability to use `?showExperiments` query in the experiments fixtures, regressed in [version 0.2.0](#020---2024-12-06).
 
 ## [0.2.2] - 2024-12-24
 
 ### Fixed
 
 - links to folders, not `README.mdx`, in the experiments examples
+- create `FeaturesProvider` via factory in outermost scope, rather than on each render of an example
 
 ## [0.2.1] - 2024-12-18
 

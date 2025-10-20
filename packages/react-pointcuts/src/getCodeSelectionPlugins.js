@@ -6,6 +6,6 @@
  */
 
 const getCodeSelectionPlugins = (plugins) =>
-  plugins.filter(({ onCodeSelected }) => !!onCodeSelected);
+  plugins?.filter(({ onCodeSelected }) => !!onCodeSelected) ?? null;
 
 export default getCodeSelectionPlugins;

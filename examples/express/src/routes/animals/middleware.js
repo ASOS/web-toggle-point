@@ -9,7 +9,7 @@ const contextMiddleware = (request, response, scopeCallBack) => {
     return;
   }
   response.header("Vary", version);
-  featuresStore.useValue({ value: { version }, scopeCallBack });
+  featuresStore.setValue({ value: { version }, scopeCallBack });
 };
 
 export default contextMiddleware;

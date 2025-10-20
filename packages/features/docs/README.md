@@ -12,9 +12,15 @@ See: [JSDoc output](https://asos.github.io/web-toggle-point/module-web-toggle-po
 
 ## Exports
 
+> [!WARNING]
+> This package uses [`package.json` exports](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#exports) to specify individual stores (listed below), to ensure that browser / node specific stores can 
+> be individually imported and prevent build failures where, prior to tree-shaking, incompatible APIs / globals are referenced.
+> Due to [a long-standing bug in `eslint-plugin-import`](https://github.com/import-js/eslint-plugin-import/issues/1810), users of eslint with this plugin may need to ignore an [`import/no-unresolved`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-unresolved.md) error,
+> or move to a modern alternative for this plugin (e.g. [`eslint-plugin-import-x`](https://github.com/un-ts/eslint-plugin-import-x)), or use [a typescript parser](https://typescript-eslint.io/packages/parser/) (which understands `exports`)
+
 The package contains the following exports:
 
-### `globalFeaturesStoreFactory`
+### `storeFactories/globalFeaturesStoreFactory`
 
 A "global" features store factory: a thin wrapper around a singleton, this is an extension point for future plugins etc.  Each invocation will create a new store, even with a `toggleType` matching a prior invocation.
 
@@ -24,7 +30,7 @@ It accepts the following parameters:
 
 It exports a store with:
 
-- a `useValue` function, that sets a current value.
+- a `setValue` function, that sets a current value.
 - a `getFeatures` function
    - designed to be passed as the `getActiveFeatures` input of the `withTogglePointFactory` or `withToggledHookFactory` from the [`react-pointcuts` package](../../react-pointcuts/docs/README.md).
 
@@ -58,7 +64,7 @@ export const getActiveFeatures = () => useSnapshot(featuresStore.getFeatures());
 ```
 ...which will then re-render consuming components based on the parts of the toggle state they are reliant on.
 
-### `nodeRequestScopedFeaturesStoreFactory`
+### `storeFactories/nodeRequestScopedFeaturesStoreFactory`
 
 A "request scoped" features store factory, for use in [Node](https://nodejs.org/).
 
@@ -67,7 +73,7 @@ It accepts the following parameters:
   - the type of the toggle, this is keyed against a singleton referenced by [a runtime-wide global symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#shared_symbols_in_the_global_symbol_registry), to ensure it works across multi-compilation runtimes (e.g. NextJs) / throughout a [realm](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model#realms).  N.B. Each invocation with the same toggleType will return the initial store.
 
 It exports a store with:
-- a `useValue` function that sets a current value, taking a `scopeCallBack` (along with a `value`), under which the value is scoped.
+- a `setValue` function that sets a current value, taking a `scopeCallBack` (along with a `value`), under which the value is scoped.
    - This is using [`AsyncLocalStorage.run`](https://nodejs.org/api/async_context.html#asynclocalstoragerunstore-callback-args) under the hood, which can be plugged into Express middleware thus:
       ```js
       import express from "express";
@@ -77,7 +83,7 @@ It exports a store with:
 
       app.use((request, response, next) => {
         const value = ?? // some value holding toggle state, either based on `request`, or scoped from outside this middleware, etc.
-        featuresStore.useValue({ value, scopeCallBack: next });
+        featuresStore.setValue({ value, scopeCallBack: next });
       });
       app.use("/", () => { /* routes that require toggled code */ });
       ```
@@ -85,9 +91,10 @@ It exports a store with:
    - designed to be passed as the `getActiveFeatures` input of the `withTogglePointFactory` or `withToggledHookFactory` from the [`react-pointcuts` package](../../react-pointcuts/docs/README.md).
 > [!WARNING]
 > This will throw an error if called outside of a request scope, so care should be taken to set up the toggle point config to only toggle modules called within the call stack of the middleware.
+> Wrap the `setValue` call in a `try` / `catch`, if prior access is expected.
 > If this happens unexpectedly, follow the advice [here](https://nodejs.org/api/async_context.html#troubleshooting-context-loss).
 
-### `reactContextFeaturesStoreFactory`
+### `storeFactories/reactContextFeaturesStoreFactory`
 
 It accepts the following parameters:
 - `toggleType`
@@ -100,7 +107,7 @@ It exports a store with:
   - this uses [`useContext`](https://react.dev/reference/react/useContext) internally, so should be used honouring the rules of hooks.  It will make consumers reactive to any change of the toggle state.
   - can be passed to `getActiveFeatures` of `withTogglePointFactory` / `withToggledHookFactory` from the [`react-pointcuts` package](../../react-pointcuts/docs/README.md).
 
-### `ssrBackedReactContextFeaturesStoreFactory`
+### `storeFactories/ssrBackedReactContextFeaturesStoreFactory`
 
 It exports a store with the same signature as that exported by `reactContextFeaturesStoreFactory`.  It utilises `withJsonIsomorphism` from the [`ssr` package](../../ssr/docs/README.md) internally, to create ["isomorphic" or "universal"](https://en.wikipedia.org/wiki/Isomorphic_JavaScript) contexts, for use in framework-less React applications.  The value set on the server will be realised as the initial value within the browser.
 

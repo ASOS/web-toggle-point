@@ -1,4 +1,4 @@
-import requestScopedStoreFactory from "./store";
+import nodeRequestScopedFeaturesStoreFactory from "./nodeRequestScopedFeaturesStoreFactory";
 import { AsyncLocalStorage } from "async_hooks";
 
 jest.mock("async_hooks", () => ({
@@ -13,7 +13,7 @@ describe("nodeRequestScopedFeaturesStoreFactory", () => {
   let requestScopedStore;
 
   beforeEach(() => {
-    requestScopedStore = requestScopedStoreFactory({ toggleType });
+    requestScopedStore = nodeRequestScopedFeaturesStoreFactory({ toggleType });
   });
 
   it("should create an AsyncLocalStorage store", () => {
@@ -28,7 +28,7 @@ describe("nodeRequestScopedFeaturesStoreFactory", () => {
     });
   });
 
-  describe("when using a value", () => {
+  describe("when setting a value", () => {
     const value = Symbol("test-value");
     const scopeCallBack = Symbol("test-callback");
     let storeMock;
@@ -59,7 +59,9 @@ describe("nodeRequestScopedFeaturesStoreFactory", () => {
   describe("when creating a new store with the same toggleType", () => {
     let newRequestScopedStore;
     beforeEach(() => {
-      newRequestScopedStore = requestScopedStoreFactory({ toggleType });
+      newRequestScopedStore = nodeRequestScopedFeaturesStoreFactory({
+        toggleType
+      });
     });
 
     it("should return the same store instance", () => {
@@ -71,7 +73,7 @@ describe("nodeRequestScopedFeaturesStoreFactory", () => {
     let newRequestScopedStore;
     const newToggleType = "new-test-toggle-type";
     beforeEach(() => {
-      newRequestScopedStore = requestScopedStoreFactory({
+      newRequestScopedStore = nodeRequestScopedFeaturesStoreFactory({
         toggleType: newToggleType
       });
     });

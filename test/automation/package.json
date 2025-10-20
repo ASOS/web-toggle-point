@@ -1,8 +1,7 @@
 {
   "name": "web-toggle-point-automation-tests",
-  "version": "0.1.2",
-  "main": "index.js",  
-  "keywords": [],
+  "version": "0.1.4",
+  "main": "index.js",
   "type": "module",
   "private": true,
   "scripts": {
