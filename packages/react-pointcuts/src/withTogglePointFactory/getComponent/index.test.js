@@ -1,11 +1,11 @@
 import getComponent from "./index";
 import withErrorBoundary from "./withErrorBoundary";
-import withPlugins from "./withPlugins";
+import withCodeSelectionPlugins from "./withCodeSelectionPlugins";
 import { render, screen } from "@testing-library/react";
 import { createRef, forwardRef } from "react";
 
 jest.mock("./withErrorBoundary", () => jest.fn());
-jest.mock("./withPlugins", () => jest.fn());
+jest.mock("./withCodeSelectionPlugins", () => jest.fn());
 
 const mockVariantComponent = "test-variant-component";
 const MockVariantComponent = forwardRef(
@@ -19,11 +19,18 @@ describe("getComponent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     params = {
-      logError: Symbol("test-error-logger"),
       control: () => Symbol("test-base-component"),
-      plugins: Symbol("test-plugins")
+      codeSelectionPlugins: Symbol("test-code-selection-plugins"),
+      variantErrorPlugins: [
+        {
+          onVariantError: jest.fn(() => {
+            throw "this errors";
+          })
+        },
+        { onVariantError: jest.fn() }
+      ]
     };
-    withPlugins.mockImplementation(({ Component }) => {
+    withCodeSelectionPlugins.mockImplementation(({ Component }) => {
       Component[pluginMarker] = true;
       return Component;
     });
@@ -32,7 +39,7 @@ describe("getComponent", () => {
   const makeCommonAssertions = () => {
     it("should run plugins on the the matched features, passing the params that were passed to the component, in-case the plugins need them", () => {
       const { plugins, ...rest } = params;
-      expect(withPlugins).toHaveBeenCalledWith({
+      expect(withCodeSelectionPlugins).toHaveBeenCalledWith({
         Component: result,
         plugins,
         ...rest
@@ -110,7 +117,7 @@ describe("getComponent", () => {
       it("should wrap the variant with an error boundary, to ensure errors in the variant result in falling back to the base/default component", () => {
         const { control: Component } = params;
         expect(withErrorBoundary).toHaveBeenCalledWith({
-          logError: params.logError,
+          onVariantError: expect.any(Function),
           Variant: expect.anything(),
           fallback: Component
         });
@@ -139,6 +146,28 @@ describe("getComponent", () => {
             expect.objectContaining({ ...variables, ...componentProps }),
             mockRef
           );
+        });
+      });
+
+      describe("when the variant throws an error, thus the error boundary calls the passed onVariantError method", () => {
+        const mockError = Symbol("test-error");
+        const syncMethod = jest.fn();
+
+        beforeEach(() => {
+          const [[{ onVariantError }]] = withErrorBoundary.mock.calls;
+          onVariantError(mockError);
+          syncMethod();
+        });
+
+        it("should call the onVariantError callbacks with the error, with the callbacks not holding up execution of the main thread and errors thrown not affecting subsequent callbacks", () => {
+          const [
+            { onVariantError: plugin1Callback },
+            { onVariantError: plugin2Callback }
+          ] = params.variantErrorPlugins;
+          expect(plugin1Callback).toHaveBeenCalledWith(mockError);
+          expect(plugin2Callback).toHaveBeenCalledWith(mockError);
+          expect(syncMethod).toHaveBeenCalledBefore(plugin1Callback);
+          expect(syncMethod).toHaveBeenCalledBefore(plugin2Callback);
         });
       });
     });

@@ -1,7 +1,7 @@
 {
   "name": "@asos/web-toggle-point-ssr",
   "description": "toggle point server side rendering code",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
@@ -39,7 +39,7 @@
     "build": "npm run clean && npm run build:browser && npm run build:server",
     "build:browser": "cross-env BABEL_ENV=browser rollup -c build/rollup.mjs --config_isClient true",
     "build:server": "rollup -c build/rollup.mjs --config_isClient false",
-    "prepublishOnly": "shx cp docs/README.md ../../LICENSE . && npm run build",
+    "prepublishOnly": "node ../prepare-publish.mjs && npm run build",
     "postpublish": "shx rm ./README.md LICENSE",
     "clean": "rimraf ./lib",
     "docs": "rimraf ./docs/**/*.html && jsdoc -c ../jsdoc.conf.js",
@@ -72,7 +72,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rollup-plugin-auto-external": "^2.0.0",
-    "shx": "^0.4.0"
+    "shx": "^0.4.0",
+    "transform-markdown-links": "^2.1.0"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",

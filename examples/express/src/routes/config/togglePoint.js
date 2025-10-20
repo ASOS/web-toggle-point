@@ -6,7 +6,11 @@ const { getFeatures: getActiveFeatures } = featuresStore;
 const withTogglePoint = withTogglePointFactory({
   getActiveFeatures,
   variantKey: "size",
-  logError: console.log
+  plugins: [
+    {
+      onVariantError: console.error
+    }
+  ]
 });
 
 export default withTogglePoint;

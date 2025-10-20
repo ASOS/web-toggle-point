@@ -8,9 +8,9 @@ const getActiveFeatures = () => getFeatures().decisions;
 
 const withTogglePoint = withTogglePointFactory({
   getActiveFeatures,
-  logError: console.log,
   plugins: [
     {
+      onVariantError: console.error,
       onCodeSelected: ({ matchedFeatures }) => {
         if (matchedFeatures?.length) {
           const [[feature]] = matchedFeatures;

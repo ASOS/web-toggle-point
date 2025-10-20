@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - updated to features [version 0.5.0](../../../packages/features/docs/CHANGELOG.md#050---2025-10-20)
 
+## [0.3.1] - 2025-09-30
+
+### Changed
+
+- move to use new `onVariantError` plugin hook over `logError` to consume [0.5.0](../../../packages/react-pointcuts/docs/CHANGELOG.md#040---2025-07-06) of `react-pointcuts` package.
+
 ## [0.3.0] - 2025-09-29
 
 ### Added

@@ -2,7 +2,7 @@ import { Component, forwardRef, createContext } from "react";
 
 const ForwardedRefContext = createContext();
 
-const withErrorBoundary = ({ Variant, fallback, logError }) => {
+const withErrorBoundary = ({ Variant, onVariantError, fallback }) => {
   class TogglePointErrorBoundary extends Component {
     constructor(props) {
       super(props);
@@ -15,7 +15,7 @@ const withErrorBoundary = ({ Variant, fallback, logError }) => {
 
     componentDidCatch(error) {
       error.message = `Variant errored, rendering fallback: ${error.message}`;
-      logError(error);
+      onVariantError(error);
     }
 
     static contextType = ForwardedRefContext;

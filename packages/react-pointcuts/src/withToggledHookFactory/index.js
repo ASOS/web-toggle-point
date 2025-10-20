@@ -1,9 +1,10 @@
 import useCodeMatches from "../useCodeMatches";
 import pluginsHookFactory from "./pluginsHookFactory";
-import getCodeSelectionPlugins from "../getCodeSelectionPlugins";
+import getHooksFromPlugins from "../getHooksFromPlugins";
 
 // eslint-disable-next-line prettier/prettier, no-empty -- https://github.com/babel/babel/issues/15156
-{}
+{
+}
 /**
  * A factory function used to create a withToggledHook React hook, wrapping an existing hook/function.
  * @memberof module:web-toggle-point-react-pointcuts
@@ -27,8 +28,9 @@ const withToggledHookFactory = ({
   variantKey = "bucket",
   plugins
 }) => {
-  const codeSelectionPlugins = getCodeSelectionPlugins(plugins);
-  const useCodeSelectionPlugins = pluginsHookFactory(codeSelectionPlugins);
+  const useCodeSelectionPlugins = pluginsHookFactory(
+    getHooksFromPlugins(plugins, "onCodeSelected")
+  );
 
   /**
    * A React hook that wraps a base / control function or hook and swaps in a variant based on the active features supplied

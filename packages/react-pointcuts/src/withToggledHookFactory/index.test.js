@@ -1,5 +1,5 @@
 import withToggledHookFactory from ".";
-import getCodeSelectionPlugins from "../getCodeSelectionPlugins";
+import getHooksFromPlugins from "../getHooksFromPlugins";
 import pluginsHookFactory from "./pluginsHookFactory";
 import { renderHook } from "@testing-library/react";
 import useCodeMatches from "../useCodeMatches";
@@ -7,7 +7,7 @@ import useCodeMatches from "../useCodeMatches";
 const mockMatches = { matchedFeatures: Symbol("test-matched-features") };
 jest.mock("../useCodeMatches", () => jest.fn(() => mockMatches));
 const mockCodeSelectionPlugins = Symbol("test-code-selection-plugins");
-jest.mock("../getCodeSelectionPlugins", () =>
+jest.mock("../getHooksFromPlugins", () =>
   jest.fn(() => mockCodeSelectionPlugins)
 );
 jest.mock("./pluginsHookFactory", () => jest.fn());
@@ -29,7 +29,10 @@ describe("withToggledHookFactory", () => {
 
   const makeCommonAssertions = () => {
     it("should get code selection plugins", () => {
-      expect(getCodeSelectionPlugins).toHaveBeenCalledWith(mockPlugins);
+      expect(getHooksFromPlugins).toHaveBeenCalledWith(
+        mockPlugins,
+        "onCodeSelected"
+      );
     });
 
     it("should create a code selection hook based on the appropriate plugins", () => {

@@ -1,15 +1,4 @@
 /**
- * Code expected in the host application
- * @external HostApplication
- */
-/**
- * A delegate passed to log an error
- * @callback external:HostApplication.logError
- * @type {Function}
- * @param {string} message A message to log as an error
- */
-
-/**
  * React UI library
  * @external React
  * @see {@link https://reactjs.org/|React}

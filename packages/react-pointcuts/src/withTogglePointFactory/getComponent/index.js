@@ -1,11 +1,11 @@
-import withPlugins from "./withPlugins";
+import withCodeSelectionPlugins from "./withCodeSelectionPlugins";
 import withErrorBoundary from "./withErrorBoundary";
 import { forwardRef } from "react";
 
 const getControlOrVariant = ({
   matchedFeatures,
   matchedVariant,
-  logError,
+  onVariantError,
   control
 }) => {
   if (!matchedFeatures.length) {
@@ -27,7 +27,7 @@ const getControlOrVariant = ({
 
     Component = withErrorBoundary({
       Variant,
-      logError,
+      onVariantError,
       fallback: control
     });
   }
@@ -35,13 +35,23 @@ const getControlOrVariant = ({
 };
 
 const getComponent = (params) => {
-  let Component = getControlOrVariant(params);
+  const onVariantError = (error) => {
+    params.variantErrorPlugins.forEach(({ onVariantError }) => {
+      Promise.resolve().then(() => {
+        try {
+          onVariantError(error);
+        } catch {} // eslint-disable-line no-empty
+      });
+    });
+  };
 
-  const { plugins, ...rest } = params;
-  if (plugins) {
-    Component = withPlugins({
+  let Component = getControlOrVariant({ ...params, onVariantError });
+
+  const { codeSelectionPlugins, ...rest } = params;
+  if (codeSelectionPlugins) {
+    Component = withCodeSelectionPlugins({
       Component,
-      plugins,
+      codeSelectionPlugins,
       ...rest
     });
   }
