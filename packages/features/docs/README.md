@@ -38,13 +38,13 @@ For protection against variation (or other) code modifying the toggle state undu
 ```js
 import { deepFreeze } from "deep-freeze-es6";
 const initialValue = {};
-featuresStore.useValue({ value: deepFreeze(initialValue) });
+featuresStore.setValue({ value: deepFreeze(initialValue) });
 ```
 For reactive values, without the need for a React or other contextual wrapper, consider wrapping an object with [`valtio`](https://github.com/pmndrs/valtio):
 ```js
 import { proxy } from "valtio/vanilla";
 const initialValue = {};
-featuresStore.useValue({ value: proxy(initialValue) });
+featuresStore.setValue({ value: proxy(initialValue) });
 ```
 ...which can then be subscribed to in an appropriate toggle point, to re-evaluate toggled functions:
 ```js
@@ -55,9 +55,9 @@ If using React (e.g. `react-pointcuts` package), can just use the native support
 ```js
 import { proxy, useSnapshot } from "valtio";
 const initialValue = {};
-featuresStore.useValue({ value: proxy(initialValue) });
-export const useValue = (input) =>  // consumed in updating code-paths
-  featuresStore.useValue({
+featuresStore.setValue({ value: proxy(initialValue) });
+export const setValue = (input) =>  // consumed in updating code-paths
+  featuresStore.setValue({
     value: Object.assign(featuresStore.getFeatures(), input)
   });
 export const getActiveFeatures = () => useSnapshot(featuresStore.getFeatures()); // passed to `withTogglePointFactory`

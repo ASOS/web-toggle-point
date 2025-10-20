@@ -34,7 +34,7 @@ describe("nodeRequestScopedFeaturesStoreFactory", () => {
     let storeMock;
 
     beforeEach(() => {
-      requestScopedStore.useValue({ value, scopeCallBack });
+      requestScopedStore.setValue({ value, scopeCallBack });
       storeMock = AsyncLocalStorage.mock.results[0].value;
     });
 
