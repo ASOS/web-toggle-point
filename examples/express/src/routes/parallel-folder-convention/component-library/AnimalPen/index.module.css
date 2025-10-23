@@ -1,0 +1,11 @@
+.animalPen {
+  padding: 1em;
+  margin: 1em;
+  border-radius: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 8em;
+  border: 1px dashed black;
+  background: lightgreen;
+  overflow: auto;
+  max-height: 40vh;
+}

@@ -8,7 +8,7 @@ const Component = ({ backgroundColor }) => (
       backgroundColor
     }}
   >
-    I'm Small
+    I am Small
   </div>
 );
 

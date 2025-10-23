@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.0] - 2025-10-21
 
-### Changed
+### Added
 
 - updated toggle handlers to take a `variantPathMap` corresponding to webpack [version 0.9.0](../../../packages/webpack/docs/CHANGELOG.md#090---2025-07-29)
+- `@typescript-eslint/parser` to support the above
+
+### Fixed
+
+- convert deprecated `unstable_config_lookup_from_file` eslint flag to `v10_config_lookup_from_file` now that [its stable](https://eslint.org/docs/latest/flags/#active-flags) awaiting next major version
 
 ## [0.3.0] - 2025-10-20
 

@@ -1,0 +1,54 @@
+body {
+  font-family: "Didact Gothic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  height: 100vh;
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    padding: 2em;
+    flex-basis: content;
+
+    & > div {
+      display: flex;
+      flex: 1 1 auto;
+      justify-content: center;
+      flex-direction: column;
+      padding: 3em;
+    }
+  }
+}
+
+select,
+::picker(select) {
+  appearance: base-select;
+  backdrop-filter: saturate(0.3);
+}
+::picker(select) {
+  opacity: 0;
+  transition: all 0.4s allow-discrete;
+}
+select::picker-icon {
+  margin: auto;
+}
+option::checkmark {
+  order: 1;
+  margin-left: auto;
+  content: "☑️";
+}
+::picker(select):popover-open {
+  opacity: 1;
+}
+@starting-style {
+  ::picker(select):popover-open {
+    opacity: 0;
+  }
+}
