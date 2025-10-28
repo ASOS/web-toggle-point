@@ -21,4 +21,3 @@ N.B. NextJs support is currently experimental, see [caveats](#caveats).
 - The webpack package cannot currently vary some of NextJs' [filesystem convention files](https://nextjs.org/docs/pages/getting-started/project-structure#files-conventions) ([Issue #9](https://github.com/ASOS/web-toggle-point/issues/9))
 - The `webpack` plugin uses webpack hooks, so is incompatible with the new TurboPack bundler
 - The `webpack` plugin uses Node JS APIs to access the filesystem, so may be incompatible with [the edge runtime](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis)
-- The `nodeRequestScopedFeaturesStoreFactory` from the [`features`](../../packages/features/docs/README.md) package relies on singleton values held in top-level scope, which Next does not support. See [issue 50](https://github.com/ASOS/web-toggle-point/issues/50), which should remedy this.

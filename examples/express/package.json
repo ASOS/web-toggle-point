@@ -1,6 +1,6 @@
 {
   "name": "web-toggle-point-express-example",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "type": "module",
   "engines": {
     "node": ">=20.6.0"
@@ -16,32 +16,38 @@
     "prelint": "npm run build-dependencies",
     "lint": "npm run lint:code && npm run lint:docs",
     "lint:fix": "npm run lint:code -- --fix && npm run lint:docs -- --fix",
-    "lint:code": "eslint src --flag unstable_config_lookup_from_file",
-    "lint:docs": "eslint *.md --flag unstable_config_lookup_from_file"
+    "lint:code": "eslint src --flag v10_config_lookup_from_file",
+    "lint:docs": "eslint *.md --flag v10_config_lookup_from_file"
   },
   "dependencies": {
-    "@asos/web-toggle-point-react-pointcuts": "file:../../packages/react-pointcuts",
     "@asos/web-toggle-point-features": "file:../../packages/features",
+    "@asos/web-toggle-point-react-pointcuts": "file:../../packages/react-pointcuts",
     "@asos/web-toggle-point-ssr": "file:../../packages/ssr",
     "@asos/web-toggle-point-webpack": "file:../../packages/webpack",
+    "@reduxjs/toolkit": "^2.8.2",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "http-status-codes": "^2.3.0",
     "react": ">=17",
-    "react-dom": ">=17"
+    "react-dom": ">=17",
+    "react-redux": "^9.2.0",
+    "valtio": "^2.1.5"
   },
   "devDependencies": {
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
+    "enhanced-tsconfig-paths-webpack-plugin": "^0.2.3",
     "mini-css-extract-plugin": "^2.9.2",
     "path-exists-cli": "^2.0.0",
     "prop-types": "^15.7.2",
+    "source-map-loader": "^5.0.0",
     "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2",
     "webpack-node-externals": "^3.0.0"
   },
   "peerDependencies": {
-    "@playwright/test": "^1.49.0"
+    "@playwright/test": "^1.56.0"
   }
 }

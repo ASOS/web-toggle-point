@@ -1,12 +1,14 @@
 import express from "express";
 import animalsRouter from "./routes/animals/router.js";
 import configRouter from "./routes/config/router.js";
+import parallelFolderConventionRouter from "./routes/parallel-folder-convention/router.tsx";
 
 const app = express();
 const PORT = process.env.PORT;
 
 app.use("/animals", animalsRouter);
 app.use("/config", configRouter);
+app.use("/parallel-folder-convention", parallelFolderConventionRouter);
 app.get("/", (_, response) => {
   response.send(`<!DOCTYPE html>
 <html lang="en">
@@ -39,6 +41,7 @@ app.get("/", (_, response) => {
     <ul>
       <li><a href="/animals">Version header with nodeRequestScoped store</a></li>
       <li><a href="/config">.env config with ssrBackedReactContext store for initial value in browser</a></li>
+      <li><a href="/parallel-folder-convention">parallel folder convention, with varied constants, css, react & redux</a></li>
     </ul>
   </body>
 </html>`);

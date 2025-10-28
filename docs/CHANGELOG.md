@@ -20,6 +20,7 @@ This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 - updated to `0.11.0` of [`eslint-plugin-workspaces`](https://github.com/joshuajaco/eslint-plugin-workspaces) after [addition of ESLint9 support](https://github.com/joshuajaco/eslint-plugin-workspaces/commit/af855c3a3d8069366d4446747e91828ddf7560c6)
   - update `eslint.config.mjs` to utilise flat config
+- updated `eslint` to 9.38.0
 
 ## [0.12.0] - 2025-09-30
 

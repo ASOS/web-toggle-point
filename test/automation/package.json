@@ -1,6 +1,6 @@
 {
   "name": "web-toggle-point-automation-tests",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "index.js",
   "type": "module",
   "private": true,
@@ -16,7 +16,7 @@
   },
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.49.0",
+    "@playwright/test": "^1.56.0",
     "@types/node": "^22.9.1",
     "path-exists-cli": "^2.0.0"
   }
