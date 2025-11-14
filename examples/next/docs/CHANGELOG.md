@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - update to take supply static `webpackNormalModule` corresponding to webpack plugin [version 0.9.0](../../../packages/webpack/docs/CHANGELOG.md#090---2025-07-29)
+- update [`Next.js`](https://nextjs.org/) to version 15.5.6
+- update [`@playwright/test`](https://github.com/microsoft/playwright/tree/main/packages/playwright-test) to 1.56.0
+
+### Fixed
+
+- remove note regarding [issue #50](https://github.com/ASOS/web-toggle-point/issues/50) after release of features [version 0.5.0](../../../packages/features/docs/CHANGELOG.md#050---2025-10-20)
 
 ## [0.4.0] - 2025-10-20
 

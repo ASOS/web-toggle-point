@@ -77,7 +77,7 @@ jobs:
 
       - name: Upload updated package.json to artifact
         if: steps.pre-release-version.outcome == 'success'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ format('{0}-{1}', env.PACKAGE_ARTIFACT, matrix.package.shortName) }}
           path: |
@@ -96,7 +96,7 @@ jobs:
 
       - name: Upload to publish matrix
         if: steps.artifact-json.outcome == 'success'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ format('{0}-{1}', env.UPDATED_MATRIX_ARTIFACT, matrix.package.shortName) }}
           path: |
@@ -111,7 +111,7 @@ jobs:
       matrix: ${{ steps.updatedPackages.outputs.packageArray }}
     name: 👨‍🍳 Prepare Publishing Matrix
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           pattern: ${{ env.UPDATED_MATRIX_ARTIFACT }}-*
           merge-multiple: true
@@ -151,7 +151,7 @@ jobs:
             .github/**
           sparse-checkout-cone-mode: false
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           pattern: ${{ env.PACKAGE_ARTIFACT }}-*
           merge-multiple: true
@@ -175,7 +175,7 @@ jobs:
         shell: bash
 
       - name: Upload (potentially reified) package.jsons to artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PACKAGE_ARTIFACT }}
           path: ${{ steps.createPathArray.outputs.pathArray }}
@@ -204,7 +204,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: ${{ env.PACKAGE_ARTIFACT }}
 

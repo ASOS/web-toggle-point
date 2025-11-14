@@ -1,0 +1,4 @@
+.button {
+  composes: button from "../../../../../../components/TopBox/TopBoxChild/TopBoxButton/index.module.css";
+  background-color: wheat;
+}

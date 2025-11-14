@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": ".",
+    "paths": {
+      "@/component-library/*": ["./component-library/*"],
+      "@/components/*": ["./components/*"],
+      "@/state/*": ["./state/*"],
+      "@/constants/*": ["./constants/*"]
+    },
+    "target": "es2018",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "sourceMap": true
+  },
+  "include": ["**/*.ts", "**/*.tsx", "toggle-plumbing/pointCutConfig.js"],
+  "exclude": ["node_modules"]
+}

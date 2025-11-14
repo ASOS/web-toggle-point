@@ -3,8 +3,7 @@ import pluginsHookFactory from "./pluginsHookFactory";
 import getHooksFromPlugins from "../getHooksFromPlugins";
 
 // eslint-disable-next-line prettier/prettier, no-empty -- https://github.com/babel/babel/issues/15156
-{
-}
+{}
 /**
  * A factory function used to create a withToggledHook React hook, wrapping an existing hook/function.
  * @memberof module:web-toggle-point-react-pointcuts

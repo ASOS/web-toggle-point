@@ -11,8 +11,8 @@
     "prelint": "npm run build-dependencies",
     "lint": "npm run lint:code && npm run lint:docs",
     "lint:fix": "npm run lint:code -- --fix && npm run lint:docs -- --fix",
-    "lint:code": "eslint src --flag unstable_config_lookup_from_file",
-    "lint:docs": "eslint *.md --flag unstable_config_lookup_from_file"
+    "lint:code": "eslint src --flag v10_config_lookup_from_file",
+    "lint:docs": "eslint *.md --flag v10_config_lookup_from_file"
   },
   "dependencies": {
     "@asos/web-toggle-point-webpack": "file:../../packages/webpack",
@@ -28,6 +28,6 @@
     "webpack-node-externals": "^3.0.0"
   },
   "peerDependencies": {
-    "@playwright/test": "^1.49.0"
+    "@playwright/test": "^1.56.0"
   }
 }

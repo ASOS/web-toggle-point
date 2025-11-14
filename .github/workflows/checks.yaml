@@ -67,7 +67,7 @@ jobs:
           sparse-checkout: |
             .git/**
           sparse-checkout-cone-mode: false
-          
+
       - name: Workaround actions/checkout#1475
         run: git config core.sparseCheckout false
         shell: bash
@@ -89,7 +89,7 @@ jobs:
         working-directory: ./test/automation
 
       - name: Upload results for shard
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: ${{ !cancelled() }}
         with:
           name: blob-report-${{ matrix.type }}-${{ runner.os }}
@@ -117,7 +117,7 @@ jobs:
         uses: ./.github/actions/setup-node
 
       - name: Download blob reports from GitHub Actions Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           path: all-blob-reports
           pattern: blob-report-*
@@ -127,7 +127,7 @@ jobs:
         run: npx playwright merge-reports --reporter=html ./all-blob-reports
 
       - name: Upload HTML report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report

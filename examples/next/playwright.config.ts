@@ -1,4 +1,5 @@
 import { defineConfig, type PlaywrightTestConfig } from "@playwright/test";
+// eslint-disable-next-line workspaces/no-relative-imports, workspaces/require-dependency
 import baseConfig from "../../test/automation/base.config";
 
 const THREE_MINUTES = 3 * 60 * 1000;

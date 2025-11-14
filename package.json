@@ -1,6 +1,6 @@
 {
   "name": "@asos/web-toggle-point",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "repository": "git@github.com:asos/web-toggle-point.git",
   "homepage": "https://asos.github.io/web-toggle-point/",
   "license": "MIT",
@@ -41,7 +41,7 @@
     "core-js": "^3.0.0",
     "cross-env": "^7.0.3",
     "danger": "^13.0.3",
-    "eslint": "^9.15.0",
+    "eslint": "^9.38.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jest": "^28.9.0",
     "eslint-plugin-jest-formatting": "^3.1.0",

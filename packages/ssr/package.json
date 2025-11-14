@@ -1,7 +1,7 @@
 {
   "name": "@asos/web-toggle-point-ssr",
   "description": "toggle point server side rendering code",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "license": "MIT",
   "type": "module",
   "main": "./lib/main.es5.cjs",
@@ -43,7 +43,7 @@
     "postpublish": "shx rm ./README.md LICENSE",
     "clean": "rimraf ./lib",
     "docs": "rimraf ./docs/**/*.html && jsdoc -c ../jsdoc.conf.js",
-    "lint": "eslint build src docs --flag unstable_config_lookup_from_file",
+    "lint": "eslint build src docs --flag v10_config_lookup_from_file",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest"
   },
