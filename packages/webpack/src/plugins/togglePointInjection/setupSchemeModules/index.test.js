@@ -1,5 +1,5 @@
 import { PLUGIN_NAME, POINT_CUTS, JOIN_POINTS, SCHEME } from "../constants.js";
-import generateJoinPoint from "./generateJoinPoint/index.js";
+import generateJoinPoint from "./generateJoinPoint.js";
 import generatePointCut from "./generatePointCut.js";
 import setupSchemeModules from "./index.js";
 
@@ -24,7 +24,7 @@ describe("setupSchemeModules", () => {
   const joinPointFiles = Symbol("test-join-point-files");
   const pointCuts = Symbol("test-point-cuts");
 
-  beforeEach(() => {
+  beforeEach(async () => {
     setupSchemeModules({
       NormalModule,
       compilation,

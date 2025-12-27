@@ -1,6 +1,6 @@
+import processPointCuts from "./index.js";
 import processVariantFiles from "./processVariantFiles/index.js";
 import getVariantPaths from "./getVariantPaths.js";
-import processPointCuts from "./index.js";
 
 jest.mock("./processVariantFiles/index", () => jest.fn());
 jest.mock("./getVariantPaths", () =>
@@ -9,17 +9,18 @@ jest.mock("./getVariantPaths", () =>
 
 describe("processPointCuts", () => {
   const pointCuts = new Map([
-    ["test-key-1", Symbol("test-point-cut")],
-    ["test-key-2", Symbol("test-point-cut")],
-    ["test-key-3", Symbol("test-point-cut")]
+    ["test-key-1", { ["test-key"]: Symbol("test-point-cut") }],
+    ["test-key-2", { ["test-key"]: Symbol("test-point-cut") }],
+    ["test-key-3", { ["test-key"]: Symbol("test-point-cut") }]
   ]);
   const pointCutsValues = Array.from(pointCuts.values());
-  const appRoot = Symbol("test-app-root");
+  const appRoot = "test-app-root";
   const fileSystem = Symbol("test-file-system");
   let warnings, joinPointFiles;
 
   beforeEach(async () => {
     jest.clearAllMocks();
+
     ({ warnings, joinPointFiles } = await processPointCuts({
       appRoot,
       fileSystem,
@@ -57,7 +58,7 @@ describe("processPointCuts", () => {
     ).toEqual(1);
   });
 
-  it("should return an array of warnings an a map of join point files", () => {
+  it("should return an array of warnings and a Map of join point files", () => {
     expect(warnings).toBeInstanceOf(Array);
     expect(joinPointFiles).toBeInstanceOf(Map);
   });

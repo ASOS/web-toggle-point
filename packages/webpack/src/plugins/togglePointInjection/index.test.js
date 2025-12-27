@@ -32,7 +32,10 @@ jest.mock("./fillDefaultOptionalValues.js", () =>
 
 describe("togglePointInjection", () => {
   let togglePointInjection, compiler, options;
-  const pointCuts = [{ name: "test-name", togglePointModule: "test-module" }];
+  const pointCuts = [
+    { [Symbol("test-key")]: Symbol("test-value") },
+    { [Symbol("test-key")]: Symbol("test-value") }
+  ];
 
   beforeEach(() => {
     jest.clearAllMocks();

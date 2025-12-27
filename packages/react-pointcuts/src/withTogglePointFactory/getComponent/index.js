@@ -1,37 +1,34 @@
 import withCodeSelectionPlugins from "./withCodeSelectionPlugins";
 import withErrorBoundary from "./withErrorBoundary";
 import { forwardRef } from "react";
+import getDisplayName from "../getDisplayName";
 
 const getControlOrVariant = ({
   matchedFeatures,
   matchedVariant,
   onVariantError,
-  control
+  packedBaseModule,
+  unpackComponent
 }) => {
-  if (!matchedFeatures.length) {
-    return control;
+  if (!matchedFeatures.length || !matchedVariant) {
+    return unpackComponent(packedBaseModule);
   }
 
-  let Component = control;
-  if (matchedVariant) {
-    const { codeRequest, variables } = matchedVariant;
-    const { default: VariantWithoutVariables } = codeRequest;
-    const Variant = forwardRef((props, ref) => (
-      <VariantWithoutVariables {...{ ...variables, ...props, ref }} />
-    ));
-    Variant.displayName = `Variant(${
-      VariantWithoutVariables.displayName ||
-      VariantWithoutVariables.name ||
-      "Component"
-    })`;
+  const { packedModule, variables } = matchedVariant;
+  const VariantWithoutVariables = unpackComponent(packedModule);
+  const Variant = forwardRef((props, ref) => (
+    <VariantWithoutVariables {...{ ...variables, ...props, ref }} />
+  ));
+  Variant.displayName = `Variant(${getDisplayName(VariantWithoutVariables)})`;
 
-    Component = withErrorBoundary({
-      Variant,
-      onVariantError,
-      fallback: control
-    });
-  }
-  return Component;
+  const component = withErrorBoundary({
+    Variant,
+    onVariantError,
+    packedBaseModule,
+    unpackComponent
+  });
+
+  return component;
 };
 
 const getComponent = (params) => {

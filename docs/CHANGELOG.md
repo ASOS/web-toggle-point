@@ -14,6 +14,20 @@ N.B. See changelogs for individual packages, where most change will occur:
 
 This log covers the [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
+## [0.13.2] - ????-??-??
+
+### Fixed
+
+- remove `react` and `react-dom` from repo root package.json, introduced in [version 0.9.0](#090---2024-11-29)
+
+### Added
+
+- `test:unit:coverage` script
+
+### Changed
+
+- set minimum node version to 20.8 due to use of [`import.meta.resolve`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta/resolve) where possible in packages / examples
+
 ## [0.13.1] - 2025-11-14
 
 ### Changed

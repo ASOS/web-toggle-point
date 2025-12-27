@@ -1,7 +1,17 @@
+import lazyComponentLoadStrategyFactory from "@asos/web-toggle-point-react-pointcuts/lazyComponentLoadStrategyFactory";
+
 export default {
   name: "toggled twice experiment",
-  togglePointModule: import.meta.resolve("./withTogglePoint.tsx"),
+  togglePointModuleSpecifier: import.meta.resolve("./withTogglePoint.tsx"),
   variantGlobs: ["./src/app/fixtures/experiments/8-toggled-twice/**/*.?-?.tsx"],
   joinPointResolver: (path) => path.replace(/.-.\.tsx$/, "tsx"),
-  toggleHandler: import.meta.resolve("./toggleHandlerFactory.ts")
+  toggleHandlerFactoryModuleSpecifier: import.meta.resolve(
+    "./toggleHandlerFactory.ts"
+  ),
+  loadStrategy: lazyComponentLoadStrategyFactory({
+    importCodeGeneratorOptions: {
+      webpackMagicComment:
+        "/* webpackChunkName: 'toggled-twice-chunk', webpackPreload: true */"
+    }
+  })
 };

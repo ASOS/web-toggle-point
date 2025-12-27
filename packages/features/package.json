@@ -1,7 +1,7 @@
 {
   "name": "@asos/web-toggle-point-features",
   "description": "toggle point features code, used to store toggle state",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "license": "MIT",
   "type": "module",
   "main": "./lib/global.js",

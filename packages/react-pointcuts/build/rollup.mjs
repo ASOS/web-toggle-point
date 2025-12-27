@@ -1,46 +1,66 @@
-import pkg from "../package.json" with { type: "json" };
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
 import external from "rollup-plugin-auto-external";
 import commonjs from "@rollup/plugin-commonjs";
 import terser from "@rollup/plugin-terser";
 import keepExternalComments from "./keepExternalComments.mjs";
+import replace from "@rollup/plugin-replace";
 
-export default ({ config_isClient }) => {
-  const CLIENT = JSON.parse(config_isClient);
-  const [esOutputFile, cjsOutputFile, extraPlugins] = {
-    false: [pkg.exports.default.import, pkg.exports.default.require, []],
-    true: [pkg.exports.browser.import, pkg.exports.browser.require, [terser()]]
-  }[CLIENT];
+const getCommon = ({ config_isClient }) => ({
+  input: {
+    main: "./src/index.js",
+    lazyComponentLoadStrategyFactory:
+      "./src/lazyComponentLoadStrategyFactory.js"
+  },
+  external: ["react/jsx-runtime"],
+  plugins: [
+    keepExternalComments,
+    babel({
+      exclude: [/node_modules/],
+      babelHelpers: "runtime"
+    }),
+    resolve({
+      preferBuiltins: true
+    }),
+    commonjs(),
+    external(),
+    ...[JSON.parse(config_isClient) ? terser() : []]
+  ],
+  preserveSymlinks: true
+});
 
-  return {
-    input: "./src/index.js",
-    output: [
-      {
-        file: esOutputFile,
+export default (args) => {
+  const isClient = JSON.parse(args.config_isClient);
+  const common = getCommon(args);
+  return [
+    {
+      ...common,
+      output: {
+        dir: "lib/",
+        exports: "named",
         format: "es",
-        sourcemap: true
-      },
-      {
-        file: cjsOutputFile,
-        format: "cjs",
+        entryFileNames: `[name]${isClient ? ".browser" : ""}.js`,
         sourcemap: true
       }
-    ],
-    external: ["react/jsx-runtime"],
-    plugins: [
-      keepExternalComments,
-      babel({
-        exclude: [/node_modules/],
-        babelHelpers: "runtime"
-      }),
-      resolve({
-        preferBuiltins: true
-      }),
-      commonjs(),
-      external(),
-      ...extraPlugins
-    ],
-    preserveSymlinks: true
-  };
+    },
+    {
+      ...common,
+      output: {
+        dir: "lib/",
+        exports: "named",
+        format: "cjs",
+        entryFileNames: `[name]${isClient ? ".browser" : ""}.es5.cjs`,
+        sourcemap: true
+      },
+      plugins: [
+        ...common.plugins,
+        replace({
+          preventAssignment: true,
+          values: {
+            "import.meta.filename": "__filename"
+          }
+        })
+      ]
+    }
+  ];
 };

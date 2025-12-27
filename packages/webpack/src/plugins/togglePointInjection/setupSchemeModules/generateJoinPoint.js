@@ -1,9 +1,11 @@
-import { POINT_CUTS, SCHEME } from "../../constants.js";
-import importCodeGenerator from "./importCodeGenerator.js";
+import { POINT_CUTS, SCHEME } from "../constants.js";
 
 const generateJoinPoint = ({ joinPointFiles, joinPointPath }) => {
   const {
-    pointCut: { name },
+    pointCut: {
+      name,
+      loadStrategy: { importCodeGenerator }
+    },
     variantPathMap
   } = joinPointFiles.get(joinPointPath);
   const pointCutImport = `import pointCut from "${SCHEME}:${POINT_CUTS}:/${name}";`;

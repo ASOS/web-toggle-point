@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - ????-??-??
+
+### Changed
+
+- updated to new webpack plugin
+  - moved "experiments" example to use the `lazyComponentLoadStrategyFactory` from `react-pointcuts`
+  - new "content management" example utilising the default `deferredRequireLoadStrategyFactory` of `webpack` package
+- colocate documentation for "experiments" example to sit with its own `README.mdx`
+- updated documentation to indicate incompatibility of Next 14 (and presumed below) with the default `deferredRequireLoadStrategyFactory`
+- update [`Next.js`](https://nextjs.org/) to version 16.1.1
+
 ## [0.4.1] - 2025-10-21
 
 ### Changed

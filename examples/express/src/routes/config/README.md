@@ -8,6 +8,8 @@ It shows how a payload can be included in the props passed to the toggle point c
 
 N.B. No implication that this is in any way a _good use_ of "config", it's heavily contrived.
 
+The implementation uses the `lazyComponentLoadStrategyFactory` from the `react-pointcuts` package, to ensure that variant code is bundled independently, and downloaded on demand.
+
 ## Setup
 
 1. `npm install`
@@ -15,5 +17,10 @@ N.B. No implication that this is in any way a _good use_ of "config", it's heavi
 3. open `localhost:3002/config` in a browser, you should see a medium sized div
 4. stop, and re-start the server with `npm run start:small-env` or `npm run start:large-env`
 5. open `localhost:3003/config` (small env) or `localhost:3004/config` (large env), and see a different sized (and coloured) `div` shown
-6. press the buttons, to demonstrate overriding the initial content serialized on the server.
+6. press the buttons, to demonstrate overriding the initial content serialized on the server
    - N.B. The colourisation is only a result of the stored config, so using the buttons will just change the size
+   - watch the network tab in developer tools to observe the lazy loading in effect
+   - try blocking one of the subsequent chunks, you should see the error boundary falling back to the default experience, with a console log:
+     ```
+     ChunkLoadError: Variant errored, rendering fallback: Loading chunk ### failed.
+     ```

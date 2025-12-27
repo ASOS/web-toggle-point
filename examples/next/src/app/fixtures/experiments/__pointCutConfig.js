@@ -3,7 +3,7 @@ import toggledTwicePointCutConfig from "./8-toggled-twice/__variants__/test-feat
 export default [
   {
     name: "experiments",
-    togglePointModule: "/src/app/fixtures/experiments/withTogglePoint",
+    togglePointModuleSpecifier: "/src/app/fixtures/experiments/withTogglePoint",
     variantGlobs: [
       "./src/app/fixtures/experiments/**/__variants__/*/*/!(*.spec).tsx"
     ]

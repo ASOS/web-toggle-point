@@ -1,7 +1,10 @@
-import webpack from "webpack";
-import fillDefaultOptionalValues from "./fillDefaultOptionalValues.js";
+import deferredRequireLoadStrategyFactory from "../../moduleLoadStrategyFactories/deferredRequireLoadStrategyFactory.js";
 
-jest.mock("webpack", () => ({ NormalModule: Symbol("test-normal-module") }));
+const mockDeferredRequireLoadStrategy = Symbol("test-default-load-strategy");
+jest.mock(
+  "../../moduleLoadStrategyFactories/deferredRequireLoadStrategyFactory.js",
+  () => jest.fn(() => mockDeferredRequireLoadStrategy)
+);
 
 describe("fillDefaultOptionalValues", () => {
   let result;
@@ -17,59 +20,49 @@ describe("fillDefaultOptionalValues", () => {
     });
   };
 
-  const variantGlobs = Symbol("test-variant-globs");
+  const variantGlob = Symbol("test-variant-glob");
   const joinPointResolver = Symbol("test-join-point-resolver");
+  const loadStrategy = Symbol("test-load-strategy");
 
-  const defaultVariantGlobs = [
-    "./**/__variants__/*/*/!(*.test).{js,jsx,ts,tsx}"
-  ];
+  const defaultVariantGlob = "./**/__variants__/*/*/!(*.test).{js,jsx,ts,tsx}";
   const defaultJoinPointResolver = expect.any(Function);
-  const defaultToggleHandler =
-    "@asos/web-toggle-point-webpack/pathSegmentToggleHandler";
-  const toggleHandler = Symbol("test-toggle-handler");
-  const webpackNormalModule = Symbol("test-webpack-normal-module");
-
-  describe("when configuring the plugin with a supplied webpackNormalModule", () => {
-    beforeEach(() => {
-      result = fillDefaultOptionalValues({
-        webpackNormalModule,
-        pointCuts: []
-      });
-    });
-
-    it("should return the supplied webpackNormalModule", () => {
-      expect(result.webpackNormalModule).toBe(webpackNormalModule);
-    });
-  });
-
-  describe("when configuring the plugin without supplying a webpackNormalModule", () => {
-    beforeEach(() => {
-      result = fillDefaultOptionalValues({
-        pointCuts: []
-      });
-    });
-
-    it("should return the NormalModule from the webpack import", () => {
-      expect(result.webpackNormalModule).toBe(webpack.NormalModule);
-    });
-  });
+  const defaultToggleHandlerFactoryModuleSpecifier =
+    "@asos/web-toggle-point-webpack/toggleHandlerFactories/pathSegment";
+  const toggleHandlerFactoryModuleSpecifier = Symbol(
+    "test-toggle-handler-factory-module-specifier"
+  );
 
   describe.each`
-    variantGlobs    | joinPointResolver    | toggleHandler    | description                                                     | expectation
-    ${undefined}    | ${undefined}         | ${undefined}     | ${"nothing"}                                                    | ${{ variantGlobs: defaultVariantGlobs, joinPointResolver: defaultJoinPointResolver, toggleHandler: defaultToggleHandler }}
-    ${variantGlobs} | ${undefined}         | ${undefined}     | ${"a variantGlob, but nothing else"}                            | ${{ variantGlobs, joinPointResolver: defaultJoinPointResolver, toggleHandler: defaultToggleHandler }}
-    ${variantGlobs} | ${joinPointResolver} | ${undefined}     | ${"a variantGlob and a join point resolver"}                    | ${{ variantGlobs, joinPointResolver, toggleHandler: defaultToggleHandler }}
-    ${undefined}    | ${joinPointResolver} | ${undefined}     | ${"a joinPointResolver, but nothing else"}                      | ${{ variantGlobs: defaultVariantGlobs, joinPointResolver, toggleHandler: defaultToggleHandler }}
-    ${undefined}    | ${undefined}         | ${toggleHandler} | ${"a toggle handler "}                                          | ${{ variantGlobs: defaultVariantGlobs, joinPointResolver: defaultJoinPointResolver, toggleHandler }}
-    ${variantGlobs} | ${undefined}         | ${toggleHandler} | ${"a toggle handler and a variantGlob, but nothing else"}       | ${{ variantGlobs, joinPointResolver: defaultJoinPointResolver, toggleHandler }}
-    ${variantGlobs} | ${joinPointResolver} | ${toggleHandler} | ${"a toggle handler, a variantGlob and a join point resolver"}  | ${{ variantGlobs, joinPointResolver, toggleHandler }}
-    ${undefined}    | ${joinPointResolver} | ${toggleHandler} | ${"a toggle handler and a joinPointResolver, but nothing else"} | ${{ variantGlobs: defaultVariantGlobs, joinPointResolver, toggleHandler }}
+    variantGlob    | joinPointResolver    | loadStrategy    | toggleHandlerFactoryModuleSpecifier    | description                                                                                            | expectation
+    ${undefined}   | ${undefined}         | ${undefined}    | ${undefined}                           | ${"nothing"}                                                                                           | ${{ variantGlob: defaultVariantGlob, joinPointResolver: defaultJoinPointResolver, loadStrategy: mockDeferredRequireLoadStrategy, toggleHandlerFactoryModuleSpecifier: defaultToggleHandlerFactoryModuleSpecifier }}
+    ${variantGlob} | ${undefined}         | ${undefined}    | ${undefined}                           | ${"a variantGlob, but nothing else"}                                                                   | ${{ variantGlob, joinPointResolver: defaultJoinPointResolver, loadStrategy: mockDeferredRequireLoadStrategy, toggleHandlerFactoryModuleSpecifier: defaultToggleHandlerFactoryModuleSpecifier }}
+    ${variantGlob} | ${joinPointResolver} | ${undefined}    | ${undefined}                           | ${"a variantGlob and a join point resolver"}                                                           | ${{ variantGlob, joinPointResolver, loadStrategy: mockDeferredRequireLoadStrategy, toggleHandlerFactoryModuleSpecifier: defaultToggleHandlerFactoryModuleSpecifier }}
+    ${variantGlob} | ${undefined}         | ${loadStrategy} | ${undefined}                           | ${"a variantGlob and a load strategy"}                                                                 | ${{ variantGlob, joinPointResolver: defaultJoinPointResolver, loadStrategy, toggleHandlerFactoryModuleSpecifier: defaultToggleHandlerFactoryModuleSpecifier }}
+    ${variantGlob} | ${joinPointResolver} | ${loadStrategy} | ${undefined}                           | ${"a variantGlob, a join point resolver and a load strategy"}                                          | ${{ variantGlob, joinPointResolver, loadStrategy, toggleHandlerFactoryModuleSpecifier: defaultToggleHandlerFactoryModuleSpecifier }}
+    ${undefined}   | ${joinPointResolver} | ${undefined}    | ${undefined}                           | ${"a joinPointResolver, but nothing else"}                                                             | ${{ variantGlob: defaultVariantGlob, joinPointResolver, loadStrategy: mockDeferredRequireLoadStrategy, toggleHandlerFactoryModuleSpecifier: defaultToggleHandlerFactoryModuleSpecifier }}
+    ${undefined}   | ${joinPointResolver} | ${loadStrategy} | ${undefined}                           | ${"a joinPointResolver and a load strategy"}                                                           | ${{ variantGlob: defaultVariantGlob, joinPointResolver, loadStrategy, toggleHandlerFactoryModuleSpecifier: defaultToggleHandlerFactoryModuleSpecifier }}
+    ${undefined}   | ${undefined}         | ${loadStrategy} | ${undefined}                           | ${"a load strategy, but nothing else"}                                                                 | ${{ variantGlob: defaultVariantGlob, joinPointResolver: defaultJoinPointResolver, loadStrategy, toggleHandlerFactoryModuleSpecifier: defaultToggleHandlerFactoryModuleSpecifier }}
+    ${undefined}   | ${undefined}         | ${undefined}    | ${toggleHandlerFactoryModuleSpecifier} | ${"a toggle handler factory module specifier"}                                                         | ${{ variantGlob: defaultVariantGlob, joinPointResolver: defaultJoinPointResolver, loadStrategy: mockDeferredRequireLoadStrategy, toggleHandlerFactoryModuleSpecifier: toggleHandlerFactoryModuleSpecifier }}
+    ${variantGlob} | ${undefined}         | ${undefined}    | ${toggleHandlerFactoryModuleSpecifier} | ${"a toggle handler factory module specifier and a variantGlob, but nothing else"}                     | ${{ variantGlob, joinPointResolver: defaultJoinPointResolver, loadStrategy: mockDeferredRequireLoadStrategy, toggleHandlerFactoryModuleSpecifier: toggleHandlerFactoryModuleSpecifier }}
+    ${variantGlob} | ${joinPointResolver} | ${undefined}    | ${toggleHandlerFactoryModuleSpecifier} | ${"a toggle handler factory module specifier, a variantGlob and a join point resolver"}                | ${{ variantGlob, joinPointResolver, loadStrategy: mockDeferredRequireLoadStrategy, toggleHandlerFactoryModuleSpecifier: toggleHandlerFactoryModuleSpecifier }}
+    ${variantGlob} | ${undefined}         | ${loadStrategy} | ${toggleHandlerFactoryModuleSpecifier} | ${"a toggle handler factory module specifier, variantGlob and a load strategy"}                        | ${{ variantGlob, joinPointResolver: defaultJoinPointResolver, loadStrategy, toggleHandlerFactoryModuleSpecifier: toggleHandlerFactoryModuleSpecifier }}
+    ${variantGlob} | ${joinPointResolver} | ${loadStrategy} | ${toggleHandlerFactoryModuleSpecifier} | ${"a toggle handler factory module specifier, variantGlob, a join point resolver and a load strategy"} | ${{ variantGlob, joinPointResolver, loadStrategy, toggleHandlerFactoryModuleSpecifier: toggleHandlerFactoryModuleSpecifier }}
+    ${undefined}   | ${joinPointResolver} | ${undefined}    | ${toggleHandlerFactoryModuleSpecifier} | ${"a toggle handler factory module specifier and a joinPointResolver, but nothing else"}               | ${{ variantGlob: defaultVariantGlob, joinPointResolver, loadStrategy: mockDeferredRequireLoadStrategy, toggleHandlerFactoryModuleSpecifier: toggleHandlerFactoryModuleSpecifier }}
+    ${undefined}   | ${joinPointResolver} | ${loadStrategy} | ${toggleHandlerFactoryModuleSpecifier} | ${"a toggle handler factory module specifier, joinPointResolver and a load strategy"}                  | ${{ variantGlob: defaultVariantGlob, joinPointResolver, loadStrategy, toggleHandlerFactoryModuleSpecifier: toggleHandlerFactoryModuleSpecifier }}
+    ${undefined}   | ${undefined}         | ${loadStrategy} | ${toggleHandlerFactoryModuleSpecifier} | ${"a toggle handler factory module specifier and a load strategy, but nothing else"}                   | ${{ variantGlob: defaultVariantGlob, joinPointResolver: defaultJoinPointResolver, loadStrategy, toggleHandlerFactoryModuleSpecifier: toggleHandlerFactoryModuleSpecifier }}
   `(
     "when configuring pointCuts, supplying $description",
     // eslint-disable-next-line no-unused-vars
     ({ expectation, description, ...pointCut }) => {
       beforeEach(async () => {
+        const { default: fillDefaultOptionalValues } = await import(
+          "./fillDefaultOptionalValues.js"
+        );
         result = fillDefaultOptionalValues({ pointCuts: [pointCut] });
+      });
+
+      it("should have retrieved the default load strategy", () => {
+        expect(deferredRequireLoadStrategyFactory).toHaveBeenCalled();
       });
 
       it("should fill the defaults", () => {

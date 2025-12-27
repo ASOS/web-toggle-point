@@ -1,9 +1,9 @@
 import getRelevantModule from "./getRelevantModule";
 
-const togglePoint = (joinPoint, featuresMap) => {
-  return new Proxy(joinPoint.default, {
+const togglePoint = ({ joinPoint, featuresMap, unpack }) => {
+  return new Proxy(unpack(joinPoint).default, {
     get(_, ...rest) {
-      const newTarget = getRelevantModule(joinPoint, featuresMap);
+      const newTarget = getRelevantModule({ joinPoint, featuresMap, unpack });
       return Reflect.get(newTarget.default, ...rest);
     }
   });

@@ -39,7 +39,7 @@ app.get("/", (_, response) => {
   </head>
   <body>
     <ul>
-      <li><a href="/animals">Version header with nodeRequestScoped store</a></li>
+      <li><a href="/animals">Version header with nodeRequestScoped features store</a></li>
       <li><a href="/config">.env config with ssrBackedReactContext store for initial value in browser</a></li>
       <li><a href="/parallel-folder-convention">parallel folder convention, with varied constants, css, react & redux</a></li>
     </ul>

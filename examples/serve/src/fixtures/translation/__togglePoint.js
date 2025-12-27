@@ -1,9 +1,9 @@
 import featuresStore from "./__featuresStore.js";
 
-export default (joinPoint, featuresMap) => {
+export default ({ joinPoint, featuresMap, unpack }) => {
   const language = featuresStore.getFeatures();
   if (featuresMap.has(language)) {
-    return featuresMap.get(language);
+    return unpack(featuresMap.get(language)).default;
   }
-  return joinPoint;
+  return unpack(joinPoint).default;
 };

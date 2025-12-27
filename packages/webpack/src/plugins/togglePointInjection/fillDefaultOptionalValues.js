@@ -1,18 +1,23 @@
 import { posix, basename } from "path";
 import webpack from "webpack";
+import deferredRequireLoadStrategyFactory from "../../moduleLoadStrategyFactories/deferredRequireLoadStrategyFactory.js";
+
+const defaultLoadStrategy = deferredRequireLoadStrategyFactory();
 
 const fillDefaultPointcutValues = (pointCut) => {
   const {
-    variantGlobs = ["./**/__variants__/*/*/!(*.test).{js,jsx,ts,tsx}"],
+    variantGlob = "./**/__variants__/*/*/!(*.test).{js,jsx,ts,tsx}",
     joinPointResolver = (variantPath) =>
       posix.resolve(variantPath, ...Array(4).fill(".."), basename(variantPath)),
-    toggleHandler = "@asos/web-toggle-point-webpack/pathSegmentToggleHandler"
+    toggleHandlerFactoryModuleSpecifier = "@asos/web-toggle-point-webpack/toggleHandlerFactories/pathSegment",
+    loadStrategy = defaultLoadStrategy
   } = pointCut;
   return {
     ...pointCut,
-    variantGlobs,
+    variantGlob,
     joinPointResolver,
-    toggleHandler
+    loadStrategy,
+    toggleHandlerFactoryModuleSpecifier
   };
 };
 

@@ -79,7 +79,7 @@ It exports a store with:
       import express from "express";
 
       const app = express();
-      const featuresStore = requestScopedFeaturesStoreFactory({ toggleType: "some type of toggle" });
+      const featuresStore = nodeRequestScopedFeaturesStoreFactory({ toggleType: "some type of toggle" });
 
       app.use((request, response, next) => {
         const value = ?? // some value holding toggle state, either based on `request`, or scoped from outside this middleware, etc.

@@ -1,8 +1,8 @@
 import getRelevantModule from "./getRelevantModule";
 
 const togglePoint =
-  (joinPoint, featuresMap) =>
+  ({ joinPoint, featuresMap, unpack }) =>
   (...args) =>
-    getRelevantModule(joinPoint, featuresMap).default(...args);
+    getRelevantModule({ joinPoint, featuresMap, unpack }).default(...args);
 
 export default togglePoint;

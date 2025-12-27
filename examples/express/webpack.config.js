@@ -1,21 +1,32 @@
 import { resolve, basename, dirname, posix } from "path";
-import externals from "webpack-node-externals";
-import { TogglePointInjection } from "@asos/web-toggle-point-webpack/plugins";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { fileURLToPath } from "url";
+import externals from "webpack-node-externals";
+import { TogglePointInjectionPlugin } from "@asos/web-toggle-point-webpack/plugins";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import staticLoadStrategyFactory from "@asos/web-toggle-point-webpack/moduleLoadStrategyFactories/staticLoadStrategyFactory";
+import lazyComponentLoadStrategyFactory from "@asos/web-toggle-point-react-pointcuts/lazyComponentLoadStrategyFactory";
 import parallelFolderConventionPointCutConfig from "./src/routes/parallel-folder-convention/toggle-plumbing/pointCutConfig.js";
 import { EnhancedTsconfigWebpackPlugin } from "enhanced-tsconfig-paths-webpack-plugin";
 import webpack from "webpack";
 
+const publicPath = resolve(dirname(fileURLToPath(import.meta.url)), "public");
+
 const configPointCutConfig = {
   name: "configuration variants",
   variantGlobs: ["./src/routes/config/__variants__/*/*/*.jsx"],
-  togglePointModule: "/src/routes/config/togglePoint.js"
+  togglePointModuleSpecifier: "/src/routes/config/togglePoint.js",
+  loadStrategy: lazyComponentLoadStrategyFactory()
 };
 
 const common = {
-  mode: "production",
+  mode: "development",
   devtool: "source-map",
+  experiments: {
+    outputModule: true
+  },
+  output: {
+    module: true
+  },
   module: {
     rules: [
       {
@@ -67,20 +78,20 @@ const config = [
   {
     entry: "./src/index.js",
     target: "node",
-    output: {
-      path: resolve(dirname(fileURLToPath(import.meta.url)), "bin"),
-      filename: "server.cjs",
-      clean: true,
-      chunkFormat: "module"
-    },
-    externals: [externals()],
     ...common,
+    output: {
+      ...common.output,
+      path: resolve(dirname(fileURLToPath(import.meta.url)), "bin"),
+      filename: "server.mjs",
+      clean: true
+    },
+    externals: [externals({ importType: "module" })],
     plugins: [
       new webpack.DefinePlugin({
         CLIENT: false
       }),
       new MiniCssExtractPlugin(),
-      new TogglePointInjection({
+      new TogglePointInjectionPlugin({
         pointCuts: [
           configPointCutConfig,
           ...parallelFolderConventionPointCutConfig,
@@ -95,7 +106,8 @@ const config = [
                 ...Array(3).fill(".."),
                 basename(variantPath)
               ),
-            togglePointModule: "/src/routes/animals/togglePoint.js"
+            togglePointModuleSpecifier: "/src/routes/animals/togglePoint.js",
+            loadStrategy: staticLoadStrategyFactory()
           }
         ]
       })
@@ -104,21 +116,35 @@ const config = [
   {
     entry: "./src/routes/config/client.js",
     target: "web",
+    ...common,
     output: {
-      path: resolve(dirname(fileURLToPath(import.meta.url)), "public"),
-      filename: "main.js"
+      ...common.output,
+      path: publicPath,
+      filename: "main.mjs",
+      clean: true
     },
     plugins: [
       new MiniCssExtractPlugin(),
-      new TogglePointInjection({ pointCuts: [configPointCutConfig] })
+      new TogglePointInjectionPlugin({ pointCuts: [configPointCutConfig] })
     ],
-    ...common
+    module: {
+      ...common.module,
+      rules: [
+        {
+          test: /\.js$/,
+          enforce: "pre",
+          use: ["source-map-loader"]
+        },
+        ...common.module.rules
+      ]
+    }
   },
   {
     entry: "./src/routes/parallel-folder-convention/client.js",
     target: "web",
+    ...common,
     output: {
-      path: resolve(dirname(fileURLToPath(import.meta.url)), "public"),
+      path: publicPath,
       filename: "parallel-folder-convention.js"
     },
     plugins: [
@@ -128,11 +154,10 @@ const config = [
       new MiniCssExtractPlugin({
         filename: "parallel-folder-convention.css"
       }),
-      new TogglePointInjection({
+      new TogglePointInjectionPlugin({
         pointCuts: parallelFolderConventionPointCutConfig
       })
-    ],
-    ...common
+    ]
   }
 ];
 

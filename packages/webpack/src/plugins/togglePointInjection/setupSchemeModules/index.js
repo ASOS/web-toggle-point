@@ -1,5 +1,5 @@
 import { PLUGIN_NAME, POINT_CUTS, JOIN_POINTS, SCHEME } from "../constants.js";
-import generateJoinPoint from "./generateJoinPoint/index.js";
+import generateJoinPoint from "./generateJoinPoint.js";
 import generatePointCut from "./generatePointCut.js";
 
 const setupSchemeModules = ({

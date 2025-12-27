@@ -51,16 +51,18 @@ The bare minimum would be injecting a plugin from the [`webpack package`](../pac
 
 Then:
 
-1. Figure out what code modules you'd like to toggle, and see if they are suitable
-2. Figure out a filesystem convention to use
+1. Figure out what code modules you'd like to toggle.
+2. Figure out a filesystem convention to use.
    - the default proposes colocating variations of base modules in `./__variants__/<feature name>/<variant name>/` folders, with filename parity for the modules themselves.
-2. Implement the [`webpack package`](../packages/webpack/docs/README.md)[^2] into your build process, via configuration of appropriate [`pointcuts`](https://en.wikipedia.org/wiki/Pointcut), targeting code modules for toggling that meet the criteria:
-   - A single, default export, that is a function
-   - Side-effect free (or, at least, with harmless import side-effects)
-   - Resolvable by Webpack
-3. Create a feature toggle state store, utilising the [`features package`](../packages/features/docs/README.md), or otherwise, suitable for the dynamism of your toggle type.
+3. Figure out a ["loading strategy"](../packages/webpack/docs/README.md#loadstrategy) to use.
+   - the default loads modules at the point they are selected for use, and the code is build into the entry point of the application.
+   - static (loaded at the entrypoint to the bundle holding the code) or asynchronous (code split) strategies are also available, if compatible with the referring code
+4. Implement the [`webpack package`](../packages/webpack/docs/README.md)[^2] into your build process, via configuration of appropriate [`pointcuts`](https://en.wikipedia.org/wiki/Pointcut), targeting code modules for toggling that meet the criteria:
+   - A single, default export, that is a function.
+   - Resolvable by Webpack.
+5. Create a feature toggle state store, utilising the [`features package`](../packages/features/docs/README.md), or otherwise, suitable for the dynamism of your toggle type.
    - This needs to get state from an appropriate Toggle Router / runtime state provider.
-4. Create a toggle point for the point cuts
+6. Create a toggle point for the point cuts.
    - For a [React](https://react.dev/) application, the `withTogglePointFactory` or `withToggledHookFactory` from the [`react pointcuts package`](../packages/react-pointcuts/docs/README.md) can be used, to construct one.
     - Again, use [the examples](../examples/README.md) as a guide.
 

@@ -1,0 +1,7 @@
+{
+  "testEnvironment": "jsdom",
+  "setupFilesAfterEnv": ["./jest.setup-after-env.js"],
+  "transform": {
+    "\\.js$": ["babel-jest", { "configFile": "./babel.jest.json" }]
+  }
+}

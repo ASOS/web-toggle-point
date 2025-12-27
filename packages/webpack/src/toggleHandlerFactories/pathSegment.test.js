@@ -1,21 +1,28 @@
-import pathSegmentToggleHandler from "./pathSegmentToggleHandler.js";
+import pathSegmentToggleHandlerFactory from "./pathSegment.js";
 
 const toggleOutcome = Symbol("test-outcome");
 const togglePoint = jest.fn(() => toggleOutcome);
-const joinPoint = Symbol("mock-join-point");
+const pack = jest.fn(() => Symbol("packed"));
+const unpack = jest.fn(() => Symbol("unpacked"));
 
-describe("pathSegmentToggleHandler", () => {
-  let result;
+describe("toggleHandlerFactories/pathSegment", () => {
+  let toggleHandlerFactory;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    toggleHandlerFactory = pathSegmentToggleHandlerFactory({
+      togglePoint,
+      pack,
+      unpack
+    });
   });
 
   [1, 2, 3].forEach((segmentCount) => {
     const keyArray = [...Array(segmentCount).keys()];
 
-    describe(`given a list of variant paths with ${segmentCount} path segments (after the variants path)`, () => {
-      let variantPathMap;
+    describe(`given a Map keyed by variant paths with ${segmentCount} path segments (after the variants path)`, () => {
+      let result, variantPathMap;
+      const joinPoint = Symbol("mock-join-point");
 
       beforeEach(() => {
         const segments = keyArray.map((key) => `test-segment-${key}/`);
@@ -29,15 +36,23 @@ describe("pathSegmentToggleHandler", () => {
             Symbol("test-variant")
           ]
         ]);
-        result = pathSegmentToggleHandler({
-          togglePoint,
+        result = toggleHandlerFactory({
           joinPoint,
           variantPathMap
         });
       });
 
-      it("should call the toggle point with the join point module and a map", () => {
-        expect(togglePoint).toHaveBeenCalledWith(joinPoint, expect.any(Map));
+      it("should pack the join point", () => {
+        expect(pack).toHaveBeenCalledWith(joinPoint);
+      });
+
+      it("should call the toggle point with the join point module and a map, plus the passed method to unpack modules", () => {
+        const packedJoinPoint = pack.mock.results.pop().value;
+        expect(togglePoint).toHaveBeenCalledWith({
+          joinPoint: packedJoinPoint,
+          featuresMap: expect.any(Map),
+          unpack
+        });
       });
 
       it("should return the outcome of the toggle point", () => {
@@ -59,7 +74,8 @@ describe("pathSegmentToggleHandler", () => {
               expect(node.has(segment)).toBe(true);
               node = node.get(segment);
             }
-            expect(node).toBe(variantPathMap.get(key));
+            expect(pack).toHaveBeenCalledWith(variantPathMap.get(key));
+            expect(node).toBe(pack.mock.results.pop().value);
           }
         });
       });

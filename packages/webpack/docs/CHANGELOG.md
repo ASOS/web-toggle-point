@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - ????-??-??
+
+### Added
+
+- "load strategy" concept
+  - provide `moduleLoadStrategyFactories` exports: `staticLoadStrategyFactory`, `deferredRequireLoadStrategyFactory`, `deferredDynamicImportLoadStrategyFactory`
+
+### Changed
+
+- changed description of package to better indicate it contains more than just a plugin
+- renamed `TogglePointInjection` to `TogglePointInjectionPlugin` to follow Webpack recommended naming convention
+- renamed `togglePointModule` to `togglePointModuleSpecifier` to better describe [the type](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#importing_features_into_your_script)
+- updated webpack version to 5.99.7
+- various internal variable renames for clarity
+- wrapped "toggle handlers" in a factory method, to support `togglePoint`, `pack` and `unpack` being passed during setup, simplifying the toggle handler interface
+  - move `toggleHandler/pathSegmentToggleHandler` to `toggleHandlerFactories/pathSegment`
+- update [`Webpack`](https://webpack.js.org/) version 5.104.1
+  - update comment in `generatePointCut.test.js` to indicate that despite raised issue being fixed, NextJS is stuck on Webpack [`5.98.0` ](https://github.com/webpack/webpack/tree/v5.98.0) from [13th Feb](https://github.com/webpack/webpack/releases/tag/v5.98.0)
+
 ## [0.9.2] - 2025-11-14
 
 ### Fixed

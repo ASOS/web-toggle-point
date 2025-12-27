@@ -1,21 +1,21 @@
-import { POINT_CUTS, SCHEME } from "../../constants.js";
-import generateJoinPoint from "./index.js";
-import importCodeGenerator from "./importCodeGenerator.js";
+import { POINT_CUTS, SCHEME } from "../constants.js";
+import generateJoinPoint from "./generateJoinPoint.js";
 
-jest.mock("../../constants", () => ({
+jest.mock("../constants", () => ({
   SCHEME: "test-scheme",
   POINT_CUTS: "test-point-cuts"
 }));
-const mockImportCode =
-  "const joinPoint = 'test-join-point'; const variantPathMap = 'test-variants';";
-jest.mock("./importCodeGenerator.js", () => jest.fn(() => mockImportCode));
 
 describe("generateJoinPoint", () => {
   const joinPointPath = "/test-path";
   const pointCutName = "test-point-cut";
   const variantPathMap = Symbol("test-variant-path-map");
+  const mockImportCode =
+    "const joinPoint = 'test-join-point'; const variantPathMap = 'test-variants';";
+  const importCodeGenerator = jest.fn(() => mockImportCode);
   const pointCut = {
-    name: pointCutName
+    name: pointCutName,
+    loadStrategy: { importCodeGenerator }
   };
   let result;
 

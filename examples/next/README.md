@@ -21,3 +21,4 @@ N.B. NextJs support is currently experimental, see [caveats](#caveats).
 - The webpack package cannot currently vary some of NextJs' [filesystem convention files](https://nextjs.org/docs/pages/getting-started/project-structure#files-conventions) ([Issue #9](https://github.com/ASOS/web-toggle-point/issues/9))
 - The `webpack` plugin uses webpack hooks, so is incompatible with the new TurboPack bundler
 - The `webpack` plugin uses Node JS APIs to access the filesystem, so may be incompatible with [the edge runtime](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis)
+- The `webpack` plugin's default loading strategy (`deferredRequire`) is incompatible with the pages router in Next 14 (and presumed below), due to [issues](https://github.com/vercel/next.js/discussions/37520) whereby next converts deferred require into a `Promise`.

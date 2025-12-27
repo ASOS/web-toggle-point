@@ -20,7 +20,9 @@ describe("withToggledHookFactory", () => {
   const mockPlugins = [Symbol("test-plugin1"), Symbol("test-plugin2")];
   const initialProps = Symbol("test-arg");
   const mockActiveFeatures = Symbol("test-active-features");
+
   const getActiveFeatures = jest.fn(() => mockActiveFeatures);
+  const unpack = jest.fn((module) => module);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -62,13 +64,19 @@ describe("withToggledHookFactory", () => {
 
         beforeEach(() => {
           mockMatches.matchedVariant = {
-            codeRequest: {
+            packedModule: {
               default: variant
             }
           };
           ({ result } = renderHook(toggledHook, {
             initialProps
           }));
+        });
+
+        it("should unpack the variant module", () => {
+          expect(unpack).toHaveBeenCalledWith(
+            mockMatches.matchedVariant.packedModule
+          );
         });
 
         it("should call and return the output of the matched variant", () => {
@@ -92,6 +100,12 @@ describe("withToggledHookFactory", () => {
           ({ result } = renderHook(toggledHook, { initialProps }));
         });
 
+        it("should unpack the control module", () => {
+          expect(unpack).toHaveBeenCalledWith({
+            default: mockControlHook
+          });
+        });
+
         it("should call and return the output of the fallback (control) hook", () => {
           expect(mockControlHook).toHaveBeenCalledWith(initialProps);
           expect(result.current).toBe(output);
@@ -106,7 +120,7 @@ describe("withToggledHookFactory", () => {
 
       beforeEach(() => {
         mockMatches.matchedVariant = {
-          codeRequest: {
+          packedModule: {
             default: jest.fn()
           }
         };
@@ -139,7 +153,11 @@ describe("withToggledHookFactory", () => {
         variantKey,
         plugins: mockPlugins
       });
-      toggledHook = withToggledHook({ default: mockControlHook }, featuresMap);
+      toggledHook = withToggledHook({
+        joinPoint: { default: mockControlHook },
+        featuresMap,
+        unpack
+      });
     });
 
     makeCommonAssertions();
@@ -154,7 +172,11 @@ describe("withToggledHookFactory", () => {
         variantKey,
         plugins: mockPlugins
       });
-      toggledHook = withToggledHook({ default: mockControlHook }, featuresMap);
+      toggledHook = withToggledHook({
+        joinPoint: { default: mockControlHook },
+        featuresMap,
+        unpack
+      });
     });
 
     makeCommonAssertions();

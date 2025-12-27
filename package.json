@@ -1,12 +1,12 @@
 {
   "name": "@asos/web-toggle-point",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "repository": "git@github.com:asos/web-toggle-point.git",
   "homepage": "https://asos.github.io/web-toggle-point/",
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=20"
+    "node": ">=20.8"
   },
   "scripts": {
     "build": "npm run build --workspace packages",
@@ -20,6 +20,7 @@
     "lint:fix": "npm run lint:fix --workspaces --if-present && npm run lint:docs -- --fix && npm run lint:danger -- --fix",
     "test": "npm run test:unit && npm run test:automation",
     "test:unit": "npm test --workspace packages",
+    "test:unit:coverage": "npm test --workspace packages -- --coverage",
     "test:automation": "npm test --workspace test/automation"
   },
   "devDependencies": {
@@ -32,7 +33,6 @@
     "@eslint/js": "^9.15.0",
     "@eslint/markdown": "^6.2.1",
     "@rollup/plugin-babel": "^6.0.2",
-    "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",
     "@rollup/plugin-replace": "^5.0.1",
     "@rollup/plugin-terser": "^0.4.3",
@@ -52,8 +52,6 @@
     "jsdoc": "^4.0.4",
     "lint-staged": "^15.2.10",
     "prettier": "^3.4.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "rollup": "^3.29.2"
   },
   "workspaces": [

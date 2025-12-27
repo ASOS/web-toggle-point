@@ -1,1 +1,1 @@
-export { default as TogglePointInjection } from "./togglePointInjection/index.js";
+export { default as TogglePointInjectionPlugin } from "./togglePointInjection/index.js";

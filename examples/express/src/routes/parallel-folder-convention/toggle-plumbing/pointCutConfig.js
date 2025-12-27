@@ -1,19 +1,21 @@
 import { win32, posix } from "path";
+import loadStrategyFactory from "@asos/web-toggle-point-webpack/moduleLoadStrategyFactories/staticLoadStrategyFactory";
 
-const toggleHandler =
+const toggleHandlerFactoryModuleSpecifier =
   "/src/routes/parallel-folder-convention/toggle-plumbing/toggleHandler";
 const joinPointResolver = (path) =>
   path.replaceAll(win32.sep, posix.sep).replace(/__variants__\/[^/]+\//, "");
 
 const common = {
-  toggleHandler,
-  joinPointResolver
+  toggleHandlerFactoryModuleSpecifier,
+  joinPointResolver,
+  loadStrategy: loadStrategyFactory()
 };
 
 export default [
   {
     name: "react components",
-    togglePointModule:
+    togglePointModuleSpecifier:
       "/src/routes/parallel-folder-convention/toggle-plumbing/toggle-points/reactComponentTogglePoint",
     variantGlobs: [
       "./src/routes/parallel-folder-convention/__variants__/*/components/**/!(*.spec).tsx"
@@ -22,7 +24,7 @@ export default [
   },
   {
     name: "css modules & constants & redux slices",
-    togglePointModule:
+    togglePointModuleSpecifier:
       "/src/routes/parallel-folder-convention/toggle-plumbing/toggle-points/objectProxyTogglePoint",
     variantGlobs: [
       "./src/routes/parallel-folder-convention/__variants__/*/components/**/*.css",
@@ -33,7 +35,7 @@ export default [
   },
   {
     name: "redux reducer maps",
-    togglePointModule:
+    togglePointModuleSpecifier:
       "/src/routes/parallel-folder-convention/toggle-plumbing/toggle-points/reduxReducerMapTogglePoint",
     variantGlobs: [
       "./src/routes/parallel-folder-convention/__variants__/*/state/modules/index.ts"

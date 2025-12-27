@@ -35,12 +35,15 @@ const withToggledHookFactory = ({
    * A React hook that wraps a base / control function or hook and swaps in a variant based on the active features supplied
    * @function withToggledHook
    * @memberof module:web-toggle-point-react-pointcuts
-   * @param {ReactHookModuleNamespaceObject} controlModule The control / base module
-   * @param {(external:React.Hook|function)} controlModule.default The control react hook or function.
-   * @param {Map<string, Map<string, ReactHookModuleNamespaceObject>>} featuresMap A map of features and their variants, with features as top-level keys and variants as nested keys with modules as the values.
+   * @param {LoadWrappedReactHookModule} controlModule The control / base module
+   * @param {Map<string, Map<string, LoadWrappedReactHookModule>>} featuresMap A Map of features and their variants, with features as top-level keys and variants as nested keys with loader-wrapped react hook modules as the values
    * @returns {external:React.Hook} Wrapped function / hook, as a hook (so must be applied in accordance with the {@link https://reactjs.org/docs/hooks-rules.html|rules of hooks})
    */
-  const withToggledHook = (controlModule, featuresMap) => {
+  const withToggledHook = ({
+    joinPoint: packedBaseModule,
+    featuresMap,
+    unpack
+  }) => {
     const useTogglePoint = (...args) => {
       const activeFeatures = getActiveFeatures();
       const { matchedVariant } = useCodeMatches({
@@ -51,7 +54,9 @@ const withToggledHookFactory = ({
 
       useCodeSelectionPlugins?.(...args);
 
-      const { default: hook } = matchedVariant?.codeRequest ?? controlModule;
+      const { default: hook } = unpack(
+        matchedVariant?.packedModule ?? packedBaseModule
+      );
 
       return hook(...args);
     };
